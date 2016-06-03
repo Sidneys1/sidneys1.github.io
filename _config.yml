@@ -9,7 +9,7 @@
 title: Sidneys1's Weblog
 email: sidneys1@live.com
 description: > # this means to ignore newlines until "baseurl:"
-  Things I've learned.
+  Things I've learned on the job.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://sidneys1.github.io" # the base hostname & protocol for your site
 twitter_username: sidneys1
@@ -18,7 +18,9 @@ github_username:  sidneys1
 # Build settings
 markdown: kramdown
 
-highlighter: pygments
+highlighter: rouge
 encoding: utf-8
+paginate: 5
+paginate_path: "/blog/page:num"
 
-gems: ['jekyll-github-metadata']
+gems: ['jekyll-github-metadata', 'jekyll-paginate']

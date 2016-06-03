@@ -4,11 +4,17 @@
   {% include head.html %}
 
   <body>
-{% include header.html %}
-<section>
-{{content}}
-</section>
-{% include footer.html %}
+
+    {% include header.html %}
+
+    <div class="page-content">
+      <div class="wrapper">
+        {{ content }}
+      </div>
+    </div>
+
+    {% include footer.html %}
+
   </body>
 
 </html>

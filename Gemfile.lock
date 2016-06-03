@@ -123,6 +123,7 @@ PLATFORMS
 DEPENDENCIES
   github-pages
   jekyll-github-metadata
+  jekyll-paginate
   wdm (~> 0.1.0)
 
 BUNDLED WITH
