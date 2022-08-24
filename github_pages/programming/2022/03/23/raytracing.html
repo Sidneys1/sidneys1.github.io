@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="onion-location" content="http://pa6stp7ojipm64l7d3d3ebkcq57sfzq365po7k4enajgaprnefzeygid.onion/programming/2022/03/23/raytracing.html" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Raytracing! | Sidneys1.com on GitHub Pages</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Raytracing!" />
+<meta name="author" content="Sidneys1" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Since I started programming I’ve had a dream in the back of my mind: raytracers are super cool, and I’d like to build one myself. But with that dream accompanied another thought: raytracers are nearly a pure expression of math, a discipline I am poorly qualified for. However this winter I discovered a new programming community, OneLoneCoder, and its leader, javidx9. Watching the videos produced by javidx9 inspired me to take a leap of faith in myself and start this raytracing project. The result has been amazing to see unfold as I developed first a working prototype in C#, then in C++, and finally as I produced what hopefully is an easy to follow “tutorial” style Git repository. So, lets dive in!" />
+<meta property="og:description" content="Since I started programming I’ve had a dream in the back of my mind: raytracers are super cool, and I’d like to build one myself. But with that dream accompanied another thought: raytracers are nearly a pure expression of math, a discipline I am poorly qualified for. However this winter I discovered a new programming community, OneLoneCoder, and its leader, javidx9. Watching the videos produced by javidx9 inspired me to take a leap of faith in myself and start this raytracing project. The result has been amazing to see unfold as I developed first a working prototype in C#, then in C++, and finally as I produced what hopefully is an easy to follow “tutorial” style Git repository. So, lets dive in!" />
+<link rel="canonical" href="https://sidneys1.github.io/programming/2022/03/23/raytracing.html" />
+<meta property="og:url" content="https://sidneys1.github.io/programming/2022/03/23/raytracing.html" />
+<meta property="og:site_name" content="Sidneys1.com on GitHub Pages" />
+<meta property="og:image" content="https://sidneys1.github.io/images/2022-03-23-raytracing/hero.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-03-23T13:04:39-04:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://sidneys1.github.io/images/2022-03-23-raytracing/hero.png" />
+<meta property="twitter:title" content="Raytracing!" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sidneys1"},"dateModified":"2022-03-23T13:04:39-04:00","datePublished":"2022-03-23T13:04:39-04:00","description":"Since I started programming I’ve had a dream in the back of my mind: raytracers are super cool, and I’d like to build one myself. But with that dream accompanied another thought: raytracers are nearly a pure expression of math, a discipline I am poorly qualified for. However this winter I discovered a new programming community, OneLoneCoder, and its leader, javidx9. Watching the videos produced by javidx9 inspired me to take a leap of faith in myself and start this raytracing project. The result has been amazing to see unfold as I developed first a working prototype in C#, then in C++, and finally as I produced what hopefully is an easy to follow “tutorial” style Git repository. So, lets dive in!","headline":"Raytracing!","image":"https://sidneys1.github.io/images/2022-03-23-raytracing/hero.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://sidneys1.github.io/programming/2022/03/23/raytracing.html"},"url":"https://sidneys1.github.io/programming/2022/03/23/raytracing.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="https://sidneys1.github.io/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+
+  <!-- The loading of KaTeX is deferred to speed up page rendering -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+
+  <!-- To automatically render math in text elements, include the auto-render extension: -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Sidneys1.com on GitHub Pages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/tags.html">Tags</a><a class="page-link" href="/categories.html">Categories</a><a class="page-link" href="/series.html">Series</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+	<header class="post-header">
+		<h1 class="post-title p-name" itemprop="name headline">Raytracing!</h1>
+		<h2 class="post-title p-name"></h1><div class="erratum-notice">This post has <a href="#erratum">erratum</a>.</div><p class="post-meta">
+			<time class="dt-published" datetime="2022-03-23T13:04:39-04:00" itemprop="datePublished">Mar 23, 2022
+			</time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+				<span class="p-author h-card" itemprop="name">Sidneys1</span></span>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/%20/tags.html#programming" style="display: inane;"
+				class="tag">programming</a>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/%20/tags.html#raytracing" style="display: inane;"
+				class="tag">raytracing</a></p></header><div class="post-image"><img src="https://sidneys1.github.io/images/2022-03-23-raytracing/hero.png" style=""></div><!-- <div class="post-toc"> -->
+	<ul id="toc" class="toc__list">
+<li class="toc-entry toc-h2"><a href="#what-is-raytracing">What is Raytracing?</a></li>
+<li class="toc-entry toc-h2"><a href="#how-do-we-begin">How Do We Begin?</a>
+<ul class="toc__sublist">
+<li class="toc-entry toc-h3"><a href="#creating-a-new-olcpixelgameengine-project">Creating a new olc::PixelGameEngine Project</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#setting-the-scene">Setting the Scene</a>
+<ul class="toc__sublist">
+<li class="toc-entry toc-h3"><a href="#add-basic-shapes-and-a-vector-of-shapes-to-render">Add basic Shapes and a vector of shapes to render</a></li>
+<li class="toc-entry toc-h3"><a href="#add-constants-and-a-way-to-sample-single-pixels">Add constants and a way to “Sample” single pixels</a></li>
+<li class="toc-entry toc-h3"><a href="#add-some-geometry-types-enhance-shape-and-sphere">Add some geometry types, enhance Shape and Sphere</a></li>
+<li class="toc-entry toc-h3"><a href="#add-fog-color-and-a-way-to-sample-rays">Add fog color and a way to sample rays</a></li>
+<li class="toc-entry toc-h3"><a href="#add-intersection-and-sample-methods-to-shapes">Add intersection and sample methods to Shapes</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#rendering-shapes">Rendering Shapes</a>
+<ul class="toc__sublist">
+<li class="toc-entry toc-h3"><a href="#implement-ray-sphere-intersection">Implement ray-Sphere intersection</a></li>
+<li class="toc-entry toc-h3"><a href="#add-perspective-rendering-and-depth-sorting">Add perspective rendering and depth sorting</a></li>
+<li class="toc-entry toc-h3"><a href="#add-a-plane-shape-and-apply-fog">Add a Plane Shape, and apply fog</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#prettying-up">Prettying Up</a>
+<ul class="toc__sublist">
+<li class="toc-entry toc-h3"><a href="#add-reflections">Add reflections</a></li>
+<li class="toc-entry toc-h3"><a href="#create-and-use-a-color3-type">Create and use a color3 type</a></li>
+<li class="toc-entry toc-h3"><a href="#add-diffuse-lighting">Add diffuse lighting</a></li>
+<li class="toc-entry toc-h3"><a href="#add-shadow-casting">Add shadow casting</a></li>
+<li class="toc-entry toc-h3"><a href="#add-multisampling">Add multisampling</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#all-done">All Done!</a></li>
+</ul>
+	<!-- </div> -->
+
+	<div class="post-content e-content" itemprop="articleBody">
+		<p>Since I started programming I’ve had a dream in the back of my mind: <em>raytracers are super cool</em>, and I’d like to build
+one myself. But with that dream accompanied another thought: <em>raytracers are nearly a pure expression of math</em>, a
+discipline I am poorly qualified for.</p>
+
+<p>However this winter I discovered a new programming community, <a href="https://community.onelonecoder.com/">OneLoneCoder</a>, and its leader, <a href="https://www.youtube.com/channel/UC-yuWVUplUJZvieEligKBkA">javidx9</a>.
+Watching the videos produced by javidx9 inspired me to take a leap of faith in myself and start this raytracing project.
+The result has been amazing to see unfold as I developed first a working prototype in C#, then in C++, and finally as I
+produced what hopefully is an easy to follow “tutorial” style Git repository. So, lets dive in!</p>
+
+<!--more-->
+
+<p><img src="https://sidneys1.github.io/images/2022-03-23-raytracing/finished.gif" alt="finished product" /></p>
+
+<h2 id="what-is-raytracing">What is Raytracing?</h2>
+
+<p>Raytracing is a method of rendering three dimensional scenes that is inspired by the physics behind light and vision. In
+the real world, light emanates from some source and bounces off of objects before entering our eye and being processed
+by the brain. In raytracing, however, this process is reversed, and a “ray” is sent out from the virtual camera into a
+scene, collecting information about the objects it encounters, eventually returning a resolved color for that pixel of
+the canvas.</p>
+
+<h2 id="how-do-we-begin">How Do We Begin?</h2>
+
+<h3 id="creating-a-new-olcpixelgameengine-project">Creating a new <code class="language-plaintext highlighter-rouge">olc::PixelGameEngine</code> Project</h3>
+
+<p>We’re going to start with <kbd>Create a new project</kbd> in Visual Studio (I’m using 2022). Select the <kbd>Empty
+Project</kbd> (C++/Windows/Console) template. I also opted for the flat directory structure option <kbd>☑ Place solution
+and project in the same directory</kbd>.</p>
+
+<p><img src="https://sidneys1.github.io/images/2022-03-23-raytracing/create-a-new-project.png" alt="Create new project" /></p>
+
+<p>We copy in the <a href="https://github.com/OneLoneCoder/olcPixelGameEngine/releases/latest/download/olcPixelGameEngine.h"><code class="language-plaintext highlighter-rouge">olcPixelGameEngine.h</code> file</a> and add it to our solution. We also add a blank <code class="language-plaintext highlighter-rouge">main.cpp</code>
+and populate it with the contents of the template available in the <code class="language-plaintext highlighter-rouge">olcPixelGameEngine.h</code> header, taking care to rename
+our game class to match our needs.</p>
+
+<div class="note">
+  <div class="note-title">Note</div>
+  <p>Running our project will render a default PixelGameEngine scene: a 256x240 canvas of random pixels, magnified 4x:</p>
+
+  <div class="popunder">
+	<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/rainbow.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('pixel-barf').showModal()" />
+	<em>Click to zoom.</em>
+</div>
+
+  <dialog class="popover" id="pixel-barf">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="/images/2022-03-23-raytracing/rainbow.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('pixel-barf').close()" />
+</dialog>
+
+</div>
+
+<h2 id="setting-the-scene">Setting the Scene</h2>
+
+<h3 id="add-basic-shapes-and-a-vector-of-shapes-to-render">Add basic Shapes and a vector of shapes to render</h3>
+
+<p>We create a base class <code class="language-plaintext highlighter-rouge">Shape</code> and derived class <code class="language-plaintext highlighter-rouge">Sphere</code> (blank for now) that we will use to define our renderable
+objects in the future.</p>
+
+<p>We also add a <code class="language-plaintext highlighter-rouge">std::vector</code> of <code class="language-plaintext highlighter-rouge">std::unique_ptr&lt;Shape&gt;</code> to our game class. This will allow us to add new <code class="language-plaintext highlighter-rouge">Shape</code>-derived
+objects to our scene:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shapes</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Sphere</span><span class="o">&gt;</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>When the game exits, the memory we allocated will be freed (thanks, smart pointers).</p>
+
+<h3 id="add-constants-and-a-way-to-sample-single-pixels">Add constants and a way to “Sample” single pixels</h3>
+
+<p>We define a few constants for window geometry and begin implementing our rendering process by looping over the rows and
+columns of the scene and calling a <code class="language-plaintext highlighter-rouge">Sample</code> function that takes a floating-point x,y position on the viewport and
+returns a <code class="language-plaintext highlighter-rouge">olc::Pixel</code> for that location.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Game width and height (in pixels).</span>
+<span class="k">constexpr</span> <span class="kt">int</span> <span class="n">WIDTH</span> <span class="o">=</span> <span class="mi">250</span><span class="p">;</span>
+<span class="k">constexpr</span> <span class="kt">int</span> <span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">250</span><span class="p">;</span>
+
+<span class="c1">// Half the game width and height (to identify the center of the screen).</span>
+<span class="k">constexpr</span> <span class="kt">float</span> <span class="n">HALF_WIDTH</span> <span class="o">=</span> <span class="n">WIDTH</span> <span class="o">/</span> <span class="mf">2.0</span><span class="n">f</span><span class="p">;</span>
+<span class="k">constexpr</span> <span class="kt">float</span> <span class="n">HALF_HEIGHT</span> <span class="o">=</span> <span class="n">HEIGHT</span> <span class="o">/</span> <span class="mf">2.0</span><span class="n">f</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">OnUserUpdate</span><span class="p">(</span><span class="kt">float</span> <span class="n">fElapsedTime</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="c1">// Called once per frame</span>
+
+    <span class="c1">// Iterate over the rows and columns of the scene</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">HEIGHT</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">WIDTH</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// Sample this specific pixel (converting screen coordinates to scene coordinates).</span>
+            <span class="k">auto</span> <span class="n">color</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">HALF_WIDTH</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">HALF_HEIGHT</span><span class="p">);</span>
+            <span class="n">Draw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="nf">Sample</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="c1">// Called to get the color of a specific point on the screen.</span>
+    <span class="c1">// For now we're returning a color based on the screen coordinates.</span>
+    <span class="k">return</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">255</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+<span class="err">}</span>
+</code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+  <p>Running our project will now render a 250x250 canvas at 2x magnification. Our magenta fill has been replaced with a
+color pattern converging in the center of the canvas:
+<img src="https://sidneys1.github.io/images/2022-03-23-raytracing/identity.png" alt="identity" /></p>
+</div>
+
+<h3 id="add-some-geometry-types-enhance-shape-and-sphere">Add some geometry types, enhance Shape and Sphere</h3>
+
+<p>We add <code class="language-plaintext highlighter-rouge">struct</code>s for vectors (<code class="language-plaintext highlighter-rouge">vf3d</code>) and rays (<code class="language-plaintext highlighter-rouge">ray</code>). A vector represents a 3-dimensional point in space or a
+3-dimensional magnitude, while a ray uses two vectors, one to represent an origin point, and one to represent a
+directional magnitude out from that point.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Struct to describe a 3D floating point vector.</span>
+<span class="k">struct</span> <span class="nc">vf3d</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">;</span>
+    <span class="c1">// Default constructor.</span>
+    <span class="n">vf3d</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="c1">// Explicit constructor that initializes x, y, and z.</span>
+    <span class="k">constexpr</span> <span class="n">vf3d</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="c1">// Explicit constructor that initializes x, y, and z to the same value.</span>
+    <span class="k">constexpr</span> <span class="n">vf3d</span><span class="p">(</span><span class="kt">float</span> <span class="n">f</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="c1">// Struct to describe a 3D floating point ray (vector with origin point).</span>
+<span class="k">struct</span> <span class="nc">ray</span> <span class="p">{</span>
+    <span class="n">vf3d</span> <span class="n">origin</span><span class="p">,</span> <span class="n">direction</span><span class="p">;</span>
+    <span class="c1">// Default constructor.</span>
+    <span class="n">ray</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="c1">// Add explicit constructor that initializes origin and direction.</span>
+    <span class="k">constexpr</span> <span class="n">ray</span><span class="p">(</span><span class="k">const</span> <span class="n">vf3d</span> <span class="n">origin</span><span class="p">,</span> <span class="k">const</span> <span class="n">vf3d</span> <span class="n">direction</span><span class="p">)</span> <span class="o">:</span> <span class="n">origin</span><span class="p">(</span><span class="n">origin</span><span class="p">),</span> <span class="n">direction</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>We’ll also enhance our <code class="language-plaintext highlighter-rouge">Shape</code> class with properties that will allow us to describe the size, position, and color of
+shapes in our scene:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Class to describe any kind of object we want to add to our scene.</span>
+<span class="k">class</span> <span class="nc">Shape</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">vf3d</span> <span class="n">origin</span><span class="p">;</span>
+    <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">fill</span><span class="p">;</span>
+    <span class="c1">// Delete the default constructor (we'll never have a Shape with a default origin and fill).</span>
+    <span class="n">Shape</span><span class="p">()</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+    <span class="c1">// Add explicit constructor that initializes origin and fill.</span>
+    <span class="n">Shape</span><span class="p">(</span><span class="n">vf3d</span> <span class="n">origin</span><span class="p">,</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">fill</span><span class="p">)</span> <span class="o">:</span> <span class="n">origin</span><span class="p">(</span><span class="n">origin</span><span class="p">),</span> <span class="n">fill</span><span class="p">(</span><span class="n">fill</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>We’ll also give the <code class="language-plaintext highlighter-rouge">Sphere</code> class a notion of a <code class="language-plaintext highlighter-rouge">radius</code>, which is not shared by all <code class="language-plaintext highlighter-rouge">Shape</code>-derived classes:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Sphere</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Shape</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">float</span> <span class="n">radius</span><span class="p">;</span>
+    <span class="c1">// Delete the default constructor (see "Shape() = delete;").</span>
+    <span class="n">Sphere</span><span class="p">()</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+    <span class="c1">// Add explicit constructor that initializes Shape::origin, Shape::fill, and Sphere::radius.</span>
+    <span class="n">Sphere</span><span class="p">(</span><span class="n">vf3d</span> <span class="n">origin</span><span class="p">,</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">fill</span><span class="p">,</span> <span class="kt">float</span> <span class="n">radius</span><span class="p">)</span> <span class="o">:</span> <span class="n">Shape</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">fill</span><span class="p">),</span> <span class="n">radius</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Next, we’ll want to update our <code class="language-plaintext highlighter-rouge">OnUserCreate</code> function to pass in the newly required properties of a <code class="language-plaintext highlighter-rouge">Sphere</code>. Let’s
+create our initial <code class="language-plaintext highlighter-rouge">Sphere</code> at the position <code class="language-plaintext highlighter-rouge">x=0, y=0, z=200</code>, where \(x\) is lateral position, \(y\) is vertical
+position, and \(z\) is depth (or distance from the camera). Since our camera will be at <code class="language-plaintext highlighter-rouge">x=0, y=0, z=0</code> this will
+align our <code class="language-plaintext highlighter-rouge">Sphere</code> in the center of the canvas, 200 units away. We’ll also give our <code class="language-plaintext highlighter-rouge">Sphere</code> a solid <code class="language-plaintext highlighter-rouge">olc::GREY</code> color,
+and set the <code class="language-plaintext highlighter-rouge">radius</code> to <code class="language-plaintext highlighter-rouge">100</code>.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">- shapes.emplace_back(std::make_unique&lt;Sphere&gt;());
+</span><span class="gi">+ shapes.emplace_back(std::make_unique&lt;Sphere&gt;(vf3d(0, 0, 200), olc::GREY, 100));
+</span></code></pre></div></div>
+
+<p>Finally, using our newly created <code class="language-plaintext highlighter-rouge">ray</code> type, let’s construct a ray in <code class="language-plaintext highlighter-rouge">Sample</code> for a given pixel that will point into
+the scene:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a ray casting into the scene from this "pixel".</span>
+<span class="n">ray</span> <span class="nf">sample_ray</span><span class="p">({</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">{</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="p">});</span>
+<span class="c1">// TODO: We now need to test if this ray hits any Shapes and produces</span>
+<span class="c1">//       a color.</span>
+</code></pre></div></div>
+
+<p>We create the <code class="language-plaintext highlighter-rouge">ray</code> at origin <code class="language-plaintext highlighter-rouge">x=x, y=y, z=0</code>, and set the direction to <code class="language-plaintext highlighter-rouge">x=0, y=0, z=1</code>. The direction is what we call a
+<em>unit vector</em>, which means that the overall magnitude to the vector is 1 (\(\sqrt{x^2+y^2+z^2}=1\)). Using a unit vector
+will simplify some math for us later.</p>
+
+<h3 id="add-fog-color-and-a-way-to-sample-rays">Add fog color and a way to sample rays</h3>
+
+<p>To prevent our scene from extending into infinity, and to have something to show when a ray doesn’t hit <em>anything</em>, we
+add a new constant: a “fog” color.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// A color representing scene fog.</span>
+<span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="nf">FOG</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Additionally, we add a more specific function, <code class="language-plaintext highlighter-rouge">SampleRay</code>, that is called by <code class="language-plaintext highlighter-rouge">Sample</code> to return the color (or absence
+thereof) of a ray as it extends into our scene. For now, still, this returns a color relative to the \(x\) and \(y\)
+coordinate in our scene:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a new include at the top of our file:</span>
+<span class="cp">#include</span> <span class="cpf">&lt;optional&gt;</span><span class="cp">
+</span>
+<span class="c1">// ---✂---</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span><span class="o">&gt;</span> <span class="n">SampleRay</span><span class="p">(</span><span class="k">const</span> <span class="n">ray</span> <span class="n">r</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="c1">// Called to get the color produced by a specific ray.</span>
+    <span class="c1">// This will be the color we (eventually) return.</span>
+    <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">final_color</span><span class="p">;</span>
+    <span class="c1">// For now we're returning a color based on the screen coordinates.</span>
+    <span class="k">return</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">255</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">final_color</span> <span class="o">=</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="mi">255</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">final_color</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Don’t forget to update <code class="language-plaintext highlighter-rouge">Sample</code> accordingly:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  // Create a ray casting into the scene from this "pixel".
+  ray sample_ray({ x, y, 0 }, { 0, 0, 1 });
+<span class="gd">- // TODO: We now need to test if this ray hits any Shapes and produces
+- //       a color.
+</span><span class="gi">+ // Sample this ray - if the ray doesn't hit anything, use the color of
++ // the surrounding fog.
++ return SampleRay(sample_ray).value_or(FOG);
+</span></code></pre></div></div>
+
+<h3 id="add-intersection-and-sample-methods-to-shapes">Add intersection and sample methods to Shapes</h3>
+
+<p>Our <code class="language-plaintext highlighter-rouge">SampleRay</code> function has been upgraded to search for a <code class="language-plaintext highlighter-rouge">Shape</code> that it intersects with. To do this, <code class="language-plaintext highlighter-rouge">Shape</code> has been
+upgraded with two new virtual methods:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Get the color of this Shape (when intersecting with a given ray).</span>
+<span class="k">virtual</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">sample</span><span class="p">(</span><span class="n">ray</span> <span class="n">sample_ray</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">fill</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="c1">// Determine how far along a given ray this Shape intersects (if at all).</span>
+<span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">intersection</span><span class="p">(</span><span class="n">ray</span> <span class="n">r</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>These methods provide the ability to determine where along a <code class="language-plaintext highlighter-rouge">ray</code> a <code class="language-plaintext highlighter-rouge">Shape</code> intersects, and to provide the color of the
+<code class="language-plaintext highlighter-rouge">Shape</code> at a given <code class="language-plaintext highlighter-rouge">ray</code> intersection. Our <code class="language-plaintext highlighter-rouge">Sphere</code> class overrides the <code class="language-plaintext highlighter-rouge">intersection</code> method, though for now
+the implementation only returns an empty optional.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Determine how far along a given ray this Circle intersects (if at all).</span>
+<span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">intersection</span><span class="p">(</span><span class="n">ray</span> <span class="n">r</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="c1">// TODO: Implement ray-sphere intersection.</span>
+    <span class="k">return</span> <span class="p">{};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Finally, let’s update our <code class="language-plaintext highlighter-rouge">Sample</code> function, replacing the <code class="language-plaintext highlighter-rouge">final_color</code> value we compute based on screen coordinates
+with an algorithm that searches a <code class="language-plaintext highlighter-rouge">Shape</code> that intersects with our given <code class="language-plaintext highlighter-rouge">ray</code>:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Store a pointer to the Shape this ray intersects with.</span>
+<span class="k">auto</span> <span class="n">intersected_shape_iterator</span> <span class="o">=</span> <span class="n">shapes</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>
+<span class="c1">// Also store the distance along the ray that the intersection occurs.</span>
+<span class="kt">float</span> <span class="n">intersection_distance</span> <span class="o">=</span> <span class="n">INFINITY</span><span class="p">;</span>
+
+<span class="cm">/* Determine the Shape this ray intersects with(if any). */</span> <span class="p">{</span>
+    <span class="c1">// Iterate over all of the Shapes in our scene.</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">shapes</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">shapes</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">it</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// If the distance is not undefined (meaning no intersection)...</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">distance</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">intersection</span><span class="p">(</span><span class="n">r</span><span class="p">))</span> <span class="p">{</span>
+            <span class="c1">// Save the current Shape as the intersected Shape!</span>
+            <span class="n">intersected_shape_iterator</span> <span class="o">=</span> <span class="n">it</span><span class="p">;</span>
+            <span class="c1">// Also save the distance along the ray that this intersection occurred.</span>
+            <span class="n">intersection_distance</span> <span class="o">=</span> <span class="n">distance</span><span class="p">.</span><span class="n">value</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// If we didn't intersect with any Shapes, return an empty optional.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">intersected_shape_iterator</span> <span class="o">==</span> <span class="n">shapes</span><span class="p">.</span><span class="n">end</span><span class="p">())</span>
+        <span class="k">return</span> <span class="p">{};</span>
+<span class="p">}</span>
+<span class="c1">// Get the shape we discovered</span>
+<span class="k">const</span> <span class="n">Shape</span> <span class="o">&amp;</span><span class="n">intersected_shape</span> <span class="o">=</span> <span class="o">**</span><span class="n">intersected_shape_iterator</span><span class="p">;</span>
+<span class="c1">// Set our color to the sampled color of the Shape this ray with.</span>
+<span class="n">final_color</span> <span class="o">=</span> <span class="n">intersected_shape</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="rendering-shapes">Rendering Shapes</h2>
+
+<h3 id="implement-ray-sphere-intersection">Implement ray-Sphere intersection</h3>
+
+<p>We’ll need to overload some operators for a <code class="language-plaintext highlighter-rouge">vf3d</code>: subtraction, and dot-product. A dot-product is a useful way of
+comparing two vectors to determine if they are similar. Consider two vectors, \(a\) and \(b\). The dot-product is a
+scalar value determined like so:</p>
+
+\[dot(a,b) = a\cdot{}b = a_{1}b_{1}+a_{2}b_{2}+a_{3}b_{3}\]
+
+<p>So, for example:</p>
+
+\[\begin{bmatrix} 1 &amp; 2 &amp; 3\end{bmatrix}\cdot\begin{bmatrix} 4 &amp; 5 &amp; 6\end{bmatrix}\newline=\newline(1\cdot4)+(2\cdot5)+(3\cdot6)\newline=\newline4+10+18\newline=\newline32\]
+
+<p>Translating this to C++ gives us our dot product function:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Dot product (multiplication): vf3d * vf3d = float</span>
+<span class="k">const</span> <span class="kt">float</span> <span class="k">operator</span><span class="o">*</span> <span class="p">(</span><span class="k">const</span> <span class="n">vf3d</span> <span class="n">right</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">right</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">right</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">z</span> <span class="o">*</span> <span class="n">right</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Subtraction: vf3d - vf3d = vf3d</span>
+<span class="k">const</span> <span class="n">vf3d</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span> <span class="n">vf3d</span> <span class="n">right</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="n">x</span> <span class="o">-</span> <span class="n">right</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">right</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">-</span> <span class="n">right</span><span class="p">.</span><span class="n">z</span> <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We’ll also implement the equation for an intersection between a <code class="language-plaintext highlighter-rouge">ray</code> and a <code class="language-plaintext highlighter-rouge">Sphere</code>. I’m not going to go into depth
+explaining the geometry here: this is a well-documented process and can be researched separately.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">intersection</span><span class="p">(</span><span class="n">ray</span> <span class="n">r</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{};</span>
+    <span class="n">vf3d</span> <span class="n">oc</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">origin</span> <span class="o">-</span> <span class="n">origin</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">a</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">direction</span> <span class="o">*</span> <span class="n">r</span><span class="p">.</span><span class="n">direction</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">2.0</span><span class="n">f</span> <span class="o">*</span> <span class="p">(</span><span class="n">oc</span> <span class="o">*</span> <span class="n">r</span><span class="p">.</span><span class="n">direction</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">oc</span> <span class="o">*</span> <span class="n">oc</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">discriminant</span> <span class="o">=</span> <span class="n">powf</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">discriminant</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{};</span>
+    <span class="k">auto</span> <span class="n">ret</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrtf</span><span class="p">(</span><span class="n">discriminant</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span><span class="n">f</span> <span class="o">*</span> <span class="n">a</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{};</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+  <p>Running our project will now render a (highly aliased and flatly-colored) Sphere!
+<img src="https://sidneys1.github.io/images/2022-03-23-raytracing/flat.png" alt="flat" /></p>
+</div>
+
+<h3 id="add-perspective-rendering-and-depth-sorting">Add perspective rendering and depth sorting</h3>
+
+<p>First we’ll add some additional Spheres to our scene at different Z-depths. If we run our project now, you’ll see that
+the Spheres added to our scene last are drawn in front of the earlier ones, even if they are further away.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add some additional Spheres at different positions.</span>
+<span class="n">shapes</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Sphere</span><span class="o">&gt;</span><span class="p">(</span><span class="n">vf3d</span><span class="p">(</span><span class="o">-</span><span class="mi">150</span><span class="p">,</span> <span class="o">+</span><span class="mi">75</span><span class="p">,</span> <span class="o">+</span><span class="mi">300</span><span class="p">),</span> <span class="n">olc</span><span class="o">::</span><span class="n">RED</span><span class="p">,</span> <span class="mi">100</span><span class="p">));</span>
+<span class="n">shapes</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Sphere</span><span class="o">&gt;</span><span class="p">(</span><span class="n">vf3d</span><span class="p">(</span><span class="o">+</span><span class="mi">150</span><span class="p">,</span> <span class="o">-</span><span class="mi">75</span><span class="p">,</span> <span class="o">+</span><span class="mi">100</span><span class="p">),</span> <span class="n">olc</span><span class="o">::</span><span class="n">GREEN</span><span class="p">,</span> <span class="mi">100</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><img src="https://sidneys1.github.io/images/2022-03-23-raytracing/bad-z.png" alt="Bad Z-depth" /></p>
+
+<p>To remedy that, we up date our hit check in <code class="language-plaintext highlighter-rouge">SampleRay</code> to select the object whose intersection is nearest to the <code class="language-plaintext highlighter-rouge">ray</code>
+origin. Now if we run our project, the Spheres are properly sorted.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">- if (std::optional&lt;float&gt; distance = (*it)-&gt;intersection(r)) {
+</span><span class="gi">+ if (std::optional&lt;float&gt; distance = (*it)-&gt;intersection(r).value_or(INFINITY);
++                 distance &lt; intersection_distance) {
+</span></code></pre></div></div>
+
+<p><img src="https://sidneys1.github.io/images/2022-03-23-raytracing/no-perspective.png" alt="no-perspective" /></p>
+
+<p>However, you’ll notice that all three Spheres are the same size, despite being different distances from the camera. To
+fix <em>this</em>, we’ll need to add perspective to our camera. We’ll do this in a very simplistic manner, by having all of the
+rays originate from some point, and pointing towards what you can think of as a “virtual canvas” some distance in front
+of that origin point. Update <code class="language-plaintext highlighter-rouge">Sample</code> like so:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">- ray sample_ray({ x, y, 0 }, { 0, 0, 1 });
+</span><span class="gi">+ ray sample_ray({ 0, 0, -800 }, { (x / (float)WIDTH) * 100, (y / (float)HEIGHT) * 100, 200});
+</span>
+  // Sample this ray - if the ray doesn't hit anything, use the color of
+  // the surrounding fog.
+<span class="gd">- return SampleRay(sample_ray).value_or(FOG);
+</span><span class="gi">+ return SampleRay(sample_ray.normalize()).value_or(FOG);
+</span></code></pre></div></div>
+
+<p>Notice we call method of <code class="language-plaintext highlighter-rouge">ray</code> that we haven’t defined yet: <code class="language-plaintext highlighter-rouge">normalize()</code>. Normalization produces a normalized vector
+(discussed before) from a non-normalized vector by resizing the vector components in proportion to their length such
+that the overall length is still 1. Normalization is defined as (with \(v\cdot{}v\) of course being the dot product of
+itself):</p>
+
+\[normalize(v) = \frac{v}{\sqrt{v\cdot{}v}}\]
+
+<p>Let’s add <code class="language-plaintext highlighter-rouge">normalize()</code> to both <code class="language-plaintext highlighter-rouge">ray</code> and <code class="language-plaintext highlighter-rouge">vf3d</code>:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ---✂--- In ray:</span>
+
+<span class="c1">// Return a normalized version of this ray (magnitude == 1).</span>
+<span class="k">const</span> <span class="n">ray</span> <span class="n">normalize</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="n">origin</span><span class="p">,</span> <span class="n">direction</span><span class="p">.</span><span class="n">normalize</span><span class="p">()</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// ---✂--- In vf3d:</span>
+
+<span class="c1">// Division: vf3d / float = vf3d</span>
+<span class="k">const</span> <span class="n">vf3d</span> <span class="k">operator</span><span class="o">/</span><span class="p">(</span><span class="kt">float</span> <span class="n">divisor</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="n">x</span> <span class="o">/</span> <span class="n">divisor</span><span class="p">,</span> <span class="n">y</span> <span class="o">/</span> <span class="n">divisor</span><span class="p">,</span> <span class="n">z</span> <span class="o">/</span> <span class="n">divisor</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// Return a normalized version of this vf3d (magnitude == 1).</span>
+<span class="k">const</span> <span class="n">vf3d</span> <span class="nf">normalize</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrtf</span><span class="p">((</span><span class="o">*</span><span class="k">this</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">));</span>
+<span class="err">}</span>
+</code></pre></div></div>
+
+<p>By normalizing this ray we get rays properly fanning out in a perspective.</p>
+
+<div class="note">
+  <div class="note-title">Note</div>
+  <p>Running our project will now produce a proper perspective rendering of our three flat-shaded Spheres, at the correct
+depths.
+<img src="https://sidneys1.github.io/images/2022-03-23-raytracing/perspective.png" alt="Perspective rendering." /></p>
+</div>
+
+<h3 id="add-a-plane-shape-and-apply-fog">Add a Plane Shape, and apply fog</h3>
+
+<p>First we’ll add a new type of <code class="language-plaintext highlighter-rouge">Shape</code>: a <code class="language-plaintext highlighter-rouge">Plane</code>. This is a flat surface extending infinitely in all directions. I’m not
+going to go into depth about the intersection algorithm, as that’s basic geometry and is better explained elsewhere.
+Unlike a <code class="language-plaintext highlighter-rouge">Sphere</code>, orientation matters to a <code class="language-plaintext highlighter-rouge">Plane</code>, so we’ll also add a “direction” <code class="language-plaintext highlighter-rouge">vf3d</code> that will indicate the
+normal pointing away from the surface.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Subclass of Shape that represents a flat Plane.</span>
+<span class="k">class</span> <span class="nc">Plane</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Shape</span> <span class="p">{</span>
+<span class="nl">public:</span>
+	<span class="n">vf3d</span> <span class="n">direction</span><span class="p">;</span>
+
+	<span class="c1">// Add explicit constructor that initializes</span>
+	<span class="n">Plane</span><span class="p">(</span><span class="n">vf3d</span> <span class="n">origin</span><span class="p">,</span> <span class="n">vf3d</span> <span class="n">direction</span><span class="p">,</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">fill</span><span class="p">)</span> <span class="o">:</span> <span class="n">Shape</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">fill</span><span class="p">),</span> <span class="n">direction</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span> <span class="p">{}</span>
+
+	<span class="c1">// Determine how far along a given ray this Plane intersects (if at all).</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">intersection</span><span class="p">(</span><span class="n">ray</span> <span class="n">sample_ray</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+		<span class="k">auto</span> <span class="n">denom</span> <span class="o">=</span> <span class="n">direction</span> <span class="o">*</span> <span class="n">sample_ray</span><span class="p">.</span><span class="n">direction</span><span class="p">;</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">denom</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.001</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">auto</span> <span class="n">ret</span> <span class="o">=</span> <span class="p">(</span><span class="n">origin</span> <span class="o">-</span> <span class="n">sample_ray</span><span class="p">.</span><span class="n">origin</span><span class="p">)</span> <span class="o">*</span> <span class="n">direction</span> <span class="o">/</span> <span class="n">denom</span><span class="p">;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="p">{};</span>
+	<span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>We will also override the <code class="language-plaintext highlighter-rouge">sample</code> virtual method for the first time to provide a checkerboard pattern that will make
+the perspective rendering we added last time really pop.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Get the color of this Plane (when intersecting with a given ray).</span>
+<span class="c1">// We're overriding this to provide a checkerboard pattern.</span>
+<span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="nf">sample</span><span class="p">(</span><span class="n">ray</span> <span class="n">sample_ray</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+	<span class="c1">// Get the point of intersection.</span>
+	<span class="k">auto</span> <span class="n">intersect</span> <span class="o">=</span> <span class="p">(</span><span class="n">sample_ray</span> <span class="o">*</span> <span class="n">intersection</span><span class="p">(</span><span class="n">sample_ray</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="mf">0.0</span><span class="n">f</span><span class="p">)).</span><span class="n">end</span><span class="p">();</span>
+
+	<span class="c1">// Get the distances along the X and Z axis from the origin to the intersection.</span>
+	<span class="kt">float</span> <span class="n">diffX</span> <span class="o">=</span> <span class="n">origin</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">intersect</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+	<span class="kt">float</span> <span class="n">diffZ</span> <span class="o">=</span> <span class="n">origin</span><span class="p">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">intersect</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+
+	<span class="c1">// Get the XOR the signedness of the differences along X and Z.</span>
+	<span class="c1">// This allows us to "invert" the +X,-Z and -X,+Z quadrants.</span>
+	<span class="kt">bool</span> <span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="n">diffX</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">diffZ</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">);</span>
+
+	<span class="c1">// Flip the "color" boolean if diff % 100 &lt; 50 (e.g., flip one half of each 100-unit span.</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">fmod</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">diffZ</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">)</span> <span class="n">color</span> <span class="o">=</span> <span class="o">!</span><span class="n">color</span><span class="p">;</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">fmod</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">diffX</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">)</span> <span class="n">color</span> <span class="o">=</span> <span class="o">!</span><span class="n">color</span><span class="p">;</span>
+
+	<span class="c1">// If we're coloring this pixel, return the fill - otherwise return DARK_GREY.</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">color</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">fill</span><span class="p">;</span>
+	<span class="k">return</span> <span class="n">olc</span><span class="o">::</span><span class="n">DARK_GREY</span><span class="p">;</span>
+<span class="err">}</span>
+</code></pre></div></div>
+
+<p>To do this we’ll also be adding some new operator overloads to both <code class="language-plaintext highlighter-rouge">vf3d</code> and <code class="language-plaintext highlighter-rouge">ray</code>, and we’ll also add a new method to
+<code class="language-plaintext highlighter-rouge">ray</code> that returns the <code class="language-plaintext highlighter-rouge">vf3d</code> representing the endpoint of the <code class="language-plaintext highlighter-rouge">ray</code>.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ---✂--- In vf3d:</span>
+
+<span class="c1">// Addition: vf3d + vf3d = vf3d</span>
+<span class="k">const</span> <span class="n">vf3d</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">vf3d</span> <span class="n">right</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="p">{</span> <span class="n">x</span> <span class="o">+</span> <span class="n">right</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">right</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">+</span> <span class="n">right</span><span class="p">.</span><span class="n">z</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// Multiplication: vf3d * float = vf3d</span>
+<span class="k">const</span> <span class="n">vf3d</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="kt">float</span> <span class="n">factor</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="p">{</span> <span class="n">x</span> <span class="o">*</span> <span class="n">factor</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="n">factor</span><span class="p">,</span> <span class="n">z</span> <span class="o">*</span> <span class="n">factor</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// ---✂--- In ray:</span>
+
+<span class="c1">// Multiplication: ray * float = ray</span>
+<span class="k">const</span> <span class="n">ray</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="kt">float</span> <span class="n">right</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="p">{</span> <span class="n">origin</span><span class="p">,</span> <span class="n">direction</span> <span class="o">*</span> <span class="n">right</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// Return the vf3d at the end of this ray.</span>
+<span class="k">const</span> <span class="n">vf3d</span> <span class="n">end</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="n">origin</span> <span class="o">+</span> <span class="n">direction</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Finally, we’ll add a new <code class="language-plaintext highlighter-rouge">Plane</code> to our scene just below our <code class="language-plaintext highlighter-rouge">Sphere</code>s. Note that since we render our canvas top to
+bottom, +Y is down, while -Y is up.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a "floor" Plane</span>
+<span class="n">shapes</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Plane</span><span class="o">&gt;</span><span class="p">(</span><span class="n">vf3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">0</span> <span class="p">),</span> <span class="n">vf3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span><span class="p">(</span><span class="mi">204</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">204</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project now you’ll see the checkerboard pattern continue off to the horizon - <em>however</em>, it appears
+further up on the canvas than you might expect. <em>Additionally</em>, the checkerboard pattern gets very garbled as the
+checks gets smaller than a single pixel, creating a sort of unexpected and disorienting moire pattern. Perhaps drawing
+surfaces <em>that</em> far away isn’t good…</p>
+
+  <p><em>Coming soon: a screenshot.</em>
+<!-- TODO: ![Plane.]() --></p>
+
+</div>
+
+<p>To remedy this, we’ll add the concept of Fog. We already have a Fog color, for when a ray doesn’t hit anything. This new
+concept applies the idea of there being some extreme translucency to the nothingness between a ray’s origin and the
+<code class="language-plaintext highlighter-rouge">Shape</code> it intersects with. We’ll begin by adding two new constants, one to define the maximum distance at which an
+<code class="language-plaintext highlighter-rouge">Shape</code> would be visible, and the other as the reciprocal of that.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Fog distance and reciprocal (falloff).</span>
+<span class="k">constexpr</span> <span class="kt">float</span> <span class="n">FOG_INTENSITY_INVERSE</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">;</span>
+<span class="k">constexpr</span> <span class="kt">float</span> <span class="n">FOG_INTENSITY</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">FOG_INTENSITY_INVERSE</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Now when we’re determining the color of a ray in <code class="language-plaintext highlighter-rouge">SampleRay</code> we can check if the intersection distance is greater than
+that of the max Fog distance. If so, we’ll immediately return the Fog color and skip further calculation. If the
+distance is lower, however, we want to smoothly transition between the <code class="language-plaintext highlighter-rouge">Shape</code>’s color and the Fog’s color, depending on
+the distance.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Quick check - if the intersection is further away than the furthest Fog point,</span>
+<span class="c1">// then we can save some time and not calculate anything further, since it would</span>
+<span class="c1">// be obscured by Fog regardless.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">intersection_distance</span> <span class="o">&gt;=</span> <span class="n">FOG_INTENSITY_INVERSE</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">FOG</span><span class="p">;</span>
+
+<span class="c1">// Set our color to the sampled color of the Shape this ray with.</span>
+<span class="n">final_color</span> <span class="o">=</span> <span class="n">intersected_shape</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+
+<span class="c1">// Apply Fog</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">FOG_INTENSITY</span><span class="p">)</span>
+	<span class="n">final_color</span> <span class="o">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">final_color</span><span class="p">,</span> <span class="n">FOG</span><span class="p">,</span> <span class="n">intersection_distance</span> <span class="o">*</span> <span class="n">FOG_INTENSITY</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>To do this, we’ve referenced a function called <code class="language-plaintext highlighter-rouge">lerp</code> - short for “linear interpolation” - that we haven’t defined yet.
+This function smoothly mixes two colors based on a floating point value between 0.0 and 1.0.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Apply a linear interpolation between two colors:</span>
+<span class="c1">//  from |-------------------------------| to</span>
+<span class="c1">//                ^ by</span>
+<span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">lerp</span><span class="p">(</span><span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">from</span><span class="p">,</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">to</span><span class="p">,</span> <span class="kt">float</span> <span class="n">by</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">by</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">)</span> <span class="k">return</span> <span class="n">from</span><span class="p">;</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">by</span> <span class="o">&gt;=</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">)</span> <span class="k">return</span> <span class="n">to</span><span class="p">;</span>
+	<span class="k">return</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span><span class="p">(</span>
+		<span class="n">from</span><span class="p">.</span><span class="n">r</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">by</span><span class="p">)</span> <span class="o">+</span> <span class="n">to</span><span class="p">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">by</span><span class="p">,</span>
+		<span class="n">from</span><span class="p">.</span><span class="n">g</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">by</span><span class="p">)</span> <span class="o">+</span> <span class="n">to</span><span class="p">.</span><span class="n">g</span> <span class="o">*</span> <span class="n">by</span><span class="p">,</span>
+		<span class="n">from</span><span class="p">.</span><span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">by</span><span class="p">)</span> <span class="o">+</span> <span class="n">to</span><span class="p">.</span><span class="n">b</span> <span class="o">*</span> <span class="n">by</span>
+	<span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project now displays our Spheres as before, plus the checkerboard Plane of the floor, smoothly fading
+into the distance.</p>
+
+  <p><em>Coming soon: a screenshot.</em>
+<!-- TODO: ![Fog.]() --></p>
+
+</div>
+
+<p>Note that as our scene and renderer grow in complexity we’ll begin to see lower and lower frame-rates when running our
+project. Switching our compilation mode to Release and running without debugging can help, as the compiler will more
+aggressively apply optimizations. Feel free to experiment with optimization strategies in the Release compilation
+settings.</p>
+
+<h2 id="prettying-up">Prettying Up</h2>
+
+<h3 id="add-reflections">Add reflections</h3>
+
+<p>Reflections are an intrinsic feature of any raytracer. To begin, let’s add a new constant to control just how many times
+a ray may reflect as it makes its way through the scene. Imagine being inside a hall of mirrors - the reflections may
+continue to some recursive depth - in real life, this is infinite (or at least to the degree allowed by the quality of
+the mirrors and available light). In our project, reflections add more computational complexity, so limiting the degree
+to which these reflections propagate is essential. To do so, I’ve surrounded two different values for this constant in
+preprocessor “if” statements to provide different values under Debug and Release mode respectively.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifdef DEBUG
+</span><span class="k">constexpr</span> <span class="kt">int</span> <span class="n">BOUNCES</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="cp">#else
+</span><span class="k">constexpr</span> <span class="kt">int</span> <span class="n">BOUNCES</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="cp">#endif
+</span></code></pre></div></div>
+
+<p>Next we’ll add a property to our base <code class="language-plaintext highlighter-rouge">Shape</code> class - a floating point representing <code class="language-plaintext highlighter-rouge">reflectivity</code>. This will range
+between 0 (no reflections) and 1 (a perfect mirror). We’ll also initialize this as a constructor parameter, and extend
+that parameter to the <code class="language-plaintext highlighter-rouge">Sphere</code> class as well.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ---✂--- In Shape:</span>
+
+<span class="n">vf3d</span> <span class="n">origin</span><span class="p">;</span>
+<span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">fill</span><span class="p">;</span>
+<span class="kt">float</span> <span class="n">reflectivity</span><span class="p">;</span>
+
+<span class="cm">/* CONSTRUCTORS */</span>
+
+<span class="c1">// Delete the default constructor (we'll never have a Shape with a default origin and fill).</span>
+<span class="n">Shape</span><span class="p">()</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+<span class="c1">// Add explicit constructor that initializes origin and fill.</span>
+<span class="n">Shape</span><span class="p">(</span><span class="n">vf3d</span> <span class="n">origin</span><span class="p">,</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">fill</span><span class="p">,</span> <span class="kt">float</span> <span class="n">reflectivity</span> <span class="o">=</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">)</span> <span class="o">:</span> <span class="n">origin</span><span class="p">(</span><span class="n">origin</span><span class="p">),</span> <span class="n">fill</span><span class="p">(</span><span class="n">fill</span><span class="p">),</span> <span class="n">reflectivity</span><span class="p">(</span><span class="n">reflectivity</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="c1">// ---✂--- In Sphere:</span>
+
+<span class="n">Sphere</span><span class="p">(</span><span class="n">vf3d</span> <span class="n">origin</span><span class="p">,</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">fill</span><span class="p">,</span> <span class="kt">float</span> <span class="n">radius</span><span class="p">,</span> <span class="kt">float</span> <span class="n">reflectivity</span> <span class="o">=</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">)</span> <span class="o">:</span> <span class="n">Shape</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">fill</span><span class="p">,</span> <span class="n">reflectivity</span><span class="p">),</span> <span class="n">radius</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span> <span class="p">{}</span>
+</code></pre></div></div>
+
+<p>Next, we’ll make the surfaces of our first and second <code class="language-plaintext highlighter-rouge">Sphere</code>s to be
+reflective.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // Create a new Sphere and add it to our scene.
+<span class="gd">-shapes.emplace_back(std::make_unique&lt;Sphere&gt;(vf3d(0, 0, 200), olc::GREY, 100));
+</span><span class="gi">+shapes.emplace_back(std::make_unique&lt;Sphere&gt;(vf3d(0, 0, 200), olc::GREY, 100, 0.9f));
+</span>
+ // Add some additional Spheres at different positions.
+<span class="gd">-shapes.emplace_back(std::make_unique&lt;Sphere&gt;(vf3d(-150, +75, +300), olc::RED, 100));
+</span><span class="gi">+shapes.emplace_back(std::make_unique&lt;Sphere&gt;(vf3d(-150, +75, +300), olc::RED, 100, 0.5f));
+</span></code></pre></div></div>
+
+<p>Lastly, we’ll add a new abstract method to our <code class="language-plaintext highlighter-rouge">Shape</code> class that will return the normal at a given
+intersection point, and override this abstract method in our <code class="language-plaintext highlighter-rouge">Sphere</code> and <code class="language-plaintext highlighter-rouge">Plane</code> classes. A normal is simply a ray
+pointing outwards from the surface of the <code class="language-plaintext highlighter-rouge">Shape</code> at the given point.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ---✂--- In Shape:</span>
+
+<span class="c1">// Determine the surface normal of this Shape at a given intersection point.</span>
+<span class="k">virtual</span> <span class="n">ray</span> <span class="n">normal</span><span class="p">(</span><span class="n">vf3d</span> <span class="n">incident</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">// ---✂--- In Sphere:</span>
+
+<span class="c1">// Return the surface normal of this Sphere at a given intersection point.</span>
+<span class="n">ray</span> <span class="n">normal</span><span class="p">(</span><span class="n">vf3d</span> <span class="n">incident</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="p">{</span> <span class="n">incident</span><span class="p">,</span> <span class="p">(</span><span class="n">incident</span> <span class="o">-</span> <span class="n">origin</span><span class="p">).</span><span class="n">normalize</span><span class="p">()</span> <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Next, let’s enhance our <code class="language-plaintext highlighter-rouge">SampleRay</code> method by adding a parameter for how many “bounces” are allowed - as this method is
+called recursively we’ll decrement this value, at at the point where bounces is zero we’ll stop processing more
+reflections. We’ll pass the initial bounces constant into the <code class="language-plaintext highlighter-rouge">SampleRay</code> method from the <code class="language-plaintext highlighter-rouge">Sample</code> method.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ---✂--- In Sample():</span>
+
+<span class="c1">// Sample this ray - if the ray doesn't hit anything, use the color of</span>
+<span class="c1">// the surrounding fog.</span>
+<span class="k">return</span> <span class="nf">SampleRay</span><span class="p">(</span><span class="n">sample_ray</span><span class="p">.</span><span class="n">normalize</span><span class="p">(),</span> <span class="n">BOUNCES</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="n">FOG</span><span class="p">);</span>
+
+<span class="c1">// ---✂--- In SampleRay():</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span><span class="o">&gt;</span> <span class="n">SampleRay</span><span class="p">(</span><span class="n">ray</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">bounces</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+	<span class="n">bounces</span><span class="o">--</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Once we’ve
+sampled our <code class="language-plaintext highlighter-rouge">Shape</code> and determined its intrinsic color, we need to created a reflected ray and sample that to determine
+the color that would be reflected by this <code class="language-plaintext highlighter-rouge">Shape</code> - we can skip this process if the reflectivity is zero or if we’ve
+reached the max depth. Creating a reflected ray is a simple geometric function between the direction of the original
+<code class="language-plaintext highlighter-rouge">sample_ray</code> and the <code class="language-plaintext highlighter-rouge">Shape</code>’s normal at the intersection point. Finally, we sample this new ray (passing in the new,
+decremented bounces count). We’ll mix our <code class="language-plaintext highlighter-rouge">final_color</code> between the intrinsic color of this <code class="language-plaintext highlighter-rouge">Shape</code> itself and the color
+we sampled along the reflected ray (or, if it didn’t hit anything, our Fog color).</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Set our color to the sampled color of the Shape this ray with.</span>
+<span class="n">final_color</span> <span class="o">=</span> <span class="n">intersected_shape</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+
+<span class="c1">// Determine the point at which our ray intersects our Shape.</span>
+<span class="n">vf3d</span> <span class="n">intersection_point</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">intersection_distance</span><span class="p">).</span><span class="n">end</span><span class="p">();</span>
+<span class="c1">// Calculate the normal of the given Shape at that point.</span>
+<span class="n">ray</span> <span class="n">normal</span> <span class="o">=</span> <span class="n">intersected_shape</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="n">intersection_point</span><span class="p">);</span>
+
+<span class="c1">// Apply reflection</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">bounces</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">intersected_shape</span><span class="p">.</span><span class="n">reflectivity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// Our reflection ray starts out as our normal...</span>
+	<span class="n">ray</span> <span class="n">reflection</span> <span class="o">=</span> <span class="n">normal</span><span class="p">;</span>
+
+	<span class="c1">// Apply a slight offset *along* the normal. This way our reflected ray will</span>
+	<span class="c1">// start at some slight offset from the surface so that rounding errors don't</span>
+	<span class="c1">// cause it to collide with the Shape it originated from!</span>
+	<span class="n">reflection</span><span class="p">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">reflection</span><span class="p">.</span><span class="n">origin</span> <span class="o">+</span> <span class="p">(</span><span class="n">normal</span><span class="p">.</span><span class="n">direction</span> <span class="o">+</span> <span class="mf">0.001</span><span class="n">f</span><span class="p">);</span>
+
+	<span class="c1">// Reflect the direction around the normal with some simple geometry.</span>
+	<span class="n">reflection</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="p">(</span><span class="n">normal</span><span class="p">.</span><span class="n">direction</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">((</span><span class="n">r</span><span class="p">.</span><span class="n">direction</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">normal</span><span class="p">.</span><span class="n">direction</span><span class="p">))</span> <span class="o">+</span> <span class="n">r</span><span class="p">.</span><span class="n">direction</span><span class="p">).</span><span class="n">normalize</span><span class="p">();</span>
+
+	<span class="c1">// Recursion! Since SampleRay doesn't care if the ray is coming from the</span>
+	<span class="c1">// canvas, we can use it to get the color that will be reflected by this Shape!</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span><span class="o">&gt;</span> <span class="n">reflected_color</span> <span class="o">=</span> <span class="n">SampleRay</span><span class="p">(</span><span class="n">reflection</span><span class="p">,</span> <span class="n">bounces</span><span class="p">);</span>
+
+	<span class="c1">// Finally, mix our Shape's color with the reflected color (or Fog color, in case</span>
+	<span class="c1">// of a miss) according to the reflectivity.</span>
+	<span class="n">final_color</span> <span class="o">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">final_color</span><span class="p">,</span> <span class="n">reflected_color</span><span class="p">.</span><span class="n">value_or</span><span class="p">(</span><span class="n">FOG</span><span class="p">),</span> <span class="n">intersected_shape</span><span class="p">.</span><span class="n">reflectivity</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project at this point produces a beautifully rendered scene where the center and left <code class="language-plaintext highlighter-rouge">Sphere</code>s reflect
+their surroundings - and a sharp eye can determine that the left <code class="language-plaintext highlighter-rouge">Sphere</code> can even see itself in its reflection of the
+center <code class="language-plaintext highlighter-rouge">Sphere</code>.</p>
+
+  <p><em>Coming soon: a screenshot.</em>
+<!-- TODO: ![Reflections.]() --></p>
+
+</div>
+
+<p>To further highlight the reflections we’ll add some simple motion to the scene by accumulating time in the
+<code class="language-plaintext highlighter-rouge">OnUserUpdate</code> function, and modifying the Y and Z coordinates of the center <code class="language-plaintext highlighter-rouge">Sphere</code> along a sine/cosine wave
+respectively.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Called once per frame</span>
+
+<span class="c1">// Create some static storage to accumulate elapsed time...</span>
+<span class="k">static</span> <span class="kt">float</span> <span class="n">accumulated_time</span> <span class="o">=</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">;</span>
+
+<span class="c1">// ...and accumulate elapsed time into it.</span>
+<span class="n">accumulated_time</span> <span class="o">+=</span> <span class="n">fElapsedTime</span><span class="p">;</span>
+
+<span class="c1">// Update the position of our first Circle every update.</span>
+<span class="c1">// sin/cos = easy, cheap motion.</span>
+<span class="n">Shape</span><span class="o">&amp;</span> <span class="n">shape</span> <span class="o">=</span> <span class="o">*</span><span class="n">shapes</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">shape</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">sinf</span><span class="p">(</span><span class="n">accumulated_time</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">-</span> <span class="mi">100</span><span class="p">;</span>
+<span class="n">shape</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">cosf</span><span class="p">(</span><span class="n">accumulated_time</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="mi">100</span><span class="p">;</span>
+
+<span class="c1">// Iterate over the rows and columns of the scene</span>
+</code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project now will display a smoothly floating <code class="language-plaintext highlighter-rouge">Sphere</code>, with appropriate reflections of its surrounding
+<code class="language-plaintext highlighter-rouge">Shapes</code>.</p>
+
+  <p><em>Coming soon: a screenshot.</em>
+<!-- TODO: ![Reflections in motion.]() --></p>
+
+</div>
+
+<h3 id="create-and-use-a-color3-type">Create and use a <code class="language-plaintext highlighter-rouge">color3</code> type</h3>
+
+<p>To simplify some upcoming features, let’s replace our use of <code class="language-plaintext highlighter-rouge">olc::Pixel</code> with our own color type. Since we’re used to
+representing color as the combination of three values - red, green, and blue - we can represent each with a floating
+point value between 0 and 1.</p>
+
+<p>Looking at our code, we already have a type to represent three floating point values: <code class="language-plaintext highlighter-rouge">vf3d</code>. Using a simple <code class="language-plaintext highlighter-rouge">using</code>
+alias, we can create a type alias called <code class="language-plaintext highlighter-rouge">color3</code> that is really a <code class="language-plaintext highlighter-rouge">vf3d</code> behind the scenes. This aliasing isn’t really
+necessary, but it will help avoid confusion. Additionally, we can leverage the <code class="language-plaintext highlighter-rouge">olc::PixelF</code> type to convert our
+floating point color to one compatible with PixelGameEngine.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Use a type alias to use vf3d and color3 interchangeably.</span>
+<span class="k">using</span> <span class="n">color3</span> <span class="o">=</span> <span class="n">vf3d</span><span class="p">;</span>
+
+<span class="c1">// ---✂---</span>
+
+<span class="c1">// Colors</span>
+
+<span class="n">color3</span> <span class="nf">LIGHT_GRAY</span><span class="p">(</span><span class="mf">0.8</span><span class="n">f</span><span class="p">);</span>
+<span class="n">color3</span> <span class="nf">DARK_GRAY</span><span class="p">(</span><span class="mf">0.5</span><span class="n">f</span><span class="p">);</span>
+<span class="n">color3</span> <span class="nf">GREY</span><span class="p">(</span><span class="mf">0.75</span><span class="n">f</span><span class="p">);</span>
+<span class="n">color3</span> <span class="nf">RED</span><span class="p">(</span><span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">);</span>
+<span class="n">color3</span> <span class="nf">GREEN</span><span class="p">(</span><span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">);</span>
+
+<span class="c1">// ---✂---</span>
+
+<span class="n">color3</span> <span class="n">FOG</span> <span class="o">=</span> <span class="n">DARK_GRAY</span><span class="p">;</span>
+
+<span class="c1">// ---✂---</span>
+
+<span class="n">Draw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">olc</span><span class="o">::</span><span class="n">PixelF</span><span class="p">(</span><span class="n">color</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">color</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">.</span><span class="n">z</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>You’ll need to update references to <code class="language-plaintext highlighter-rouge">olc::Pixel</code> throughout the code to use <code class="language-plaintext highlighter-rouge">color3</code> instead. For example in our <code class="language-plaintext highlighter-rouge">lerp</code>
+function:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // Apply a linear interpolation between two colors:
+ //  from |-------------------------------| to
+ //                ^ by
+<span class="gd">-olc::Pixel lerp(olc::Pixel from, olc::Pixel to, float by) const {
+</span><span class="gi">+color3 lerp(color3 from, color3 to, float by) const {
+</span> 	if (by &lt;= 0.0f) return from;
+ 	if (by &gt;= 1.0f) return to;
+<span class="gd">-	return olc::Pixel(
+-		from.r * (1 - by) + to.r * by,
+-		from.g * (1 - by) + to.g * by,
+-		from.b * (1 - by) + to.b * by
+</span><span class="gi">+	return color3(
++		from.x * (1 - by) + to.x * by,
++		from.y * (1 - by) + to.y * by,
++		from.z * (1 - by) + to.z * by
+</span> 	);
+ }
+</code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project now produces no difference from our previous commit.</p>
+
+</div>
+
+<h3 id="add-diffuse-lighting">Add diffuse lighting</h3>
+
+<p>Let’s add a single point light source to our scene. We’ll add a member to our game class to represent this. We’ll use a
+class member instead of a constant so that we can change the position of the light later. We’ll initialize this value in
+the constructor to be 500 units behind and 500 units above our origin.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // ---✂--- Add a class member to our OlPixelRayTracer:
+
++// The position of our point light.
+<span class="gi">+vf3d light_point;
+</span>
+ // ---✂--- Update our game constructor:
+
+-OlcPixelRayTracer() {
+<span class="gi">+OlcPixelRayTracer() : light_point(0, -500, -500) {
+</span></code></pre></div></div>
+
+<p>Diffuse lighting is frighteningly simple - we already know that a dot product between two vectors returns a value that
+roughly describes the similarity of the vectors. To implement simple diffuse lighting, we can multiply our sample color
+by a dot product between the surface normal vector and a vector pointing towards our single light source.</p>
+
+<p>Let’s add a section to our <code class="language-plaintext highlighter-rouge">SampleRay</code> function after we apply reflections where we’ll apply diffuse lighting. The
+process only requires three lines of code! First we’ll create a normalized ray at the intersection point, pointing
+towards the light point (we do this by subtracting the light point from the intersection point). Secondly, we’ll
+calculate the dot product between our light ray and the surface normal we already have.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ---✂--- After applying reflections, and before applying fog:</span>
+
+<span class="c1">// Apply diffuse lighting</span>
+
+<span class="c1">// First we'll get the normalized ray from our intersection point to the light source.</span>
+<span class="n">ray</span> <span class="n">light_ray</span> <span class="o">=</span> <span class="n">ray</span><span class="p">(</span><span class="n">intersection_point</span><span class="p">,</span> <span class="n">light_point</span> <span class="o">-</span> <span class="n">intersection_point</span><span class="p">).</span><span class="n">normalize</span><span class="p">();</span>
+
+<span class="c1">// Next we'll compute the dot product between our surface normal and the light ray.</span>
+<span class="kt">float</span> <span class="n">dot</span> <span class="o">=</span> <span class="n">light_ray</span><span class="p">.</span><span class="n">direction</span> <span class="o">*</span> <span class="n">normal</span><span class="p">.</span><span class="n">direction</span><span class="p">;</span>
+
+<span class="c1">// Multiplying our final color by this dot product darkens surfaces pointing away from the light.</span>
+<span class="n">final_color</span> <span class="o">=</span> <span class="n">final_color</span> <span class="o">*</span> <span class="n">dot</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project now will highlight a problem: the top halves of our <code class="language-plaintext highlighter-rouge">Shape</code>s look correct (towards the light), but
+the bottoms have a corrupted look. You’ll remember that the dot product of two vectors lies in the range \([-1,1]\). As we
+reach the side of our <code class="language-plaintext highlighter-rouge">Shape</code>s pointing away from the light, our dot product enters the negative range - and “negative”
+colors are certainly a concept our data types are unprepared to handle! To fix this let’s clamp the dot product value to
+the range \([0,1]\) - this way all negative values are discarded.</p>
+
+  <p><em>Coming soon: a screenshot.</em>
+<!-- TODO: ![Negative colors.]() --></p>
+
+</div>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // Next we'll compute the dot product between our surface normal and the light ray.
+<span class="gi">+// We need to clamp this between 0 and 1, because negative values have no meaning here.
+</span><span class="gd">-float dot = light_ray.direction * normal.direction;
+</span><span class="gi">+float dot = std::clamp(light_ray.direction * normal.direction, 0.0f, 1.0f);
+</span></code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project now looks correct! The tops of our <code class="language-plaintext highlighter-rouge">Shape</code>s are light, while the bottoms are almost pitch black.
+<strong>However</strong>, since darkness isn’t terribly interesting, let’s add a global ambient light, which we’ll implement as a new
+constant.</p>
+
+  <p><em>Coming soon: a screenshot.</em>
+<!-- TODO: ![Too dark.]() --></p>
+
+</div>
+
+<p>By adding our global light value to the dot product we’ll ensure that our diffuse lighting never completely
+darkens our scene.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // ---✂--- Add a new constant:
+
++// Lighting
+<span class="gi">+constexpr float AMBIENT_LIGHT = 0.5f;
+</span>
+ // ---✂--- Update our diffuse lighting:
+
+ // Next we'll compute the dot product between our surface normal and the light ray.
+ // We need to clamp this between 0 and 1, because negative values have no meaning here.
+<span class="gi">+// Additionally, we'll add in our ambient light so no surfaces are entirely dark.
+</span><span class="gd">-float dot = std::clamp(light_ray.direction * normal.direction, 0.0f, 1.0f);
+</span><span class="gi">+float dot = std::clamp(AMBIENT_LIGHT + (light_ray.direction * normal.direction), 0.0f, 1.0f);
+</span></code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project now displays simple diffuse lighting without darkening any parts of our scene entirely.</p>
+
+  <p><em>Coming soon: a screenshot.</em>
+<!-- TODO: ![Just right diffuse lighting.]() --></p>
+
+</div>
+
+<h3 id="add-shadow-casting">Add shadow casting</h3>
+
+<p>Let’s upgrade our lighting mechanic with proper shadows. The theory is simple: we check if any <code class="language-plaintext highlighter-rouge">Shape</code>s intersect with
+the ray between a <code class="language-plaintext highlighter-rouge">Shape</code>’s surface and the light itself. If any <code class="language-plaintext highlighter-rouge">Shape</code>s do intersect, then the light is fully occluded
+and we can set the lighting to full-dark (rather than the diffuse value we calculated last time). If there are no
+intersecting <code class="language-plaintext highlighter-rouge">Shape</code>s, then we use the dot product as we did last time.</p>
+
+<p>To start, instead of normalizing our lighting ray immediately, we’ll want to save its length - this lets us know how far
+away the light is from the current hit point. To do this we’ll add a short method to <code class="language-plaintext highlighter-rouge">vf3d</code> to calculate its length.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Return the length of this vf3d.</span>
+<span class="k">const</span> <span class="kt">float</span> <span class="nf">length</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="n">sqrtf</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">);</span>
+<span class="err">}</span>
+</code></pre></div></div>
+
+<p>Next, to avoid the lighting ray intersecting with the current object itself we’ll offset the light ray origin by a tiny
+amount along the surface normal. Finally, we’ll normalize the light ray’s direction.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ---✂--- In SampleRay(), replace our current diffuse lighting with the following:</span>
+
+<span class="c1">// Apply lighting</span>
+
+<span class="c1">// First we'll get the un-normalized ray from our intersection point to the light source.</span>
+<span class="n">ray</span> <span class="n">light_ray</span> <span class="o">=</span> <span class="n">ray</span><span class="p">(</span><span class="n">intersection_point</span><span class="p">,</span> <span class="n">light_point</span> <span class="o">-</span> <span class="n">intersection_point</span><span class="p">);</span>
+<span class="c1">// Get the distance to the light (equal to the length of the un-normalized ray).</span>
+<span class="kt">float</span> <span class="n">light_distance</span> <span class="o">=</span> <span class="n">light_ray</span><span class="p">.</span><span class="n">direction</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+<span class="c1">// We'll also offset the origin of the light ray by a small amount along the</span>
+<span class="c1">// surface normal so the ray doesn't intersect with this Shape itself.</span>
+<span class="n">light_ray</span><span class="p">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">light_ray</span><span class="p">.</span><span class="n">origin</span> <span class="o">+</span> <span class="p">(</span><span class="n">normal</span><span class="p">.</span><span class="n">direction</span> <span class="o">*</span> <span class="mf">0.001</span><span class="n">f</span><span class="p">);</span>
+<span class="c1">// And finally we'll normalize the light_ray.</span>
+<span class="n">light_ray</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">light_ray</span><span class="p">.</span><span class="n">direction</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>To determine if any <code class="language-plaintext highlighter-rouge">Shape</code>s intersect with this ray, we’ll use a simplified version of our search loop from before -
+however this time we don’t care which <code class="language-plaintext highlighter-rouge">Shape</code> is intersecting, just whether one has. Additionally, we don’t care about
+<code class="language-plaintext highlighter-rouge">Shape</code>s that intersect with the ray that are further from the origin than the light itself (meaning that <code class="language-plaintext highlighter-rouge">Shape</code> is on
+the far side of the light), so we’ll initialize our search distance to the distance to the light itself.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Then we'll search for any Shapes that is occluding the light_ray,</span>
+<span class="c1">// using more or less our existing search code.</span>
+<span class="c1">// We initialize closest_distance to our light distance, because we</span>
+<span class="c1">// don't care if any of the Shapes intersect the ray beyond the light.</span>
+<span class="kt">float</span> <span class="n">closest_distance</span> <span class="o">=</span> <span class="n">light_distance</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">shape</span> <span class="o">:</span> <span class="n">shapes</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="kt">float</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">shape</span><span class="o">-&gt;</span><span class="n">intersection</span><span class="p">(</span><span class="n">light_ray</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="n">INFINITY</span><span class="p">);</span> <span class="n">distance</span> <span class="o">&lt;</span> <span class="n">closest_distance</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">closest_distance</span> <span class="o">=</span> <span class="n">distance</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Finally, if the final search distance is less than the distance to the light itself then we have a <code class="language-plaintext highlighter-rouge">Shape</code> occluding the
+ray! In this case we can skip the dot-product diffuse calculation and just multiply the color by our ambient light.
+Otherwise we calculate the diffuse lighting as before.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Check if we had an intersection (the light is occluded).</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">closest_distance</span> <span class="o">&lt;</span> <span class="n">light_distance</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// Multiplying our final color by the ambient light darkens this surface "entirely".</span>
+	<span class="n">final_color</span> <span class="o">=</span> <span class="n">final_color</span> <span class="o">*</span> <span class="n">AMBIENT_LIGHT</span><span class="p">;</span>
+<span class="p">}</span>  <span class="k">else</span> <span class="p">{</span>
+	<span class="c1">// Next we'll compute the dot product between our surface normal and the light ray.</span>
+	<span class="c1">// We need to clamp this between 0 and 1, because negative values have no meaning here.</span>
+	<span class="c1">// Additionally, we'll add in our ambient light so no surfaces are entirely dark.</span>
+	<span class="kt">float</span> <span class="n">dot</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">clamp</span><span class="p">(</span><span class="n">AMBIENT_LIGHT</span> <span class="o">+</span> <span class="p">(</span><span class="n">light_ray</span><span class="p">.</span><span class="n">direction</span> <span class="o">*</span> <span class="n">normal</span><span class="p">.</span><span class="n">direction</span><span class="p">),</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">);</span>
+
+	<span class="c1">// Multiplying our final color by this dot product darkens surfaces pointing away from the light.</span>
+	<span class="n">final_color</span> <span class="o">=</span> <span class="n">final_color</span> <span class="o">*</span> <span class="n">dot</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project now will render shadows cast upon other <code class="language-plaintext highlighter-rouge">Shape</code>s in the scene that dynamically update as the
+<code class="language-plaintext highlighter-rouge">Shape</code>s or light itself move.</p>
+
+  <p><em>Coming soon: a screenshot.</em>
+<!-- TODO: ![Shadows.]() --></p>
+
+</div>
+
+<h3 id="add-multisampling">Add multisampling</h3>
+
+<p>One very noticeable shortcoming of our current renderer is the strong aliasing - since we always cast our ray towards
+the exact center of every pixel, we don’t get any sort of antialiasing effect for pixels that are only partially covered
+by a given <code class="language-plaintext highlighter-rouge">Shape</code> or feature such as shadows or reflections.</p>
+
+<p>An easy antialiasing solution is to implement multisampling, which is the process of sending multiple rays into each
+pixel and averaging the results. By varying the angle of each ray slightly we can average out aliasing error.</p>
+
+<p>Let’s add a constant to define how many samples we’ll take for each pixel.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">constexpr</span> <span class="kt">int</span> <span class="n">SAMPLES</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Then, as we iterate over the rows and columns of our canvas, let’s instead create an array of colors the same size as
+our number of samples, and for each index in this array we’ll generate a random offset in the X and Y dimensions, and
+add that to our previous ray direction. Finally, we’ll use the standard library’s <code class="language-plaintext highlighter-rouge">accumulate</code> function to sum these
+colors together, and then we’ll divide the resulting color by the number of samples, effectively averaging our array.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ---✂--- Include the numeric header:</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;numeric&gt;</span><span class="cp">
+</span>
+<span class="c1">// ---✂--- Replace the current innermost loop contents in OnUserUpdate() with:</span>
+
+<span class="c1">// Create an array of colors - we'll be sampling this pixel multiple</span>
+<span class="c1">// times with varying offsets to create a multisample, and then</span>
+<span class="c1">// rendering the average of these samples.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">color3</span><span class="p">,</span> <span class="n">SAMPLES</span><span class="o">&gt;</span> <span class="n">samples</span><span class="p">;</span>
+
+<span class="c1">// For each sample...</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">SAMPLES</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// Create random offset within this pixel</span>
+	<span class="kt">float</span> <span class="n">offsetX</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">RAND_MAX</span><span class="p">;</span>
+	<span class="kt">float</span> <span class="n">offsetY</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">RAND_MAX</span><span class="p">;</span>
+
+	<span class="c1">// Sample the color at that offset (converting screen coordinates to</span>
+	<span class="c1">// scene coordinates).</span>
+	<span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">HALF_WIDTH</span> <span class="o">+</span> <span class="n">offsetX</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">HALF_HEIGHT</span> <span class="o">+</span> <span class="n">offsetY</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Calculate the average color and draw it.</span>
+<span class="n">color3</span> <span class="n">color</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">accumulate</span><span class="p">(</span><span class="n">samples</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">samples</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">color3</span><span class="p">())</span> <span class="o">/</span> <span class="n">SAMPLES</span><span class="p">;</span>
+<span class="n">Draw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">olc</span><span class="o">::</span><span class="n">PixelF</span><span class="p">(</span><span class="n">color</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">color</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">.</span><span class="n">z</span><span class="p">));</span>
+</code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project now will display a multisampled scene. <strong>However</strong>, note that since we calculate our sample
+offsets randomly the edges of different features will flicker frame to frame as the average is recalculated.</p>
+
+</div>
+
+<p>To remedy this, we can increase the number of samples, though this increases the number of rays we need to calculate,
+and so slows down our frame times. I’ve placed my constant defining the number of samples within the same preprocessor
+if as my reflection count to help keep debug runs at an acceptable pace.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">-constexpr int SAMPLES = 3;
+</span>
+ #ifdef DEBUG
+ constexpr int BOUNCES = 2;
+<span class="gi">+constexpr int SAMPLES = 2;
+</span> #else
+ constexpr int BOUNCES = 5;
+<span class="gi">+constexpr int SAMPLES = 4;
+</span> #endif
+</code></pre></div></div>
+
+<div class="note">
+  <div class="note-title">Note</div>
+
+  <p>Running our project now will display a properly multisampled scene. The multisampling will be more stable when running
+in Release mode.</p>
+
+  <p><em>Coming soon: a screenshot.</em>
+<!-- TODO: ![Multisampling.]() --></p>
+
+</div>
+
+<h2 id="all-done">All Done!</h2>
+
+<p>Check out the <a href="https://github.com/Sidneys1/OlcPixelRayTracer">GitHub repo</a> to see the complete project.</p>
+
+
+	</div>
+
+	
+		<hr/>
+		<details id="erratum">
+			<summary>Erratum</summary>
+			<ul>
+				
+					<li>2022-07-xx: Various screenshots updated.</li>
+				
+					<li>2022-08-19: Updated the look of the "Note" callouts.</li>
+				
+			</ul>
+		</details>
+	<a class="u-url" href="https://sidneys1.github.io/programming/2022/03/23/raytracing.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="https://sidneys1.github.io/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sidneys1.com on GitHub Pages</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Contact</li><li>
+              <a class="u-email" href="mailto:admin@sidneys1.com">admin@sidneys1.com</a>
+            </li><li class="p-name" style="margin-top: 1em;">Alternative Access</li>
+		<li style="margin-left: -36px">
+			<a href="http://pa6stp7ojipm64l7d3d3ebkcq57sfzq365po7k4enajgaprnefzeygid.onion/">
+			  <img class="svg-icon" alt="Tor Logo" style="opacity: 50%; width: 26px; height: 16px;" width="26px" height="16px" src="https://sidneys1.github.io/assets/tor.svg"></img>
+			  <span>Sidneys1.com on Tor</span>
+			</a>
+		  </li>
+		  <li style="margin-left: -26px;">
+			  <a href="https://ipfs.io/ipns/sidneys1.com">
+				  <img class="svg-icon" alt="IPFS Logo" style="opacity: 50%; width: 16px; height: 16px;" width="16px" height="16px" src="https://sidneys1.github.io/assets/ipfs.svg"></img>
+				  <span>Sidneys1.com on IPFS</span>
+			  </a>
+		  </li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">sidneys1</span></a></li><li><a href="https://www.twitter.com/sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">sidneys1</span></a></li><li><a href="https://youtube.com/sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">sidneys1</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
