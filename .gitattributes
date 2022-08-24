@@ -1,0 +1,3 @@
+*.png text !filter !merge !diff
+*.* text !filter !merge !diff
+*.gif[[:space:]]*.png[[:space:]]*.xml[[:space:]]*.ico[[:space:]]*.jpg text !filter !merge !diff
