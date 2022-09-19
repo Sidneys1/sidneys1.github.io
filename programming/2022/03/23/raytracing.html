@@ -3,7 +3,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="onion-location" content="http://pa6stp7ojipm64l7d3d3ebkcq57sfzq365po7k4enajgaprnefzeygid.onion/programming/2022/03/23/raytracing.html" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <meta http-equiv="onion-location" content="http://pa6stp7ojipm64l7d3d3ebkcq57sfzq365po7k4enajgaprnefzeygid.onion/programming/2022/03/23/raytracing.html" />
+  <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" /><!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Raytracing! | Sidneys1.com on GitHub Pages</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Raytracing!" />
@@ -137,15 +138,17 @@ our game class to match our needs.</p>
   <p>Running our project will render a default PixelGameEngine scene: a 256x240 canvas of random pixels, magnified 4x:</p>
 
   <div class="popunder">
-	<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/rainbow.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('pixel-barf').showModal()" />
+	
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.PNG" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('pixel-barf').showModal()" />
+	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="pixel-barf">
+  <dialog class="popover" id="pixel-barf" onclick="document.getElementById('pixel-barf').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
-	<img class="pop-in" src="/images/2022-03-23-raytracing/rainbow.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('pixel-barf').close()" />
+	<img class="pop-in" src="https://sidneys1.github.io/images/2022-03-23-raytracing/01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.PNG" alt="Pixel Barf" title="Pixel Barf" loading="lazy" />
 </dialog>
 
 </div>
@@ -205,8 +208,22 @@ returns a <code class="language-plaintext highlighter-rouge">olc::Pixel</code> f
 <div class="note">
   <div class="note-title">Note</div>
   <p>Running our project will now render a 250x250 canvas at 2x magnification. Our magenta fill has been replaced with a
-color pattern converging in the center of the canvas:
-<img src="https://sidneys1.github.io/images/2022-03-23-raytracing/identity.png" alt="identity" /></p>
+color pattern converging in the center of the canvas:</p>
+
+  <div class="popunder">
+	
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('coordinate-identity').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+  <dialog class="popover" id="coordinate-identity" onclick="document.getElementById('coordinate-identity').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/2022-03-23-raytracing/03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" loading="lazy" />
+</dialog>
+
 </div>
 
 <h3 id="add-some-geometry-types-enhance-shape-and-sphere">Add some geometry types, enhance Shape and Sphere</h3>
@@ -426,8 +443,22 @@ explaining the geometry here: this is a well-documented process and can be resea
 
 <div class="note">
   <div class="note-title">Note</div>
-  <p>Running our project will now render a (highly aliased and flatly-colored) Sphere!
-<img src="https://sidneys1.github.io/images/2022-03-23-raytracing/flat.png" alt="flat" /></p>
+  <p>Running our project will now render a (highly aliased and flatly-colored) Sphere!</p>
+
+  <div class="popunder">
+	
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.PNG" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('flat-sphere').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+  <dialog class="popover" id="flat-sphere" onclick="document.getElementById('flat-sphere').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/2022-03-23-raytracing/07-Implement%20ray-Sphere%20intersection.PNG" alt="Flat Sphere" title="Flat Sphere" loading="lazy" />
+</dialog>
+
 </div>
 
 <h3 id="add-perspective-rendering-and-depth-sorting">Add perspective rendering and depth sorting</h3>
@@ -497,11 +528,43 @@ itself):</p>
 
 <p>By normalizing this ray we get rays properly fanning out in a perspective.</p>
 
-<div class="note">
+<div class="note note-wide">
   <div class="note-title">Note</div>
   <p>Running our project will now produce a proper perspective rendering of our three flat-shaded Spheres, at the correct
-depths.
-<img src="https://sidneys1.github.io/images/2022-03-23-raytracing/perspective.png" alt="Perspective rendering." /></p>
+depths.</p>
+
+  <div class="popunder">
+	
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.PNG" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('perspective-rendering').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+  <dialog class="popover" id="perspective-rendering" onclick="document.getElementById('perspective-rendering').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/2022-03-23-raytracing/08-Add%20perspective%20rendering%20and%20depth%20sorting.PNG" alt="Perspective Rendering" title="Perspective Rendering" loading="lazy" />
+</dialog>
+
+  <details>
+<summary>Open Image Comparison</summary>
+<figure class="compare">
+	<div>
+		<p class="c-compare" style="width: 471px; height: 500px">
+			<img class="c-compare__left" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.PNG" alt="" width="471px" loading="lazy" />
+			<img class="c-compare__right" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.PNG" alt="" width="471px" loading="lazy" />
+			<input type="range" class="c-rng c-compare__range" min="0" max="100" value="50" oninput="this.parentNode.style.setProperty(&#x27;--value&#x27;, &#x60;${this.value}%&#x60;)" />
+		</p>
+		<figcaption>
+			<span class="slight">Drag splitter to compare.</span>
+			
+		</figcaption>
+	</div>
+</figure>
+
+</details>
+
 </div>
 
 <h3 id="add-a-plane-shape-and-apply-fog">Add a Plane Shape, and apply fog</h3>
@@ -653,14 +716,43 @@ This function smoothly mixes two colors based on a floating point value between 
 <span class="p">}</span>
 </code></pre></div></div>
 
-<div class="note">
+<div class="note note-wide">
   <div class="note-title">Note</div>
 
   <p>Running our project now displays our Spheres as before, plus the checkerboard Plane of the floor, smoothly fading
 into the distance.</p>
 
-  <p><em>Coming soon: a screenshot.</em>
-<!-- TODO: ![Fog.]() --></p>
+  <div class="popunder">
+	
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.PNG" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('floor-and-fog').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+  <dialog class="popover" id="floor-and-fog" onclick="document.getElementById('floor-and-fog').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/2022-03-23-raytracing/09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.PNG" alt="Floor and Fog" title="Floor and Fog" loading="lazy" />
+</dialog>
+
+  <details>
+<summary>Open Image Comparison</summary>
+<figure class="compare">
+	<div>
+		<p class="c-compare" style="width: 471px; height: 500px">
+			<img class="c-compare__left" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.PNG" alt="" width="471px" loading="lazy" />
+			<img class="c-compare__right" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.PNG" alt="" width="471px" loading="lazy" />
+			<input type="range" class="c-rng c-compare__range" min="0" max="100" value="50" oninput="this.parentNode.style.setProperty(&#x27;--value&#x27;, &#x60;${this.value}%&#x60;)" />
+		</p>
+		<figcaption>
+			<span class="slight">Drag splitter to compare.</span>
+			
+		</figcaption>
+	</div>
+</figure>
+
+</details>
 
 </div>
 
@@ -793,15 +885,45 @@ we sampled along the reflected ray (or, if it didn’t hit anything, our Fog col
 	<span class="n">final_color</span> <span class="o">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">final_color</span><span class="p">,</span> <span class="n">reflected_color</span><span class="p">.</span><span class="n">value_or</span><span class="p">(</span><span class="n">FOG</span><span class="p">),</span> <span class="n">intersected_shape</span><span class="p">.</span><span class="n">reflectivity</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<div class="note">
+
+<div class="note note-wide">
   <div class="note-title">Note</div>
 
   <p>Running our project at this point produces a beautifully rendered scene where the center and left <code class="language-plaintext highlighter-rouge">Sphere</code>s reflect
 their surroundings - and a sharp eye can determine that the left <code class="language-plaintext highlighter-rouge">Sphere</code> can even see itself in its reflection of the
 center <code class="language-plaintext highlighter-rouge">Sphere</code>.</p>
 
-  <p><em>Coming soon: a screenshot.</em>
-<!-- TODO: ![Reflections.]() --></p>
+  <div class="popunder">
+	
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('reflections').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+  <dialog class="popover" id="reflections" onclick="document.getElementById('reflections').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/2022-03-23-raytracing/10-Add%20reflections.png" alt="Reflections" title="Reflections" loading="lazy" />
+</dialog>
+
+  <details>
+<summary>Open Image Comparison</summary>
+<figure class="compare">
+	<div>
+		<p class="c-compare" style="width: 471px; height: 500px">
+			<img class="c-compare__left" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.PNG" alt="" width="471px" loading="lazy" />
+			<img class="c-compare__right" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="" width="471px" loading="lazy" />
+			<input type="range" class="c-rng c-compare__range" min="0" max="100" value="50" oninput="this.parentNode.style.setProperty(&#x27;--value&#x27;, &#x60;${this.value}%&#x60;)" />
+		</p>
+		<figcaption>
+			<span class="slight">Drag splitter to compare.</span>
+			
+		</figcaption>
+	</div>
+</figure>
+
+</details>
 
 </div>
 
@@ -831,9 +953,6 @@ respectively.</p>
 
   <p>Running our project now will display a smoothly floating <code class="language-plaintext highlighter-rouge">Sphere</code>, with appropriate reflections of its surrounding
 <code class="language-plaintext highlighter-rouge">Shapes</code>.</p>
-
-  <p><em>Coming soon: a screenshot.</em>
-<!-- TODO: ![Reflections in motion.]() --></p>
 
 </div>
 
@@ -988,13 +1107,42 @@ darkens our scene.</p>
 </span><span class="gi">+float dot = std::clamp(AMBIENT_LIGHT + (light_ray.direction * normal.direction), 0.0f, 1.0f);
 </span></code></pre></div></div>
 
-<div class="note">
+<div class="note note-wide">
   <div class="note-title">Note</div>
 
   <p>Running our project now displays simple diffuse lighting without darkening any parts of our scene entirely.</p>
 
-  <p><em>Coming soon: a screenshot.</em>
-<!-- TODO: ![Just right diffuse lighting.]() --></p>
+  <div class="popunder">
+	
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('diffuse-lighting').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+  <dialog class="popover" id="diffuse-lighting" onclick="document.getElementById('diffuse-lighting').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/2022-03-23-raytracing/12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" loading="lazy" />
+</dialog>
+
+  <details>
+<summary>Open Image Comparison</summary>
+<figure class="compare">
+	<div>
+		<p class="c-compare" style="width: 471px; height: 500px">
+			<img class="c-compare__left" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="" width="471px" loading="lazy" />
+			<img class="c-compare__right" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="" width="471px" loading="lazy" />
+			<input type="range" class="c-rng c-compare__range" min="0" max="100" value="50" oninput="this.parentNode.style.setProperty(&#x27;--value&#x27;, &#x60;${this.value}%&#x60;)" />
+		</p>
+		<figcaption>
+			<span class="slight">Drag splitter to compare.</span>
+			
+		</figcaption>
+	</div>
+</figure>
+
+</details>
 
 </div>
 
@@ -1068,14 +1216,43 @@ Otherwise we calculate the diffuse lighting as before.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<div class="note">
+<div class="note note-wide">
   <div class="note-title">Note</div>
 
   <p>Running our project now will render shadows cast upon other <code class="language-plaintext highlighter-rouge">Shape</code>s in the scene that dynamically update as the
 <code class="language-plaintext highlighter-rouge">Shape</code>s or light itself move.</p>
 
-  <p><em>Coming soon: a screenshot.</em>
-<!-- TODO: ![Shadows.]() --></p>
+  <div class="popunder">
+	
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('shadow-casting').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+  <dialog class="popover" id="shadow-casting" onclick="document.getElementById('shadow-casting').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/2022-03-23-raytracing/13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" loading="lazy" />
+</dialog>
+
+  <details>
+<summary>Open Image Comparison</summary>
+<figure class="compare">
+	<div>
+		<p class="c-compare" style="width: 471px; height: 500px">
+			<img class="c-compare__left" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="" width="471px" loading="lazy" />
+			<img class="c-compare__right" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="" width="471px" loading="lazy" />
+			<input type="range" class="c-rng c-compare__range" min="0" max="100" value="50" oninput="this.parentNode.style.setProperty(&#x27;--value&#x27;, &#x60;${this.value}%&#x60;)" />
+		</p>
+		<figcaption>
+			<span class="slight">Drag splitter to compare.</span>
+			
+		</figcaption>
+	</div>
+</figure>
+
+</details>
 
 </div>
 
@@ -1154,8 +1331,37 @@ if as my reflection count to help keep debug runs at an acceptable pace.</p>
   <p>Running our project now will display a properly multisampled scene. The multisampling will be more stable when running
 in Release mode.</p>
 
-  <p><em>Coming soon: a screenshot.</em>
-<!-- TODO: ![Multisampling.]() --></p>
+  <div class="popunder">
+	
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('multisampling').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+  <dialog class="popover" id="multisampling" onclick="document.getElementById('multisampling').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/2022-03-23-raytracing/14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" loading="lazy" />
+</dialog>
+
+  <details>
+<summary>Open Image Comparison</summary>
+<figure class="compare">
+	<div>
+		<p class="c-compare" style="width: 471px; height: 500px">
+			<img class="c-compare__left" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="" width="471px" loading="lazy" />
+			<img class="c-compare__right" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="" width="471px" loading="lazy" />
+			<input type="range" class="c-rng c-compare__range" min="0" max="100" value="50" oninput="this.parentNode.style.setProperty(&#x27;--value&#x27;, &#x60;${this.value}%&#x60;)" />
+		</p>
+		<figcaption>
+			<span class="slight">Drag splitter to compare.</span>
+			
+		</figcaption>
+	</div>
+</figure>
+
+</details>
 
 </div>
 
@@ -1176,6 +1382,8 @@ in Release mode.</p>
 				
 					<li>2022-08-19: Updated the look of the "Note" callouts.</li>
 				
+					<li>2022-09-19: Updated many screenshots, added image comparisons.</li>
+				
 			</ul>
 		</details>
 	<a class="u-url" href="https://sidneys1.github.io/programming/2022/03/23/raytracing.html" hidden></a>
@@ -1194,7 +1402,15 @@ in Release mode.</p>
         <ul class="contact-list">
           <li class="p-name">Contact</li><li>
               <a class="u-email" href="mailto:admin@sidneys1.com">admin@sidneys1.com</a>
-            </li><li class="p-name" style="margin-top: 1em;">Alternative Access</li>
+            </li><li>
+			<a class="u-email" href="mailto:sidneys1@proton.me">sidneys1@proton.me</a>
+		  </li>
+		  <li>
+			<a class="u-email" href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FQwoc8ketLODmigLCuVhCt8Eio_ruJFnj%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAtEpK9f8ocpGt_MYmDVj0FrCIorSk7PSIVI-BmxLHUHE%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion">
+				SimpleX Chat
+			</a>
+		  </li>
+		  <li class="p-name" style="margin-top: 1em;">Alternative Access</li>
 			<li>
 			<a href="http://pa6stp7ojipm64l7d3d3ebkcq57sfzq365po7k4enajgaprnefzeygid.onion/">
 			  <img class="svg-icon" alt="Tor Logo" style="opacity: 50%; width: 26px; height: 16px;" width="26px" height="16px" src="https://sidneys1.github.io/assets/tor.svg"></img>
@@ -1210,7 +1426,7 @@ in Release mode.</p>
 		  <li>
 			<a href="https://sidneys1.github.io">
 				<img class="svg-icon" alt="GitHub Logo" style="opacity: 50%; width: 26px; height: 16px;" width="16px" height="16px" src="https://sidneys1.github.io/assets/github.svg"></img>
-				<span>Sidneys1.github.io</span>
+				<span>Sidneys1.com on GitHub Pages</span>
 			</a>
 		</li></ul>
       </div>

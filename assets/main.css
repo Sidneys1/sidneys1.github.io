@@ -187,9 +187,15 @@ div.note .note-title { font-size: larger; font-family: "MV Boli", cursive; backg
 
 div.note > p { padding: 1em; margin-bottom: 0em; }
 
+div.note > details { padding: 1em; margin-bottom: 0em; }
+
+div.note > details summary { text-align: center; }
+
 div.note > legend { color: #111; font-style: italic; font-size: initial; }
 
 div.note code { background-color: #eaeaa9; }
+
+div.note-wide { max-width: 600px; }
 
 div.note:hover { box-shadow: 0px 0px 10px #00000066; transition: 250ms linear; }
 
@@ -281,7 +287,9 @@ dd { margin-left: 1em; }
 
 .image-compare span::after { content: ""; display: block; position: absolute; top: 0; right: 0; bottom: var(--expand); border-right: var(--splitter-size) solid var(--splitter-color); }
 
-.c-compare { --h: 9; --m: 1rem 0; --w: 16; --thumb-bgc: grey; --thumb-bgc-focus: hsla(50%, 50%, 50%, 0.7); --thumb-w: 0.25rem; margin: var(--m); position: relative; margin-block-end: 0; }
+figure.compare { display: flex; justify-content: center; }
+
+.c-compare { --h: 9; --m: 1rem 0; --w: 16; --thumb-bgc: grey; --thumb-bgc-focus: hsla(50%, 50%, 50%, 0.7); --thumb-w: 0.25rem; margin: var(--m); position: relative; margin-block-end: 0; margin-bottom: 20px; }
 
 .c-compare::after { content: ""; display: block; padding-bottom: calc((var(--h) / var(--w)) * 100%); }
 
@@ -291,21 +299,7 @@ dd { margin-left: 1em; }
 
 .c-compare__right { clip-path: polygon(100% 0%, var(--value) 0%, var(--value) 100%, 100% 100%); }
 
-.c-compare__range { background-color: transparent; box-sizing: border-box; font-family: inherit; height: 100%; margin: 0; outline: none; position: absolute; top: 0; width: 100%; }
-
-.c-compare__range::-moz-range-thumb { background-color: var(--thumb-bgc); cursor: ew-resize; height: 100%; width: var(--thumb-w); }
-
-.c-compare__range::-webkit-slider-thumb { background-color: var(--thumb-bgc); cursor: ew-resize; height: 100%; width: var(--thumb-w); }
-
-.c-compare__range:focus::-webkit-slider-thumb { background-color: var(--thumb-bgc-focus); box-shadow: 0 0 0 3px var(--thumb-bgc); }
-
-.c-compare__range:focus::-moz-range-thumb { background-color: var(--thumb-bgc-focus); box-shadow: 0 0 0 3px var(--thumb-bgc); }
-
-.c-compare__range::-moz-range-track { background: transparent; background-size: 100%; box-sizing: border-box; }
-
-.c-compare__range::-webkit-slider-runnable-track { background: transparent; background-size: 100%; box-sizing: border-box; height: 100%; }
-
-.c-compare__range, .c-compare__range::-webkit-slider-runnable-track, .c-compare__range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; }
+.c-compare__range { background-color: transparent; box-sizing: border-box; font-family: inherit; margin: 0; outline: none; position: absolute; top: 100%; width: 100%; }
 
 figure figcaption { text-align: center; }
 
