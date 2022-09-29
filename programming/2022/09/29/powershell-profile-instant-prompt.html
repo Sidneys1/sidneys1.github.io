@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="onion-location" content="http://pa6stp7ojipm64l7d3d3ebkcq57sfzq365po7k4enajgaprnefzeygid.onion/programming/2022/09/29/powershell-profile-instant-prompt.html" />
+  <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>PowerShell Profile Instant Prompt | Sidneys1.com on GitHub Pages</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="PowerShell Profile Instant Prompt" />
+<meta name="author" content="Sidneys1" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Recently I began using Oh My Posh for PowerShell 7+ (pwsh). One thing I noticed however is that it takes upward of a second to activate in my pwsh $profile. Let’s dig in and see if we can’t improve that." />
+<meta property="og:description" content="Recently I began using Oh My Posh for PowerShell 7+ (pwsh). One thing I noticed however is that it takes upward of a second to activate in my pwsh $profile. Let’s dig in and see if we can’t improve that." />
+<link rel="canonical" href="https://sidneys1.github.io/programming/2022/09/29/powershell-profile-instant-prompt.html" />
+<meta property="og:url" content="https://sidneys1.github.io/programming/2022/09/29/powershell-profile-instant-prompt.html" />
+<meta property="og:site_name" content="Sidneys1.com on GitHub Pages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-09-29T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="PowerShell Profile Instant Prompt" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sidneys1"},"dateModified":"2022-09-29T00:00:00-04:00","datePublished":"2022-09-29T00:00:00-04:00","description":"Recently I began using Oh My Posh for PowerShell 7+ (pwsh). One thing I noticed however is that it takes upward of a second to activate in my pwsh $profile. Let’s dig in and see if we can’t improve that.","headline":"PowerShell Profile Instant Prompt","mainEntityOfPage":{"@type":"WebPage","@id":"https://sidneys1.github.io/programming/2022/09/29/powershell-profile-instant-prompt.html"},"url":"https://sidneys1.github.io/programming/2022/09/29/powershell-profile-instant-prompt.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="https://sidneys1.github.io/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+
+  <!-- The loading of KaTeX is deferred to speed up page rendering -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+
+  <!-- To automatically render math in text elements, include the auto-render extension: -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Sidneys1.com on GitHub Pages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/tags.html">Tags</a><a class="page-link" href="/categories.html">Categories</a><a class="page-link" href="/series.html">Series</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+	<header class="post-header">
+		<h1 class="post-title p-name" itemprop="name headline">PowerShell Profile Instant Prompt</h1>
+		<h2 class="post-title p-name"></h1><p class="post-meta">
+			<time class="dt-published" datetime="2022-09-29T00:00:00-04:00" itemprop="datePublished">Sep 29, 2022
+			</time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+				<span class="p-author h-card" itemprop="name">Sidneys1</span></span>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/%20/tags.html#programming" style="display: inane;"
+				class="tag">programming</a>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/%20/tags.html#powershell" style="display: inane;"
+				class="tag">powershell</a></p></header><!-- <div class="post-toc"> -->
+	
+	<!-- </div> -->
+
+	<div class="post-content e-content" itemprop="articleBody">
+		<p>Recently I began using <a href="https://ohmyposh.dev/">Oh My Posh</a> for PowerShell 7+ (pwsh). One thing I noticed however is that
+it takes upward of a second to activate in my pwsh <code class="language-plaintext highlighter-rouge">$profile</code>. Let’s dig in and see if we can’t improve that.</p>
+
+<!--more-->
+
+<p>First, let’s establish a baseline - after <a href="https://ohmyposh.dev/docs/installation/windows">installing Oh My Posh</a> (say,
+with WinGet) we’re instructed to add the line <code class="language-plaintext highlighter-rouge">oh-my-posh init pwsh | Invoke-Expression</code> to our pwsh <code class="language-plaintext highlighter-rouge">$profile</code>. We can
+investigate the cost of this with a handy pwsh package <code class="language-plaintext highlighter-rouge">PSProfiler</code>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Install-Module</span><span class="w"> </span><span class="nx">PSProfiler</span><span class="p">;</span><span class="w">
+</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pwsh.exe</span><span class="w"> </span><span class="nt">-NoProfile</span><span class="w"> </span><span class="nt">-Command</span><span class="w"> </span><span class="p">{</span><span class="n">Import-Module</span><span class="w"> </span><span class="nx">PSProfiler</span><span class="p">;</span><span class="w"> </span><span class="n">Measure-Script</span><span class="w"> </span><span class="nv">$profile</span><span class="p">;}</span><span class="w">
+
+</span><span class="c"># Count  Line       Time Taken Statement</span><span class="w">
+</span><span class="c"># -----  ----       ---------- ---------</span><span class="w">
+</span><span class="c">#     1     1    00:00.0734463 Import-Module PSReadLine;</span><span class="w">
+</span><span class="c">#     1     2    00:00.0234282 Set-PSReadLineOption -EditMode Windows</span><span class="w">
+</span><span class="c">#     1     3    00:00.0011258 Set-PSReadLineOption -PredictionSource HistoryAndPlugin</span><span class="w">
+</span><span class="c">#     1     4    00:00.0016107 Set-PSReadLineOption -PredictionViewStyle InlineView</span><span class="w">
+</span><span class="c">#     0     5    00:00.0000000</span><span class="w">
+</span><span class="c">#     1     6    00:00.3770726 oh-my-posh init pwsh | Invoke-Expression</span><span class="w">
+</span><span class="c">#     1     7    00:00.0005995 Enable-PoshTransientPrompt</span><span class="w">
+</span><span class="c">#     1     8    00:00.0005577 Enable-PoshLineError</span><span class="w">
+</span></code></pre></div></div>
+
+<p>You can see that out of all the commands I have in my profile, oh-my-posh init is taking an order of magnitude longer
+than the others. When my system is under load and I <em>really need that terminal now</em>, this causes friction. Let’s see
+what exactly <code class="language-plaintext highlighter-rouge">oh-my-posh init pwsh</code> is outputting that gets interpreted by <code class="language-plaintext highlighter-rouge">Invoke-Expression</code> (note that I’ve inserted
+<code class="language-plaintext highlighter-rouge">%LOCALAPPDATA%</code> and <code class="language-plaintext highlighter-rouge">&lt;some config path&gt;</code> for brevity):</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">oh-my-posh</span><span class="w"> </span><span class="nx">init</span><span class="w"> </span><span class="nx">pwsh</span><span class="w">
+</span><span class="c"># (@(&amp; '%LOCALAPPDATA%/Programs/oh-my-posh/bin/oh-my-posh.exe' init pwsh --config='&lt;some config path&gt;' --print) -join "`n") | Invoke-Expression</span><span class="w">
+</span></code></pre></div></div>
+
+<p>It looks like it just calls itself again! We can skip that first step entirely by just copy-and-pasting this output into
+our original profile. Let’s measure things again now that we’ve made this change:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&amp;</span><span class="w"> </span><span class="n">pwsh.exe</span><span class="w"> </span><span class="nt">-NoProfile</span><span class="w"> </span><span class="nt">-Command</span><span class="w"> </span><span class="p">{</span><span class="n">Import-Module</span><span class="w"> </span><span class="nx">PSProfiler</span><span class="p">;</span><span class="w"> </span><span class="n">Measure-Script</span><span class="w"> </span><span class="nv">$profile</span><span class="p">;}</span><span class="w">
+
+</span><span class="c"># Count  Line       Time Taken Statement</span><span class="w">
+</span><span class="c"># -----  ----       ---------- ---------</span><span class="w">
+</span><span class="c">#     1     1    00:00.0790705 Import-Module PSReadLine;</span><span class="w">
+</span><span class="c">#     1     2    00:00.0279149 Set-PSReadLineOption -EditMode Windows</span><span class="w">
+</span><span class="c">#     1     3    00:00.0010231 Set-PSReadLineOption -PredictionSource HistoryAndPlugin</span><span class="w">
+</span><span class="c">#     1     4    00:00.0011608 Set-PSReadLineOption -PredictionViewStyle InlineView</span><span class="w">
+</span><span class="c">#     0     5    00:00.0000000</span><span class="w">
+</span><span class="c">#     2     6    00:00.0694422 (@(&amp; '%LOCALAPPDATA%/Programs/oh-my-posh init pwsh ...</span><span class="w">
+</span><span class="c">#     1     7    00:00.0006244 Enable-PoshTransientPrompt</span><span class="w">
+</span><span class="c">#     1     8    00:00.0005833 Enable-PoshLineError</span><span class="w">
+
+</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pwsh.exe</span><span class="w"> </span><span class="nt">-NoProfile</span><span class="w"> </span><span class="nt">-Command</span><span class="w"> </span><span class="p">{</span><span class="n">Measure-Command</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">$profile</span><span class="w"> </span><span class="p">};}</span><span class="w">
+
+</span><span class="c"># ...</span><span class="w">
+</span><span class="c"># TotalMilliseconds : 463.3328</span><span class="w">
+</span></code></pre></div></div>
+
+<p>We’ve successfully brought our oh-my-posh invocation down an order of magnitude and shaved a couple hundred milliseconds
+off of our profile initialization. But… we can do better. A cool feature of
+<a href="https://github.com/romkatv/powerlevel10k">powerlevel10k</a> is “instant prompt”, which allows a prompt to show
+immediately, even while your profile is still loading. Let’s reproduce this behavior in pwsh.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># In our $profile...</span><span class="w">
+</span><span class="n">Import-Module</span><span class="w"> </span><span class="nx">PSReadLine</span><span class="p">;</span><span class="w">
+
+</span><span class="kr">function</span><span class="w"> </span><span class="nf">prompt</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="kr">if</span><span class="w"> </span><span class="p">(</span><span class="n">Test-Path</span><span class="w"> </span><span class="nx">variable:global:ompjob</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="c"># snip</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="nv">$</span><span class="nn">global</span><span class="p">:</span><span class="nv">ompjob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Start-Job</span><span class="w"> </span><span class="p">{(@(</span><span class="err">&amp;</span><span class="w"> </span><span class="s1">'%LOCALAPPDATA%/Programs/oh-my-posh/bin/oh-my-posh.exe'</span><span class="w"> </span><span class="err">init</span><span class="w"> </span><span class="err">pwsh</span><span class="w"> </span><span class="err">--config=</span><span class="s1">'&lt;some config path&gt;'</span><span class="w"> </span><span class="err">--print</span><span class="p">)</span><span class="w"> </span><span class="o">-join</span><span class="w"> </span><span class="s2">"</span><span class="se">`n</span><span class="s2">"</span><span class="p">)};</span><span class="w">
+  </span><span class="n">write-host</span><span class="w"> </span><span class="nt">-ForegroundColor</span><span class="w"> </span><span class="nx">Blue</span><span class="w"> </span><span class="s2">"Loading </span><span class="se">`$</span><span class="s2">profile in the background..."</span><span class="w">
+  </span><span class="n">Write-Host</span><span class="w"> </span><span class="nt">-ForegroundColor</span><span class="w"> </span><span class="nx">Green</span><span class="w"> </span><span class="nt">-NoNewline</span><span class="w"> </span><span class="s2">"  </span><span class="si">$(</span><span class="nv">$executionContext</span><span class="o">.</span><span class="nf">SessionState</span><span class="o">.</span><span class="nf">Path</span><span class="o">.</span><span class="nf">CurrentLocation</span><span class="si">)</span><span class="s2"> "</span><span class="o">.</span><span class="nf">replace</span><span class="p">(</span><span class="bp">$HOME</span><span class="p">,</span><span class="w"> </span><span class="s1">'~'</span><span class="p">);</span><span class="w">
+  </span><span class="n">Write-Host</span><span class="w"> </span><span class="nt">-ForegroundColor</span><span class="w"> </span><span class="nx">Red</span><span class="w"> </span><span class="nt">-NoNewline</span><span class="w"> </span><span class="s2">"ᓚᘏᗢ"</span><span class="w">
+  </span><span class="kr">return</span><span class="w"> </span><span class="s2">" "</span><span class="p">;</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>First, we create a new <code class="language-plaintext highlighter-rouge">prompt</code> function; unsurprisingly this is the function that pwsh calls to render your prompt. Our
+custom <code class="language-plaintext highlighter-rouge">prompt</code> function will first check if there’s a global variable named <code class="language-plaintext highlighter-rouge">ompjob</code> - this is going to be a background
+job in which we execute oh-my-posh. The first time <code class="language-plaintext highlighter-rouge">prompt</code> runs this variable will be unset, and so our <code class="language-plaintext highlighter-rouge">if</code> will be
+skipped, and I’ve snipped it for readability. We’ll come back to it.</p>
+
+<p>Now, if the variable is unset, we’ll set it to a new background job that executes our <code class="language-plaintext highlighter-rouge">oh-my-posh</code> invocation, but
+without the <code class="language-plaintext highlighter-rouge">Invoke-Expression</code>. This will let the job’s output be the text printed by oh-my-posh that we can consume
+with <code class="language-plaintext highlighter-rouge">Invoke-Expression</code> later. Finally, we print out a nice little prompt - not as fancy as <code class="language-plaintext highlighter-rouge">oh-my-posh</code>’s, but it’ll
+do, <em>and</em> it’ll display almost instantly.</p>
+
+<p>Finally, let’s fill in the <code class="language-plaintext highlighter-rouge">if</code>-block for when the global variable <em>is</em> set (on the second invocation of <code class="language-plaintext highlighter-rouge">prompt</code>):</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Import-Module</span><span class="w"> </span><span class="nx">PSReadLine</span><span class="p">;</span><span class="w">
+
+</span><span class="kr">function</span><span class="w"> </span><span class="nf">prompt</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="kr">if</span><span class="w"> </span><span class="p">(</span><span class="n">Test-Path</span><span class="w"> </span><span class="nx">variable:global:ompjob</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">Receive-Job</span><span class="w"> </span><span class="nt">-Wait</span><span class="w"> </span><span class="nt">-AutoRemoveJob</span><span class="w"> </span><span class="nt">-Job</span><span class="w"> </span><span class="nv">$</span><span class="nn">global</span><span class="p">:</span><span class="nv">ompjob</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Invoke-Expression</span><span class="p">;</span><span class="w">
+    </span><span class="n">Remove-Variable</span><span class="w"> </span><span class="nx">ompjob</span><span class="w"> </span><span class="nt">-Scope</span><span class="w"> </span><span class="nx">Global</span><span class="p">;</span><span class="w">
+    </span><span class="n">Enable-PoshTransientPrompt</span><span class="w">
+    </span><span class="nx">Enable-PoshLineError</span><span class="w">
+
+    </span><span class="n">Set-PSReadLineOption</span><span class="w"> </span><span class="nt">-EditMode</span><span class="w"> </span><span class="nx">Windows</span><span class="w">
+    </span><span class="n">Set-PSReadLineOption</span><span class="w"> </span><span class="nt">-PredictionSource</span><span class="w"> </span><span class="nx">HistoryAndPlugin</span><span class="w">
+    </span><span class="n">Set-PSReadLineOption</span><span class="w"> </span><span class="nt">-PredictionViewStyle</span><span class="w"> </span><span class="nx">InlineView</span><span class="w">
+
+    </span><span class="p">[</span><span class="n">console</span><span class="p">]::</span><span class="n">InputEncoding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">console</span><span class="p">]::</span><span class="n">OutputEncoding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">New-Object</span><span class="w"> </span><span class="nx">System.Text.UTF8Encoding</span><span class="w">
+    </span><span class="kr">return</span><span class="w"> </span><span class="n">prompt</span><span class="p">;</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="c"># snip</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>First, we get the output from the <code class="language-plaintext highlighter-rouge">ompjob</code>, and we <code class="language-plaintext highlighter-rouge">Invoke-Expression</code> it. In doing so, <code class="language-plaintext highlighter-rouge">oh-my-posh</code> redefines our
+<code class="language-plaintext highlighter-rouge">prompt</code> function. We’ll then initialize some other settings within <code class="language-plaintext highlighter-rouge">PSReadLine</code> and <code class="language-plaintext highlighter-rouge">oh-my-posh</code>. Finally, we return
+whatever <code class="language-plaintext highlighter-rouge">oh-my-posh</code> produces in its redefined <code class="language-plaintext highlighter-rouge">prompt</code> function, and we’re done! Let’s profile this as well:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&amp;</span><span class="w"> </span><span class="n">pwsh.exe</span><span class="w"> </span><span class="nt">-NoProfile</span><span class="w"> </span><span class="nt">-Command</span><span class="w"> </span><span class="p">{</span><span class="n">Import-Module</span><span class="w"> </span><span class="nx">PSProfiler</span><span class="p">;</span><span class="w"> </span><span class="n">Measure-Script</span><span class="w"> </span><span class="nv">$profile</span><span class="p">;}</span><span class="w">
+
+</span><span class="c"># Count  Line       Time Taken Statement</span><span class="w">
+</span><span class="c"># -----  ----       ---------- ---------</span><span class="w">
+</span><span class="c">#     1     1    00:00.0789758 Import-Module PSReadLine;</span><span class="w">
+</span><span class="c">#     0     2    00:00.0000000</span><span class="w">
+</span><span class="c">#     0     3    00:00.0000000 function prompt {</span><span class="w">
+</span><span class="c">#     0     4    00:00.0000000   if (Test-Path variable:global:ompjob) {</span><span class="w">
+</span><span class="c">#     0     5    00:00.0000000     Receive-Job -Wait -AutoRemoveJob -Job $global:ompjob | Invoke-Expression;</span><span class="w">
+</span><span class="c">#     0     6    00:00.0000000     Remove-Variable ompjob -Scope Global;</span><span class="w">
+</span><span class="c">#     0     7    00:00.0000000     Enable-PoshTransientPrompt</span><span class="w">
+</span><span class="c">#     0     8    00:00.0000000     Enable-PoshLineError</span><span class="w">
+</span><span class="c">#     0     9    00:00.0000000</span><span class="w">
+</span><span class="c">#     0    10    00:00.0000000     Set-PSReadLineOption -EditMode Windows</span><span class="w">
+</span><span class="c">#     0    11    00:00.0000000     Set-PSReadLineOption -PredictionSource HistoryAndPlugin</span><span class="w">
+</span><span class="c">#     0    12    00:00.0000000     Set-PSReadLineOption -PredictionViewStyle InlineView</span><span class="w">
+</span><span class="c">#     0    13    00:00.0000000</span><span class="w">
+</span><span class="c">#     0    14    00:00.0000000     [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding</span><span class="w">
+</span><span class="c">#     0    15    00:00.0000000     return prompt;</span><span class="w">
+</span><span class="c">#     0    16    00:00.0000000   }</span><span class="w">
+</span><span class="c">#     0    17    00:00.0000000   $global:ompjob = Start-Job {(@(&amp; '%LOCALAPPDATA%/Programs/oh-my-posh/bin/oh-my-posh.exe' init pwsh ...</span><span class="w">
+</span><span class="c">#     0    18    00:00.0000000   write-host -ForegroundColor Blue "Loading `$profile in the background..."</span><span class="w">
+</span><span class="c">#     0    19    00:00.0000000   Write-Host -ForegroundColor Green -NoNewline "  $($executionContext.SessionState.Path.CurrentLocation) ".replace($HOME, '~');</span><span class="w">
+</span><span class="c">#     0    20    00:00.0000000   Write-Host -ForegroundColor Red -NoNewline "ᓚᘏᗢ"</span><span class="w">
+</span><span class="c">#     0    21    00:00.0000000   return " ";</span><span class="w">
+</span><span class="c">#     0    22    00:00.0000000 }</span><span class="w">
+
+</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pwsh.exe</span><span class="w"> </span><span class="nt">-NoProfile</span><span class="w"> </span><span class="nt">-Command</span><span class="w"> </span><span class="p">{</span><span class="n">Measure-Command</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">$profile</span><span class="w"> </span><span class="p">};}</span><span class="w">
+
+</span><span class="c"># ...</span><span class="w">
+</span><span class="c"># TotalMilliseconds : 101.5553</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Wow! We’ve almost completely eliminated the overhead of importing our profile, and pushed that execution time into the
+background while a user is typing in their first prompt and digesting its output. I’d move the
+<code class="language-plaintext highlighter-rouge">Import-Module PSReadLine</code> into the background as well, except that module doesn’t import correctly when you do this.</p>
+
+	</div>
+
+	<a class="u-url" href="https://sidneys1.github.io/programming/2022/09/29/powershell-profile-instant-prompt.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="https://sidneys1.github.io/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sidneys1.com on GitHub Pages</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Contact</li><li>
+              <a class="u-email" href="mailto:admin@sidneys1.com">admin@sidneys1.com</a>
+            </li><li>
+			<a class="u-email" href="mailto:sidneys1@proton.me">sidneys1@proton.me</a>
+		  </li>
+		  <li>
+			<a class="u-email" href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FQwoc8ketLODmigLCuVhCt8Eio_ruJFnj%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAtEpK9f8ocpGt_MYmDVj0FrCIorSk7PSIVI-BmxLHUHE%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion">
+				SimpleX Chat
+			</a>
+		  </li>
+		  <li class="p-name" style="margin-top: 1em;">Alternative Access</li>
+			<li>
+			<a href="http://pa6stp7ojipm64l7d3d3ebkcq57sfzq365po7k4enajgaprnefzeygid.onion/">
+			  <img class="svg-icon" alt="Tor Logo" style="opacity: 50%; width: 26px; height: 16px;" width="26px" height="16px" src="https://sidneys1.github.io/assets/tor.svg"></img>
+			  <span>Sidneys1.com on Tor</span>
+			</a>
+		  </li>
+		  <li>
+			  <a href="https://ipfs.io/ipns/sidneys1.com">
+				  <img class="svg-icon" alt="IPFS Logo" style="opacity: 50%; width: 26px; height: 16px;" width="16px" height="16px" src="https://sidneys1.github.io/assets/ipfs.svg"></img>
+				  <span>Sidneys1.com on IPFS</span>
+			  </a>
+		  </li>
+		  <li>
+			<a href="https://sidneys1.github.io">
+				<img class="svg-icon" alt="GitHub Logo" style="opacity: 50%; width: 26px; height: 16px;" width="16px" height="16px" src="https://sidneys1.github.io/assets/github.svg"></img>
+				<span>Sidneys1.com on GitHub Pages</span>
+			</a>
+		</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">sidneys1</span></a></li><li><a href="https://www.twitter.com/sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">sidneys1</span></a></li><li><a href="https://youtube.com/sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">sidneys1</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
