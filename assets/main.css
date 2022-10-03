@@ -152,6 +152,14 @@ table td { border: 1px solid #e8e8e8; }
 
 @media screen and (max-width: 800px) { .post-content h4 { font-size: 18px; } }
 
+figure { background-color: #e8e8e8; border-radius: 1em; padding: 1em; }
+
+figure blockquote { border-left-color: #b5b5b5; }
+
+details.snowflake > summary { font-size: larger; }
+
+details.snowflake > summary > img { height: 1em; }
+
 .site-header .wrapper { display: flex; align-items: center; }
 
 .site-header .wrapper .coffee { flex-grow: 1; text-align: center; }
