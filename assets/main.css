@@ -156,7 +156,7 @@ table td { border: 1px solid #e8e8e8; }
 
 .site-header .wrapper .coffee { flex-grow: 1; text-align: center; }
 
-.site-header .wrapper .coffee img { max-height: 25px; opacity: 50%; transition: 250ms linear; }
+.site-header .wrapper .coffee img { opacity: 50%; transition: 250ms linear; }
 
 .site-header .wrapper .coffee img:hover { opacity: 100%; transition: 250ms linear; }
 
