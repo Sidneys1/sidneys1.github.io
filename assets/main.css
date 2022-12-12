@@ -152,13 +152,23 @@ table td { border: 1px solid #e8e8e8; }
 
 @media screen and (max-width: 800px) { .post-content h4 { font-size: 18px; } }
 
-figure { background-color: #e8e8e8; border-radius: 1em; padding: 1em; }
+figure { background-color: #e8e8e8; border-radius: 1em; padding: 0 1em; }
 
-figure blockquote { border-left-color: #b5b5b5; }
+figure blockquote { border-left-color: #b5b5b5; font-size: 16px; }
 
 details.snowflake > summary { font-size: larger; }
 
 details.snowflake > summary > img { height: 1em; }
+
+details.snowflake[open] { background-color: #e8e8e8; border-radius: 1em; }
+
+details.snowflake #snowflake-button { margin-left: auto; margin-right: auto; display: block; padding-bottom: 15px; text-align: center; }
+
+details.snowflake #snowflake-button button { background: none !important; border: none; padding: 0 !important; /*optional*/ font-family: arial, sans-serif; /*input has OS specific font-family*/ color: #069; text-decoration: none; cursor: pointer; font-size: 18px; }
+
+details.snowflake #snowflake-parent { text-align: center; padding-bottom: 15px; }
+
+details.snowflake #snowflake-parent #snowflake-iframe { display: block; margin: 0 auto; }
 
 .site-header .wrapper { display: flex; align-items: center; }
 
@@ -339,5 +349,7 @@ hr { height: 1px; border: none; border-top: 1px solid #e8e8e8; margin: 1em 0; }
 #erratum li { font-style: italic; }
 
 summary { cursor: pointer; }
+
+#mastodon-logo:first-of-type(path) { fill: green; }
 
 /*# sourceMappingURL=main.css.map */
