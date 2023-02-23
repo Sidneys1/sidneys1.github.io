@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="onion-location" content="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/reverse-engineering/programming/reverse%20engineering/2023/02/23/reverse-engineering-a-win95-game-I.html" />
+  <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Reverse Engineering a Windows 95 Game | Sidneys1.com on GitHub Pages</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Reverse Engineering a Windows 95 Game" />
+<meta name="author" content="Sidneys1" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. Let’s reverse engineer the game a bit and see what we can find; are there any secrets, unused assets, etc?" />
+<meta property="og:description" content="I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. Let’s reverse engineer the game a bit and see what we can find; are there any secrets, unused assets, etc?" />
+<link rel="canonical" href="https://sidneys1.github.io/reverse-engineering/programming/reverse%20engineering/2023/02/23/reverse-engineering-a-win95-game-I.html" />
+<meta property="og:url" content="https://sidneys1.github.io/reverse-engineering/programming/reverse%20engineering/2023/02/23/reverse-engineering-a-win95-game-I.html" />
+<meta property="og:site_name" content="Sidneys1.com on GitHub Pages" />
+<meta property="og:image" content="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-I/hero.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-23T00:00:00-05:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-I/hero.jpg" />
+<meta property="twitter:title" content="Reverse Engineering a Windows 95 Game" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sidneys1"},"dateModified":"2023-02-23T00:00:00-05:00","datePublished":"2023-02-23T00:00:00-05:00","description":"I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. Let’s reverse engineer the game a bit and see what we can find; are there any secrets, unused assets, etc?","headline":"Reverse Engineering a Windows 95 Game","image":"https://sidneys1.github.io/images/reverse-engineering-a-win95-game-I/hero.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://sidneys1.github.io/reverse-engineering/programming/reverse%20engineering/2023/02/23/reverse-engineering-a-win95-game-I.html"},"url":"https://sidneys1.github.io/reverse-engineering/programming/reverse%20engineering/2023/02/23/reverse-engineering-a-win95-game-I.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="https://sidneys1.github.io/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+
+  <!-- The loading of KaTeX is deferred to speed up page rendering -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+
+  <!-- To automatically render math in text elements, include the auto-render extension: -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="https://sidneys1.github.io/">Sidneys1.com on GitHub Pages</a>
+
+	<span class="coffee"><a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
+		<img height="25px" title="Buy me a Coffee" src="https://sidneys1.github.io/assets/coffee-cup-1.svg"/>
+	</a></span><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="https://sidneys1.github.io/tags.html">Tags</a><a class="page-link" href="https://sidneys1.github.io/categories.html">Categories</a><a class="page-link" href="https://sidneys1.github.io/series.html">Series</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+	<header class="post-header">
+		<h1 class="post-title p-name" itemprop="name headline">Reverse Engineering a Windows 95 Game</h1>
+		<h2 class="post-title p-name">Reversing Asset Storage</h1><p class="post-meta">
+			<time class="dt-published" datetime="2023-02-23T00:00:00-05:00" itemprop="datePublished">Feb 23, 2023
+			</time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+				<span class="p-author h-card" itemprop="name">Sidneys1</span></span>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/tags.html#programming" style="display: inane;"
+				class="tag">programming</a>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/tags.html#reverse-engineering" style="display: inane;"
+				class="tag">reverse-engineering</a></p><div class="multipart">
+			<em>This post has multiple parts:</em>
+			<ul>
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+						
+							<li style="list-style-type: disclosure-closed;"><em>Reverse Engineering a Windows 95 Game &ndash; Reversing Asset Storage</em> (Part I)</li>
+						
+						
+					
+				
+				
+					<li class="slight">More to come...</li>
+				
+			</ul>
+		</div></header><div class="post-image"><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-I/hero.jpg" style=""></div><!-- <div class="post-toc"> -->
+	
+	<!-- </div> -->
+
+	<div class="post-content e-content" itemprop="articleBody">
+		<!-- cSpell:words Schuster DirectX autorun pakrat -->
+<!-- cSpell:ignore PAKS AMOVIE DSETUP DSETUPE DSETUPJ MATHINV SSPUNINS Bmps Ihighsco RIFFÀ -->
+
+<p>I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played
+as a kid: <a href="https://archive.org/details/MathInvaders">Math Invaders</a>. Let’s reverse engineer the game a bit and see what
+we can find; are there any secrets, unused assets, etc?</p>
+
+<!--more-->
+<hr />
+
+<h1 id="poking-around-the-cd">Poking around the CD</h1>
+
+<p>Installing Math Invaders merely copies the EXE to <code class="language-plaintext highlighter-rouge">C:\MathInvaders</code> (or your chosen installation path). When run, the
+executable checks if you have the CD inserted (searching for a path stored in the registry during installation). So in
+practice, all of the resources can be found on the CD and the CD only.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>📁 DIRECTX
+📁 PAKS
+📁 WIN.31
+📁 WIN.95
+📄 AMOVIE.EX_
+🔧 AUTORUN.INF
+📕 DSETUP.DLL
+📕 DSETUP6E.DLL
+📕 DSETUP6J.DLL
+📕 DSETUPE.DLL
+📕 DSETUPJ.DLL
+⚙️ LAUNCH.EXE
+📄 MATHINV.EX_
+📄 README.TXT
+⚙️ SETUP.EXE
+⚙️ SPRINT.EXE
+📄 SSPUNINS.EX_
+</code></pre></div></div>
+
+<p>So, we have a few directories. <code class="language-plaintext highlighter-rouge">PAKS</code> includes the game resources, while the others are all installer files for a
+bundled DirectX 4.0 and “Sprint Internet Passport 3.01” (which seems to be an AOL-like service). The remaining files are
+largely DLLs to support the various installers, as well as a readme for our game.</p>
+
+<details>
+  <summary>Readme Contents, for those interested.</summary>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MATH INVADERS   v1.0
+(c) 1997 Simon &amp; Schuster Interactive
+__________________________________________________________________
+
+SYSTEM REQUIREMENTS:
+
+ * Windows 95
+ * Pentium 100 with 16Mb of RAM
+ * 4x CD-ROM
+ * DirectX-compatible video running 256 colors or higher
+ * Mouse
+
+__________________________________________________________________
+
+INSTALLATION:
+
+NOTE: This game runs only under Windows 95 and requires both DirectX
+and Active Movie. During installation, you will be prompted to install
+both components. If you already have DirectX or ActiveX, you may be
+able to bypass installation of that component.
+
+To Install Math Invaders:
+
+Math Invaders supports Autoplay, so if your CD-ROM drive has Autoplay
+enabled, you only need to put the CD-ROM in the drive and click the Install
+button on the screen that appears. Installation of both DirectX and Active
+Movie is required to play Math Invaders.
+
+If you don't have Autoplay enabled:
+
+1. From the Start Menu, select Run...
+2. Click the Browse button and located your CD-ROM drive (usually D:)
+3. Double-click on the SETUP.EXE file
+4. Click the OK button to bring up the Math Invaders install window.
+5. Click the Install button to install Math Invaders.
+6. If your system does not have DirectX or Active Movie, click Yes to
+   install those components.
+
+After installation you may be asked to reboot your system.
+
+__________________________________________________________________
+
+TO START MATH INVADERS:
+
+Math Invaders supports Autoplay, so if your CD-ROM drive has Autoplay
+enabled, you only need to put the CD-ROM in the drive and click the Play
+button on the screen that appears.
+
+If you don't have Autoplay enabled:
+
+1. From the Start Menu, select Programs.
+2. Choose Math Invaders and then the Math Invaders icon.
+
+__________________________________________________________________
+
+TO UNINSTALL MATH INVADERS:
+
+1. From the Start Menu, select Programs.
+2. Choose Math Invaders and then the Uninstall icon.
+
+You can also uninstall Math Invaders from your Control Panel -
+Add/Remove Program Items.
+
+__________________________________________________________________
+
+KEYBOARD/MOUSE CONTROLS:
+
+The following list describes the standard keyboard and mouse controls
+	(Press F5 to toggle between the two control modes)
+	left mouse button			- move in direction of cursor
+	Numpad 8				- Move Forward
+	Numpad 2				- Move Backward
+	Numpad 4				- Rotate to Left
+	Numpad 6				- Rotate to Right
+	Z					- Slide to left
+	X					- Slide to Right
+	Alt					- Accelerate Movement
+	Numpad 3				- Look Down
+	Numpad 9				- Look Up
+	Numpad 5				- Center the view
+	S					- Jump up
+	C					- Crouch down
+	Space					- Activate switch or door
+	Control or right mouse button		- Fire weapon
+	1 - 7					- Switch to weapon 1 - 7
+	[					- Switch to previous item
+	]					- Switch to next item
+	Enter					- Use current item
+	Esc					- Exit the game
+	TAB					- Toggle Overhead/Player Views
+
+The following list describes the alternate keyboard and mouse controls
+	(Press F5 to toggle between the two control modes)
+	A					- Move Forward
+	Z					- Move Backward
+	Left arrow or move mouse to left	- Rotate to Left
+	Right arrow or move mouse to right	- Rotate to Right
+	Shift					- Slide to left
+	X					- Slide to Right
+	Alt					- Accelerate Movement
+	Up arrow or move mouse to forward	- Look Down
+	Down arrow or move mouse to backward	- Look Up
+	S					- Jump up
+	C					- Crouch down
+	Space					- Activate switch or door
+	Control or left mouse button		- Fire weapon
+	1 - 7					- Switch to weapon 1 - 7
+	Right mouse button			- Switch to next weapon
+	[					- Switch to previous item
+	]					- Switch to next item
+	Enter					- Use current item
+	Esc					- Exit the game
+	TAB					- Toggle Overhead/Player Views
+
+
+Additional Overhead View Controls
+	NumPad 8				- Move camera up
+	NumPad 2				- Move camera down
+	NumPad 4				- Move camera to left
+	NumPad 6				- Move camera to right
+	NumPad 7				- Move camera directly behind player
+	NumPad +				- Zoom In
+	NumPad -				- Zoom Out
+
+Other Controls
+	F1					- Save or Restore game
+	F2					- Reduce game window size
+	F3					- Enlarge game window
+	F5					- Toggle between standard and
+							alternate controls
+	F6					- Toggle between high and low
+							detail modes
+	F7					- Quick Save
+	F8					- Quick Load
+
+
+__________________________________________________________________
+
+TECHNICAL SUPPORT
+
+We hope that your experience with Math Invaders will be problem-free.
+But if you have any technical problems, please call Technical Support at
+(303) 739-4020.
+
+</code></pre></div>  </div>
+
+</details>
+<p><br /></p>
+
+<p>Upon installing <code class="language-plaintext highlighter-rouge">MATHINV.EX_</code> is copied to the installation directory and renamed to <code class="language-plaintext highlighter-rouge">MATHINV.EXE</code>, of course. Let’s
+overlook this file for now and instead take a look in the <code class="language-plaintext highlighter-rouge">PAKS</code> directory:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>📁 LEVELS
+📁 VIDEO
+📄 GAME.PAK
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">LEVELS</code> contains <code class="language-plaintext highlighter-rouge">LP##.PAK</code> files, where <code class="language-plaintext highlighter-rouge">##</code> is a two-digit number from 01 to 27. Video contains (unsurprisingly)
+several AVI files, as this game has a few full motion video “FMV” sequences at startup and shutdown.</p>
+
+<h1 id="pak-files-and-pakrat">PAK Files and <code class="language-plaintext highlighter-rouge">pakrat</code></h1>
+
+<p>Let’s poke at <code class="language-plaintext highlighter-rouge">GAME.PAK</code> in a hex editor. The first ~5K of the <code class="language-plaintext highlighter-rouge">GAME.PAK</code> file looks like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0000h  56 00 00 00 57 61 76 65 73 5C 43 6C 69 63 6B 2E  V...Waves\Click.
+0010h  77 61 76 00 00 00 00 00 00 00 00 00 00 00 00 00  wav.............
+0020h  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+0030h  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+0040h  00 00 00 00 20 17 00 00 42 6D 70 73 5C 43 75 72  .... ...Bmps\Cur
+0050h  73 6F 72 2E 62 6D 70 00 00 00 00 00 00 00 00 00  sor.bmp.........
+0060h  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+0070h  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+0080h  00 00 00 00 00 00 00 00 E8 32 00 00 42 6D 70 73  ........è2..Bmps
+0090h  5C 46 6F 6E 74 2E 62 6D 70 00 00 00 00 00 00 00  \Font.bmp.......
+00A0h  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+00B0h  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+00C0h  00 00 00 00 00 00 00 00 00 00 00 00 20 4B 00 00  ............ K..
+00D0h  42 6D 70 73 5C 49 68 69 67 68 73 63 6F 2E 62 6D  Bmps\Ihighsco.bm
+00E0h  70 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  p...............
+00F0h  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+0100h  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+</code></pre></div></div>
+
+<p>And the remainder of the file is various binary data. In fact, immediately after the ~5K run above we see the following
+header, immediately recognizable as a <a href="https://en.wikipedia.org/wiki/WAV">Waveform Audio File Format</a> header:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1720h  52 49 46 46 C0 1B 00 00 57 41 56 45 66 6D 74 20  RIFFÀ...WAVEfmt
+</code></pre></div></div>
+
+<p>This lines up with the file extension of the first string we see at the beginning of the file, <code class="language-plaintext highlighter-rouge">Waves\Click.wav</code>. A
+little deduction shows that the ~5K prelude area is structured as follows:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">prelude</span> <span class="p">{</span>
+    <span class="kt">uint32_t</span> <span class="n">count</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">entry</span> <span class="p">{</span>
+        <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+        <span class="kt">uint32_t</span> <span class="n">offset</span><span class="p">;</span>
+    <span class="p">}</span> <span class="n">entries</span><span class="p">[];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Or, in english, we have first four bytes (a little-endian unsigned integer) representing the number of resource headers
+in the list. This is followed by that number of entries, each of which is a 64-character ASCII string followed by a
+four-byte offset into the PAK file where the data for that file resides. We use a little C trick here called a
+“<a href="https://en.wikipedia.org/wiki/Flexible_array_member">flexible array member</a>” to index past the end of our C struct.
+Note that each entry doesn’t need to store the length of the file - this is calculated from the offset of the next file
+in the list or (in the case of the last entry) the end of the <code class="language-plaintext highlighter-rouge">PAK</code> file itself.</p>
+
+<p>Armed with this knowledge, let’s write a simple program to “extract” <code class="language-plaintext highlighter-rouge">PAK</code> files, which we’ll call <code class="language-plaintext highlighter-rouge">pakrat</code>. The program
+will take the targeted <code class="language-plaintext highlighter-rouge">PAK</code> file as a command-line argument and extract the contents to the current working directory.
+Let’s get started with this:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;cerrno&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"Usage: "</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">" FILE</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="s">"PAKrat 0.1</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+
+	<span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">file</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"Error opening '"</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">"': "</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">file</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">end</span><span class="p">);</span>
+	<span class="kt">size_t</span> <span class="n">file_size</span> <span class="o">=</span> <span class="n">file</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"File '"</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">"' size: "</span> <span class="o">&lt;&lt;</span> <span class="n">file_size</span> <span class="o">&lt;&lt;</span> <span class="s">" Bytes</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+	<span class="n">file</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">beg</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Running it against <code class="language-plaintext highlighter-rouge">GAME.PAK</code> produces:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PAKrat 0.1
+File '../GAME.PAK' size: 22984537
+</code></pre></div></div>
+
+<p>So far so good! Continuing on (you’ll also need to <code class="language-plaintext highlighter-rouge">#include &lt;iomanip&gt;</code>, and add the <code class="language-plaintext highlighter-rouge">struct prelude</code> we defined
+before):</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Let's start by getting the number of entries, so we know how large a buffer to allocate</span>
+<span class="kt">char</span><span class="o">*</span> <span class="n">buffer</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span>
+<span class="n">file</span><span class="p">.</span><span class="n">read</span><span class="p">((</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span>
+<span class="kt">uint32_t</span> <span class="n">count</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">buffer</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"File contains "</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">buffer</span> <span class="o">&lt;&lt;</span> <span class="s">" entries:</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+<span class="c1">// Reallocate to the appropriate size.</span>
+<span class="n">buffer</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">realloc</span><span class="p">((</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">prelude</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">prelude</span><span class="o">::</span><span class="n">entry</span><span class="p">)</span> <span class="o">*</span> <span class="n">count</span><span class="p">));</span>
+<span class="n">file</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">buffer</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">prelude</span><span class="o">::</span><span class="n">entry</span><span class="p">)</span> <span class="o">*</span> <span class="n">count</span><span class="p">);</span>
+
+<span class="c1">// Interpret by casting to a prelude, then print all the files and their offsets.</span>
+<span class="n">prelude</span><span class="o">*</span> <span class="n">header</span> <span class="o">=</span> <span class="p">(</span><span class="n">prelude</span><span class="o">*</span><span class="p">)</span><span class="n">buffer</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">header</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"0x"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setw</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setfill</span><span class="p">(</span><span class="sc">'0'</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">header</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">offset</span>
+			  <span class="o">&lt;&lt;</span> <span class="s">" "</span> <span class="o">&lt;&lt;</span> <span class="n">header</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We now output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PAKrat 0.1
+File '../GAME.PAK' size: 22984537 Bytes
+File contains 86 entries:
+0x00001720 Waves\Click.wav
+0x000032e8 Bmps\Cursor.bmp
+0x00004b20 Bmps\Font.bmp
+0x00009a58 Bmps\Ihighsco.bmp
+--- ✂️ ---
+</code></pre></div></div>
+
+<p>Excellent! Let’s refactor that last for loop a bit though:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Interpret by casting to a prelude, gather, then print all the files and their offsets.</span>
+<span class="n">prelude</span><span class="o">*</span> <span class="n">header</span> <span class="o">=</span> <span class="p">(</span><span class="n">prelude</span><span class="o">*</span><span class="p">)</span><span class="n">buffer</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*</span><span class="p">,</span> <span class="kt">uint32_t</span><span class="p">,</span> <span class="kt">uint32_t</span><span class="o">&gt;&gt;</span> <span class="n">entries</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">header</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">auto</span><span class="o">&amp;</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">header</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	<span class="k">auto</span> <span class="o">&amp;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">header</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+	<span class="n">entries</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">prev</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">prev</span><span class="p">.</span><span class="n">offset</span><span class="p">,</span> <span class="n">entry</span><span class="p">.</span><span class="n">offset</span> <span class="o">-</span> <span class="n">prev</span><span class="p">.</span><span class="n">offset</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="k">auto</span><span class="o">&amp;</span> <span class="n">last</span> <span class="o">=</span> <span class="n">header</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">header</span><span class="o">-&gt;</span><span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+<span class="n">entries</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">last</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">last</span><span class="p">.</span><span class="n">offset</span><span class="p">,</span> <span class="n">file_size</span> <span class="o">-</span> <span class="n">last</span><span class="p">.</span><span class="n">offset</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>There, now we have made a more manageable list, including sizes. Let’s add some code to print it out. Sorry for the
+<code class="language-plaintext highlighter-rouge">std::ios</code> cruft, formatting C++ streams is a constant annoyance:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">entries</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">ios</span> <span class="n">old_state</span><span class="p">(</span><span class="nb">nullptr</span><span class="p">);</span>
+	<span class="n">old_state</span><span class="p">.</span><span class="n">copyfmt</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">);</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"0x"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setw</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setfill</span><span class="p">(</span><span class="sc">'0'</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+			  <span class="o">&lt;&lt;</span> <span class="s">" "</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">copyfmt</span><span class="p">(</span><span class="n">old_state</span><span class="p">);</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" Bytes</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PAKrat 0.1
+File '../GAME.PAK' size: 22984537 Bytes
+File contains 86 entries:
+0x00001720 Waves\Click.wav 7112 Bytes
+0x000032e8 Bmps\Cursor.bmp 6200 Bytes
+0x00004b20 Bmps\Font.bmp 20280 Bytes
+0x00009a58 Bmps\Ihighsco.bmp 346040 Bytes
+--- ✂️ ---
+</code></pre></div></div>
+
+<p>Nearly there! The last push is just to extract the files (you’ll want to add <code class="language-plaintext highlighter-rouge">#include &lt;filesystem&gt;</code> for filesystem
+operations and <code class="language-plaintext highlighter-rouge">#include &lt;algorithm&gt;</code> for <code class="language-plaintext highlighter-rouge">std::replace</code>)!</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Extract files</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">entries</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kt">char</span><span class="o">*</span> <span class="n">path_str</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">entry</span><span class="p">);</span>
+	<span class="kt">uint32_t</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">entry</span><span class="p">);</span>
+	<span class="kt">uint32_t</span> <span class="n">length</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">entry</span><span class="p">);</span>
+
+	<span class="c1">// Replace Windows path separators</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">replace</span><span class="p">(</span><span class="n">path_str</span><span class="p">,</span> <span class="n">path_str</span> <span class="o">+</span> <span class="n">strlen</span><span class="p">(</span><span class="n">path_str</span><span class="p">),</span> <span class="sc">'\\'</span><span class="p">,</span> <span class="sc">'/'</span><span class="p">);</span>
+
+	<span class="n">std</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">path</span> <span class="n">path</span><span class="p">(</span><span class="n">path_str</span><span class="p">);</span>
+	<span class="k">auto</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">filename</span><span class="p">();</span>
+	<span class="k">auto</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">parent_path</span><span class="p">();</span>
+
+	<span class="c1">// Create parent folder(s) (if needed)</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">parent</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">std</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">exists</span><span class="p">(</span><span class="n">parent</span><span class="p">))</span> <span class="p">{</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Creating directory "</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">quoted</span><span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="n">c_str</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">create_directories</span><span class="p">(</span><span class="n">parent</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Creating file "</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">quoted</span><span class="p">(</span><span class="n">path_str</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">out_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">out</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">out_file</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"Error creating file: "</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+		<span class="k">continue</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="c1">// Seek to the correct location and copy the file in 1KiB chunks</span>
+	<span class="n">file</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">beg</span><span class="p">);</span>
+	<span class="kt">uint32_t</span> <span class="n">to_read</span> <span class="o">=</span> <span class="n">length</span><span class="p">;</span>
+	<span class="k">do</span> <span class="p">{</span>
+		<span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+		<span class="k">auto</span> <span class="n">chunk</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">((</span><span class="kt">size_t</span><span class="p">)</span><span class="n">to_read</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">));</span>
+		<span class="n">to_read</span> <span class="o">-=</span> <span class="n">chunk</span><span class="p">;</span>
+		<span class="n">file</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">chunk</span><span class="p">);</span>
+		<span class="n">out_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">chunk</span><span class="p">);</span>
+	<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">to_read</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PAKrat 0.1
+File '../GAME.PAK' size: 22984537 Bytes
+File contains 86 entries:
+0x00001720 Waves\Click.wav 7112 Bytes
+0x000032e8 Bmps\Cursor.bmp 6200 Bytes
+0x00004b20 Bmps\Font.bmp 20280 Bytes
+0x00009a58 Bmps\Ihighsco.bmp 346040 Bytes
+--- ✂️ ---
+Creating directory "Waves"
+Creating file "Waves/Click.wav"
+Creating directory "Bmps"
+Creating file "Bmps/Cursor.bmp"
+Creating file "Bmps/Font.bmp"
+Creating file "Bmps/Ihighsco.bmp"
+--- ✂️ ---
+</code></pre></div></div>
+
+<p>And that’s it! You can find the full source code <a href="https://github.com/Sidneys1/PAKrat">in this GitHub repository</a>. Here’s
+a sample of an extracted asset! This is <code class="language-plaintext highlighter-rouge">Waves\Glose2a.wav</code>, an one of 3 randomized clips that play when you lose a
+level:</p>
+
+<audio controls="">
+	<source src="https://sidneys1.github.io/audio/reverse-engineering-a-win95-game-I/Glose2a.wav" type="" />
+	Your browser does not support the audio element.
+</audio>
+
+<p>There are also GUI elements in <code class="language-plaintext highlighter-rouge">Bmps</code>, for example the weapon sprite sheet <code class="language-plaintext highlighter-rouge">Weapons.bmp</code>:</p>
+
+<p><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-I/Weapons.bmp" alt="weapon sprite sheet" /></p>
+
+<p>There’s even an exit splash screen graphic that is unused, that indicates that the game probably had a shareware or beta
+release:</p>
+
+<p><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-I/Exit1.bmp" alt="beta exit splash" /></p>
+
+<hr />
+
+<p>Now, attentive readers may have noticed something; If the <code class="language-plaintext highlighter-rouge">PAK</code> prelude is 4+(68×86)=5852 Bytes, but the first asset
+(<code class="language-plaintext highlighter-rouge">Waves\Click.wav</code>) starts at <code class="language-plaintext highlighter-rouge">0x1720</code> (Byte 5920), then what is in the interstitial 68 bytes? Let’s take a look:</p>
+
+<ul>
+  <li>Last entry <span style="background: #C649B6; color: white">name</span> and <span style="background: #7E48C4; color: white">offset</span>.</li>
+  <li>Fist <span style="background: #47B5C1; color: white">file data</span>.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge">
+<div class="highlight">
+<pre class="highlight">
+<code>1690h  00 00 00 00 D5 91 50 01 <span style="background: #C649B6">57 61 76 65 73 5C 47 6C</span>  ....Õ‘P.<span style="background: #C649B6">Waves\Gl</span>
+16A0h  <span style="background: #C649B6">6F 73 65 33 62 2E 77 61 76 00 00 00 00 00 00 00</span>  <span style="background: #C649B6">ose3b.wav.......</span>
+16B0h  <span style="background: #C649B6">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span>  <span style="background: #C649B6">................</span>
+16C0h  <span style="background: #C649B6">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span>  <span style="background: #C649B6">................</span>
+16D0h  <span style="background: #C649B6">00 00 00 00 00 00 00 00</span> <span style="background: #7E48C4">B7 21 5A 01</span> 00 00 00 00  <span style="background: #C649B6">........</span><span style="background: #7E48C4">·!Z.</span>....
+16E0h  BC 42 59 81 00 00 00 00 8C 83 59 81 8C 83 59 81  ¼BY.....ŒƒY.ŒƒY.
+16F0h  88 83 59 81 3B AE F7 BF 00 20 56 81 00 00 00 00  ˆƒY�;®÷¿. V.....
+1700h  8C 83 59 81 DB AE F7 BF 8C 83 59 81 DE DA F7 BF  ŒƒY.Û®÷¿ŒƒY.ÞÚ÷¿
+1710h  8C 83 59 81 8C 83 59 81 E2 13 F7 BF 59 B7 5E 01  ŒƒY.ŒƒY.â.÷¿Y·^.
+1720h  <span style="background: #47B5C1">52 49 46 46 C0 1B 00 00 57 41 56 45 66 6D 74 20</span>  <span style="background: #47B5C1">RIFFÀ...WAVEfmt</span></code>
+</pre>
+</div>
+</div>
+
+<p>And honestly… I don’t know. This space being the same length as the other asset headers makes me think whatever they
+used to create these <code class="language-plaintext highlighter-rouge">PAK</code> files has an off-by-one error, and just wrote an extra entry past the end of their buffer
+into uninitialized (or maybe stack/heap) memory. Or, it could be a tightly packed block of some unknown flags or
+parameters to the game engine.</p>
+
+<h3 id="a-short-aside-about-pak">A Short Aside About <code class="language-plaintext highlighter-rouge">PAK</code></h3>
+
+<p>Digging further into the <code class="language-plaintext highlighter-rouge">LP##.PAK</code> file for specific levels (in this case, <code class="language-plaintext highlighter-rouge">LP01.PAK</code>) reveals additional asset types:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">📂 Anims\</code>
+    <ul>
+      <li>📄 <code class="language-plaintext highlighter-rouge">Anims.lst</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">📂 Levels\</code>
+    <ul>
+      <li>📄 <code class="language-plaintext highlighter-rouge">GameData.dat</code></li>
+      <li>📄 <code class="language-plaintext highlighter-rouge">Lp01.lev</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">📂 Mazes\</code>
+    <ul>
+      <li>📂 <code class="language-plaintext highlighter-rouge">LP01\</code>
+        <ul>
+          <li>📄 <code class="language-plaintext highlighter-rouge">lp01.lws</code></li>
+          <li>📄 <code class="language-plaintext highlighter-rouge">rlp01.wad</code></li>
+          <li>📄 <code class="language-plaintext highlighter-rouge">wlp01.bsp</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>📂 <code class="language-plaintext highlighter-rouge">Objects\</code>
+    <ul>
+      <li><em>A variety of <code class="language-plaintext highlighter-rouge">.bsp</code>/<code class="language-plaintext highlighter-rouge">.BSP</code> files.</em></li>
+    </ul>
+  </li>
+  <li>📂 <code class="language-plaintext highlighter-rouge">Waves\</code>
+    <ul>
+      <li><em>A variety of <code class="language-plaintext highlighter-rouge">.WAV</code> files.</em></li>
+    </ul>
+  </li>
+  <li>📂 <code class="language-plaintext highlighter-rouge">anims\</code> <em>(note the case sensitivity)</em>
+    <ul>
+      <li><em>58 directories, themselves containing <code class="language-plaintext highlighter-rouge">.pcx</code> and <code class="language-plaintext highlighter-rouge">.pcxF</code> files.</em></li>
+    </ul>
+  </li>
+  <li>📂 <code class="language-plaintext highlighter-rouge">textures\</code>
+    <ul>
+      <li>📄 <code class="language-plaintext highlighter-rouge">Lp01.lst</code></li>
+      <li><em>1345 additional <code class="language-plaintext highlighter-rouge">.pcx</code> and <code class="language-plaintext highlighter-rouge">.pcxF</code> files.</em></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Now wait a second… <code class="language-plaintext highlighter-rouge">.pak</code>, <code class="language-plaintext highlighter-rouge">.bsp</code>, <code class="language-plaintext highlighter-rouge">.wad</code>… Sounds an awful lot like
+<a href="https://en.wikipedia.org/wiki/Id_Tech#id_Tech_2">id Tech 2</a> (the Quake engine)! However, digging into it, id’s <code class="language-plaintext highlighter-rouge">pak</code>
+format is different, and these <code class="language-plaintext highlighter-rouge">wad</code> and <code class="language-plaintext highlighter-rouge">bsp</code> files won’t open in any Tech 2 editors I can find. So perhaps the
+developers of this engine merely took a lot of inspiration, and/or heavily modified and simplified these formats away
+from the Tech 2 specifications.</p>
+
+<p>This engine is almost a midway point (in capability) between Tech 1 (DOOM) and Tech 2 (Quake). It supports angled floors
+and vertical viewing angle like Quake, but also only supports sprite-based creatures like Doom.</p>
+
+<hr />
+
+<p>In the next part, we’ll explore trying to reverse engineer where this game stores its settings, and see if we can’t
+uncover some secrets in the binary itself.</p>
+
+	</div>
+
+	<hr/>
+	<div class="multipart center">
+		<em>This post has multiple parts:</em>
+		<ul>
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+						<li style="list-style-type: disclosure-closed;"><em>Reverse Engineering a Windows 95 Game &ndash; Reversing Asset Storage</em> (Part I)</li>
+					
+					
+				
+			
+			
+				<li class="slight">More to come...</li>
+			
+		</ul>
+	</div><hr>
+
+	<div class="donate">
+		Like what you read?
+		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
+			Consider buying me a coffee.
+		</a>
+		<br/>
+		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer"></a>
+			<img height="50px" title="Buy me a Coffee" src="https://sidneys1.github.io/assets/coffee-cup-1.svg"/>
+		</a>
+	</div><a class="u-url" href="https://sidneys1.github.io/reverse-engineering/programming/reverse%20engineering/2023/02/23/reverse-engineering-a-win95-game-I.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="https://sidneys1.github.io/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sidneys1.com on GitHub Pages</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Contact</li><li>
+              <a class="u-email" href="mailto:admin@sidneys1.com">admin@sidneys1.com</a>
+            </li><li>
+			<a class="u-email" href="mailto:sidneys1@proton.me">sidneys1@proton.me</a>
+		</li>
+		<li>
+		  <a class="u-email" href="https://matrix.to/#/@sidneys1:matrix.org">
+			  Matrix Chat
+		  </a>
+		</li>
+		  <li>
+			<a class="u-email" href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FQwoc8ketLODmigLCuVhCt8Eio_ruJFnj%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAtEpK9f8ocpGt_MYmDVj0FrCIorSk7PSIVI-BmxLHUHE%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion">
+				SimpleX Chat
+			</a>
+		  </li>
+		  <li class="p-name" style="margin-top: 1em;">Alternative Access</li>
+			<li>
+			<a href="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/">
+			  <img class="svg-icon" alt="Tor Logo" style="opacity: 50%; width: 26px; height: 16px;" width="26px" height="16px" src="https://sidneys1.github.io/assets/tor.svg"></img>
+			  <span>Sidneys1.com on Tor</span>
+			</a>
+		  </li>
+		  <li>
+			  <a href="https://ipfs.io/ipns/sidneys1.com">
+				  <img class="svg-icon" alt="IPFS Logo" style="opacity: 50%; width: 26px; height: 16px;" width="16px" height="16px" src="https://sidneys1.github.io/assets/ipfs.svg"></img>
+				  <span>Sidneys1.com on IPFS</span>
+			  </a>
+		  </li>
+		  <li>
+			<a href="https://sidneys1.github.io">
+				<img class="svg-icon" alt="GitHub Logo" style="opacity: 50%; width: 26px; height: 16px;" width="16px" height="16px" src="https://sidneys1.github.io/assets/github.svg"></img>
+				<span>Sidneys1.com on GitHub Pages</span>
+			</a>
+		</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+		<ul class="social-media-list" style="margin-bottom: 5px;">
+			<li>
+				<a rel="me" href="https://infosec.exchange/@Sidneys1">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 216.4144 232.00976">
+						<path fill="#828282" d="M211.80734 139.0875c-3.18125 16.36625-28.4925 34.2775-57.5625 37.74875-15.15875 1.80875-30.08375 3.47125-45.99875 2.74125-26.0275-1.1925-46.565-6.2125-46.565-6.2125 0 2.53375.15625 4.94625.46875 7.2025 3.38375 25.68625 25.47 27.225 46.39125 27.9425 21.11625.7225 39.91875-5.20625 39.91875-5.20625l.8675 19.09s-14.77 7.93125-41.08125 9.39c-14.50875.7975-32.52375-.365-53.50625-5.91875C9.23234 213.82 1.40609 165.31125.20859 116.09125c-.365-14.61375-.14-28.39375-.14-39.91875 0-50.33 32.97625-65.0825 32.97625-65.0825C49.67234 3.45375 78.20359.2425 107.86484 0h.72875c29.66125.2425 58.21125 3.45375 74.8375 11.09 0 0 32.975 14.7525 32.975 65.0825 0 0 .41375 37.13375-4.59875 62.915"/>
+						<path fill="#fff" d="M177.50984 80.077v60.94125h-24.14375v-59.15c0-12.46875-5.24625-18.7975-15.74-18.7975-11.6025 0-17.4175 7.5075-17.4175 22.3525v32.37625H96.20734V85.42325c0-14.845-5.81625-22.3525-17.41875-22.3525-10.49375 0-15.74 6.32875-15.74 18.7975v59.15H38.90484V80.077c0-12.455 3.17125-22.3525 9.54125-29.675 6.56875-7.3225 15.17125-11.07625 25.85-11.07625 12.355 0 21.71125 4.74875 27.8975 14.2475l6.01375 10.08125 6.015-10.08125c6.185-9.49875 15.54125-14.2475 27.8975-14.2475 10.6775 0 19.28 3.75375 25.85 11.07625 6.36875 7.3225 9.54 17.22 9.54 29.675"/>
+					</svg>
+					<span class="username">Sidneys1</span>
+				</a>
+			</li>
+		</ul><ul class="social-media-list"><li><a href="https://github.com/Sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">Sidneys1</span></a></li><li><a href="https://youtube.com/Sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">Sidneys1</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</p>
+		<details class="snowflake"><summary><img src="https://sidneys1.github.io/assets/snowflake.svg" /> Tor Snowflake</summary>
+			<figure>
+				<blockquote>Snowflake is a system that <strong>allows people from all over the world to access censored websites and applications</strong>. Similar to how VPNs assist users in getting around Internet censorship, Snowflake helps you avoid being noticed by Internet censors by making your Internet activity appear as though you're using the Internet for a regular video or voice call.</blockquote>
+				<figcaption>&mdash; <cite><a href="https://snowflake.torproject.org/" target="_blank" rel="noreferrer">The Tor Project</a></cite></figcaption>
+			</figure>
+			<iframe src="https://snowflake.torproject.org/embed.html" width="320" height="240" frameborder="0" scrolling="no"></iframe>
+		</details>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
