@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="onion-location" content="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html" />
+  <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Reverse Engineering a Windows 95 Game | Sidneys1.com on GitHub Pages</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Reverse Engineering a Windows 95 Game" />
+<meta name="author" content="Sidneys1" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. In this part, we’ll investigate disassembling and reverse engineering the binary to identify an undocumented settings file format." />
+<meta property="og:description" content="I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. In this part, we’ll investigate disassembling and reverse engineering the binary to identify an undocumented settings file format." />
+<link rel="canonical" href="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html" />
+<meta property="og:url" content="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html" />
+<meta property="og:site_name" content="Sidneys1.com on GitHub Pages" />
+<meta property="og:image" content="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-II/hero.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-03-16T00:00:00-04:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-II/hero.png" />
+<meta property="twitter:title" content="Reverse Engineering a Windows 95 Game" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sidneys1"},"dateModified":"2023-03-16T00:00:00-04:00","datePublished":"2023-03-16T00:00:00-04:00","description":"I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. In this part, we’ll investigate disassembling and reverse engineering the binary to identify an undocumented settings file format.","headline":"Reverse Engineering a Windows 95 Game","image":"https://sidneys1.github.io/images/reverse-engineering-a-win95-game-II/hero.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html"},"url":"https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="https://sidneys1.github.io/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+
+  <!-- The loading of KaTeX is deferred to speed up page rendering -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+
+  <!-- To automatically render math in text elements, include the auto-render extension: -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="https://sidneys1.github.io/">Sidneys1.com on GitHub Pages</a>
+
+	<span class="coffee"><a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
+		<img height="25px" title="Buy me a Coffee" src="https://sidneys1.github.io/assets/coffee-cup-1.svg"/>
+	</a></span><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="https://sidneys1.github.io/tags.html">Tags</a><a class="page-link" href="https://sidneys1.github.io/categories.html">Categories</a><a class="page-link" href="https://sidneys1.github.io/series.html">Series</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+	<header class="post-header">
+		<h1 class="post-title p-name" itemprop="name headline">Reverse Engineering a Windows 95 Game</h1>
+		<h2 class="post-title p-name">Reversing (Undocumented) Settings</h1><p class="post-meta">
+			<time class="dt-published" datetime="2023-03-16T00:00:00-04:00" itemprop="datePublished">Mar 16, 2023
+			</time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+				<span class="p-author h-card" itemprop="name">Sidneys1</span></span>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/tags.html#programming" style="display: inline;"
+				class="tag">programming</a>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/tags.html#reverse-engineering" style="display: inline;"
+				class="tag">reverse-engineering</a>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/tags.html#ghidra" style="display: inline;"
+				class="tag">ghidra</a></p><div class="multipart">
+			<em>This post has multiple parts:</em>
+			<ul>
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+						
+							<li><a href="https://sidneys1.github.io/reverse-engineering/2023/02/23/reverse-engineering-a-win95-game-I.html">Reverse Engineering a Windows 95 Game &ndash; Reversing Asset Storage</a> (Part I)</li>
+						
+						
+					
+				
+					
+						
+							<li style="list-style-type: disclosure-closed;"><em>Reverse Engineering a Windows 95 Game &ndash; Reversing (Undocumented) Settings</em> (Part II)</li>
+						
+						
+					
+				
+				
+			</ul>
+		</div></header><div class="post-image"><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-II/hero.png" style="box-shadow: none;"></div><!-- <div class="post-toc"> -->
+	
+	<!-- </div> -->
+
+	<div class="post-content e-content" itemprop="articleBody">
+		<!-- cSpell:words Schuster DirectX autorun pakrat -->
+<!-- cSpell:ignore PAKS AMOVIE DSETUP DSETUPE DSETUPJ MATHINV SSPUNINS Bmps Ihighsco RIFFÀ -->
+
+<p>I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played
+as a kid: <a href="https://archive.org/details/MathInvaders">Math Invaders</a>. In this part, we’ll investigate disassembling and
+reverse engineering the binary to identify an undocumented settings file format.</p>
+
+<!--more-->
+<hr />
+
+<p>As our reverse engineering tool of choice, we’ll be using the National Security Agency’s
+<a href="https://ghidra-sre.org/">Ghidra</a>. This powerful tool allows us to disassemble the <code class="language-plaintext highlighter-rouge">MATHINV.EX_</code> binary that is bundled
+on the disk. The first bit of information we get when ingesting the binary in Ghidra is an “Import Results Summary”
+dialog, with information about the binary itself. Here’s some excerpts:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Compiler:                     visualstudio:unknown
+Debug Misc:                   Release/sspyth.exe
+PDB File:                     sspyth.pdb
+PE Property[FileDescription]: SSPYTH MFC Application
+</code></pre></div></div>
+
+<p>Interesting - the project in visual studio seems to have originally been called “sspyth”, short for “S.S. Pythagoras”,
+the name of the protagonist’s ship within the game. Let’s try and identify the entrypoint. This is a Windows MFC program,
+which means the actual entrypoint is “runtime code” that will identify the main MFC module within the program and
+initialize it. So instead of looking for this enrtypoint (which Ghidra finds for us and names <code class="language-plaintext highlighter-rouge">entry</code>), we will try and
+find the main MFC module initializer by searching for something we know happens early in the program’s execution.</p>
+
+<p>When first run, the game checks that DirectX, DirectPlay, and the game CD are inserted. Using Ghidra’s <kbd>Search</kbd>
+→ <kbd>For Strings...</kbd> tool we’ll find the “Please insert CD” message.</p>
+
+<p><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-II/string-search.png" alt="string search" /></p>
+
+<p>Clicking the result will select the data in the CodeBrowser, and right-clicking the automatically created symbol allows
+us to click <kbd>References</kbd> → <kbd>Find references to s_Please_insert...</kbd> to find all references to this
+particular value within the codebase. Doing so brings up one result at 0x0042cb86. Clicking the result takes us to the
+relevant address. The disassembly shows us a function called <code class="language-plaintext highlighter-rouge">FUN_0042ca2f(CWinApp *param_1)</code>, which we’ll renamed to
+<code class="language-plaintext highlighter-rouge">CWinAppEntrypoint</code>. As this function is not called anywhere else in the code, we can be fairly confident that this is
+only called by runtime code that gets its address programmatically.</p>
+
+<details>
+  <summary>Disassembly of <code>CWinAppEntrypoint</code> (click to expand).</summary>
+
+  <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">CWinAppEntrypoint</span><span class="p">(</span><span class="n">CWinApp</span> <span class="o">*</span><span class="n">param_1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">iVar1</span><span class="p">;</span>
+  <span class="n">undefined4</span> <span class="o">*</span><span class="n">puVar2</span><span class="p">;</span>
+  <span class="kt">FILE</span> <span class="o">*</span><span class="n">_File</span><span class="p">;</span>
+  <span class="n">undefined4</span> <span class="n">local_28c</span><span class="p">;</span>
+  <span class="n">BYTE</span> <span class="n">local_21c</span> <span class="p">[</span><span class="mi">264</span><span class="p">];</span>
+  <span class="kt">char</span> <span class="n">local_114</span> <span class="p">[</span><span class="mi">260</span><span class="p">];</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">pvStack_10</span><span class="p">;</span>
+  <span class="n">undefined</span> <span class="o">*</span><span class="n">puStack_c</span><span class="p">;</span>
+  <span class="n">undefined4</span> <span class="n">local_8</span><span class="p">;</span>
+
+  <span class="n">local_8</span> <span class="o">=</span> <span class="mh">0xffffffff</span><span class="p">;</span>
+  <span class="n">puStack_c</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">LAB_0042cc3d</span><span class="p">;</span>
+  <span class="n">pvStack_10</span> <span class="o">=</span> <span class="n">ExceptionList</span><span class="p">;</span>
+  <span class="n">ExceptionList</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pvStack_10</span><span class="p">;</span>
+  <span class="n">CWinApp</span><span class="o">::</span><span class="n">Enable3dControlsStatic</span><span class="p">(</span><span class="n">param_1</span><span class="p">);</span>
+  <span class="n">CWinApp</span><span class="o">::</span><span class="n">LoadStdProfileSettings</span><span class="p">(</span><span class="n">param_1</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>
+  <span class="nl">FID_conflict:</span><span class="n">__mbscpy</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">local_21c</span><span class="p">,</span><span class="o">&amp;</span><span class="n">DAT_00495378</span><span class="p">);</span>
+  <span class="n">FUN_0042d603</span><span class="p">(</span><span class="n">s_Version_0049537c</span><span class="p">,</span><span class="n">local_21c</span><span class="p">);</span>
+  <span class="n">iVar1</span> <span class="o">=</span> <span class="n">_strcmp</span><span class="p">(</span><span class="n">s_1</span><span class="p">.</span><span class="mo">00</span><span class="o">-</span><span class="n">Rel_00495384</span><span class="p">,(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">local_21c</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">iVar1</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">AfxMessageBox</span><span class="p">(</span><span class="n">s_Game_not_installed</span><span class="p">,</span><span class="n">_run_the_setu_00495390</span><span class="p">,</span><span class="mh">0x10</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">FUN_0042cc47</span><span class="p">();</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nl">FID_conflict:</span><span class="n">__mbscpy</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">local_21c</span><span class="p">,</span><span class="o">&amp;</span><span class="n">DAT_004953bc</span><span class="p">);</span>
+  <span class="nl">FID_conflict:</span><span class="n">__mbscpy</span><span class="p">(</span><span class="n">local_114</span><span class="p">,</span><span class="o">&amp;</span><span class="n">DAT_004953c0</span><span class="p">);</span>
+  <span class="n">GetPrivateProfileStringA</span>
+            <span class="p">(</span><span class="n">s_MazePath_004953dc</span><span class="p">,</span><span class="n">s_pakpath_004953d4</span><span class="p">,</span><span class="o">&amp;</span><span class="n">DAT_004953d0</span><span class="p">,</span><span class="n">local_114</span><span class="p">,</span><span class="mh">0x104</span><span class="p">,</span>
+             <span class="n">s_</span><span class="p">.</span><span class="err">\</span><span class="mi">3</span><span class="n">d</span><span class="p">.</span><span class="n">ini_004953c4</span><span class="p">);</span>
+  <span class="n">puVar2</span> <span class="o">=</span> <span class="p">(</span><span class="n">undefined4</span> <span class="o">*</span><span class="p">)</span><span class="n">_strlen</span><span class="p">(</span><span class="n">local_114</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">puVar2</span> <span class="o">==</span> <span class="p">(</span><span class="n">undefined4</span> <span class="o">*</span><span class="p">)</span><span class="mh">0x0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">FUN_0042d603</span><span class="p">(</span><span class="n">s_pakpath_004953e8</span><span class="p">,</span><span class="n">local_21c</span><span class="p">);</span>
+    <span class="nl">FID_conflict:</span><span class="n">_strcat</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">local_21c</span><span class="p">,</span><span class="n">s_game</span><span class="p">.</span><span class="n">pak_004953f0</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">_File</span> <span class="o">=</span> <span class="n">FID_conflict</span><span class="o">:</span><span class="n">__wfopen</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">local_21c</span><span class="p">,</span><span class="o">&amp;</span><span class="n">DAT_004953fc</span><span class="p">),</span> <span class="n">_File</span> <span class="o">==</span> <span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">)</span><span class="mh">0x0</span><span class="p">)</span>  <span class="p">{</span>
+      <span class="n">iVar1</span> <span class="o">=</span> <span class="n">AfxMessageBox</span><span class="p">(</span><span class="n">s_Please_insert_the_Math_Invaders_C_00495400</span><span class="p">,</span><span class="mh">0x11</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">iVar1</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">FUN_0042cc47</span><span class="p">();</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">puVar2</span> <span class="o">=</span> <span class="p">(</span><span class="n">undefined4</span> <span class="o">*</span><span class="p">)</span><span class="n">_fclose</span><span class="p">(</span><span class="n">_File</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">AfxSetAllocStop</span><span class="p">(</span><span class="mh">0x53b0</span><span class="p">);</span>
+  <span class="n">local_8</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">puVar2</span> <span class="o">==</span> <span class="p">(</span><span class="n">undefined4</span> <span class="o">*</span><span class="p">)</span><span class="mh">0x0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">local_28c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="n">local_28c</span> <span class="o">=</span> <span class="n">FUN_0042e186</span><span class="p">(</span><span class="n">puVar2</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">local_8</span> <span class="o">=</span> <span class="mh">0xffffffff</span><span class="p">;</span>
+  <span class="o">*</span><span class="p">(</span><span class="n">undefined4</span> <span class="o">*</span><span class="p">)(</span><span class="n">param_1</span> <span class="o">+</span> <span class="mh">0x1c</span><span class="p">)</span> <span class="o">=</span> <span class="n">local_28c</span><span class="p">;</span>
+  <span class="n">FUN_0042e2e0</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="kt">int</span> <span class="o">**</span><span class="p">)(</span><span class="n">param_1</span> <span class="o">+</span> <span class="mh">0x1c</span><span class="p">));</span>
+  <span class="n">FUN_0042cc47</span><span class="p">();</span>
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>  </div>
+
+</details>
+
+<p>Alright! We can already see some useful things here. <code class="language-plaintext highlighter-rouge">FUN_0042d603</code> gets a value from the game’s Registry key, so that
+line just checks that the program is installed. In fact, we can just rename <code class="language-plaintext highlighter-rouge">FUN_0042d603</code> to <code class="language-plaintext highlighter-rouge">GetValueFromRegistry</code>.
+Further down we see a <code class="language-plaintext highlighter-rouge">GetPrivateProfileStringA </code> call. I had to look this function up as it’s somewhat esoteric, but it
+and the whole <code class="language-plaintext highlighter-rouge">GetPrivateProfile*</code> still supported in today’s Win32 API!</p>
+
+<blockquote>
+  <p>Retrieves a string from the specified section in an initialization file.
+<cite><a href="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getprivateprofilestringa"><code class="language-plaintext highlighter-rouge">GetPrivateProfileStringA</code> function (<code class="language-plaintext highlighter-rouge">winbase.h</code>) - Win32 apps | Microsoft Learn</a></cite></p>
+</blockquote>
+
+<p>This description undersells this singular function call - when called the <code class="language-plaintext highlighter-rouge">GetPrivateProfileXxx</code> family of APIs will
+open and read a given <code class="language-plaintext highlighter-rouge">*.ini</code> file, parse it, and return the value in the specified <code class="language-plaintext highlighter-rouge">[section]</code> and <code class="language-plaintext highlighter-rouge">key=</code>. If the given
+file does not exist, it will return the default value.</p>
+
+<p>And, using Ghidra’s Symbol Tree, we can find all calls to the <code class="language-plaintext highlighter-rouge">GetPrivateProfileXxx</code> APIs and the parameters used. Doing
+so provides us with this list of parameters, expected to be found in <code class="language-plaintext highlighter-rouge">.\3d.ini</code> (relative to the CWD). These are mostly
+loaded in another function called by <code class="language-plaintext highlighter-rouge">CWinAppEntrypoint</code>: <code class="language-plaintext highlighter-rouge">FUN_0042e2e0</code>, which we can rename to <code class="language-plaintext highlighter-rouge">LoadSettings</code>:</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[MazePath]</span>
+<span class="py">pakpath</span> <span class="p">=</span>       <span class="c">; String
+</span><span class="s">datapath =      ; String</span>
+<span class="py">diskpath</span> <span class="p">=</span>      <span class="c">; String
+</span><span class="s">lastfile =      ; String</span>
+<span class="py">room</span> <span class="p">=</span>          <span class="c">; String
+</span><span class="s">usepakfile = 0  ; Integer. In practice it is used as a boolean,</span>
+                <span class="c">; where 0 is FALSE, and anything else is TRUE.
+</span>
+<span class="nn">[Render]</span>
+<span class="py">fullscreen</span> <span class="p">=</span> <span class="s">1  ; Integer</span>
+<span class="py">winsize</span> <span class="p">=</span> <span class="s">10    ; Integer</span>
+<span class="py">textdetail</span> <span class="p">=</span> <span class="s">10 ; Integer</span>
+</code></pre></div></div>
+
+<p>Let’s see if this works. Let’s just create a <code class="language-plaintext highlighter-rouge">C:\MathInvaders\3d.ini</code> and as a simple test, we’ll set
+<code class="language-plaintext highlighter-rouge">[Render]</code>→<code class="language-plaintext highlighter-rouge">fullscreen</code> to <code class="language-plaintext highlighter-rouge">0</code>, and…</p>
+
+<p><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-II/guest%20os_000.png" alt="It works! ...sorta." /></p>
+
+<p>Well… Sort of. Ok, the game doesn’t actually run, and there’s a weird white space at the bottom of the window. But
+we’ve proven it works! But what’s intriguing to me is the <code class="language-plaintext highlighter-rouge">[MazePath]</code> section of the config… I wonder what we could
+use <em>those</em> settings for. In particular, the <code class="language-plaintext highlighter-rouge">fullscreen</code> setting is loaded into a global variable that we’ll call
+<code class="language-plaintext highlighter-rouge">gFullscreen</code> - this factors into to code processing some very interesting strings about an “editor mode”… I wonder
+if we can activate that?</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">gFullscreen</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)(</span><span class="n">param_1</span> <span class="o">+</span> <span class="mh">0x334</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">_sprintf</span><span class="p">(</span><span class="n">local_104</span><span class="p">,</span><span class="n">s__Math_Invaders_</span><span class="o">-</span><span class="n">_NO_ACTIVE_LEVEL_0049585c</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="k">else</span> <span class="p">{</span>
+		<span class="n">__splitpath</span><span class="p">(</span><span class="o">&amp;</span><span class="n">DAT_0049c7c8</span><span class="p">,</span><span class="n">local_1fc</span><span class="p">,</span><span class="n">local_1f4</span><span class="p">,</span><span class="n">local_12c</span><span class="p">,</span><span class="n">local_10c</span><span class="p">);</span>
+		<span class="n">_sprintf</span><span class="p">(</span><span class="n">local_104</span><span class="p">,</span><span class="n">s__Math_Invaders_</span><span class="o">-</span><span class="n">_</span><span class="err">'</span><span class="o">%</span><span class="n">s</span><span class="err">'</span><span class="n">_004957f4</span><span class="p">,</span><span class="n">local_12c</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)(</span><span class="n">param_1</span> <span class="o">+</span> <span class="mh">0x3714</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nl">FID_conflict:</span><span class="n">_strcat</span><span class="p">(</span><span class="n">local_104</span><span class="p">,</span><span class="n">s__</span><span class="o">-</span><span class="n">_</span><span class="o">***</span><span class="n">_EDITOR_MODE_</span><span class="o">***</span><span class="n">_00495810</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="n">iVar1</span> <span class="o">=</span> <span class="n">CSplitterWnd</span><span class="o">::</span><span class="n">IsTracking</span><span class="p">((</span><span class="n">CSplitterWnd</span> <span class="o">*</span><span class="p">)(</span><span class="n">param_1</span> <span class="o">+</span> <span class="mh">0x2e0</span><span class="p">));</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">iVar1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nl">FID_conflict:</span><span class="n">_strcat</span><span class="p">(</span><span class="n">local_104</span><span class="p">,</span><span class="n">s__</span><span class="o">-</span><span class="n">_Running</span><span class="p">...</span><span class="n">_0049584c</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">else</span> <span class="p">{</span>
+			<span class="nl">FID_conflict:</span><span class="n">_strcat</span><span class="p">(</span><span class="n">local_104</span><span class="p">,</span><span class="n">s__</span><span class="o">-</span><span class="n">_Paused</span><span class="p">,</span><span class="n">_press_</span><span class="sc">'p'</span><span class="n">_to_resume</span><span class="p">.</span><span class="n">_00495828</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="n">CWnd</span><span class="o">::</span><span class="n">SetWindowTextA</span><span class="p">(</span><span class="n">param_1</span><span class="p">,</span><span class="n">local_104</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Next time!</p>
+
+<!-- References -->
+
+
+	</div>
+
+	<hr/>
+	<div class="multipart center">
+		<em>This post has multiple parts:</em>
+		<ul>
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+						<li><a href="https://sidneys1.github.io/reverse-engineering/2023/02/23/reverse-engineering-a-win95-game-I.html">Reverse Engineering a Windows 95 Game &ndash; Reversing Asset Storage</a> (Part I)</li>
+					
+					
+				
+			
+				
+					
+						<li style="list-style-type: disclosure-closed;"><em>Reverse Engineering a Windows 95 Game &ndash; Reversing (Undocumented) Settings</em> (Part II)</li>
+					
+					
+				
+			
+			
+		</ul>
+	</div><hr>
+
+	<div class="donate">
+		Like what you read?
+		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
+			Consider buying me a coffee.
+		</a>
+		<br/>
+		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer"></a>
+			<img height="50px" title="Buy me a Coffee" src="https://sidneys1.github.io/assets/coffee-cup-1.svg"/>
+		</a>
+	</div><a class="u-url" href="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="https://sidneys1.github.io/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sidneys1.com on GitHub Pages</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Contact</li><li>
+              <a class="u-email" href="mailto:admin@sidneys1.com">admin@sidneys1.com</a>
+            </li><li>
+			<a class="u-email" href="mailto:sidneys1@proton.me">sidneys1@proton.me</a>
+		</li>
+		<li>
+		  <a class="u-email" href="https://matrix.to/#/@sidneys1:matrix.org">
+			  Matrix Chat
+		  </a>
+		</li>
+		  <li>
+			<a class="u-email" href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FQwoc8ketLODmigLCuVhCt8Eio_ruJFnj%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAtEpK9f8ocpGt_MYmDVj0FrCIorSk7PSIVI-BmxLHUHE%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion">
+				SimpleX Chat
+			</a>
+		  </li>
+		  <li class="p-name" style="margin-top: 1em;">Alternative Access</li>
+			<li>
+			<a href="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/">
+			  <img class="svg-icon" alt="Tor Logo" style="opacity: 50%; width: 26px; height: 16px;" width="26px" height="16px" src="https://sidneys1.github.io/assets/tor.svg"></img>
+			  <span>Sidneys1.com on Tor</span>
+			</a>
+		  </li>
+		  <li>
+			  <a href="https://ipfs.io/ipns/sidneys1.com">
+				  <img class="svg-icon" alt="IPFS Logo" style="opacity: 50%; width: 26px; height: 16px;" width="16px" height="16px" src="https://sidneys1.github.io/assets/ipfs.svg"></img>
+				  <span>Sidneys1.com on IPFS</span>
+			  </a>
+		  </li>
+		  <li>
+			<a href="https://sidneys1.github.io">
+				<img class="svg-icon" alt="GitHub Logo" style="opacity: 50%; width: 26px; height: 16px;" width="16px" height="16px" src="https://sidneys1.github.io/assets/github.svg"></img>
+				<span>Sidneys1.com on GitHub Pages</span>
+			</a>
+		</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+		<ul class="social-media-list" style="margin-bottom: 5px;">
+			<li>
+				<a rel="me" href="https://infosec.exchange/@Sidneys1">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 216.4144 232.00976">
+						<path fill="#828282" d="M211.80734 139.0875c-3.18125 16.36625-28.4925 34.2775-57.5625 37.74875-15.15875 1.80875-30.08375 3.47125-45.99875 2.74125-26.0275-1.1925-46.565-6.2125-46.565-6.2125 0 2.53375.15625 4.94625.46875 7.2025 3.38375 25.68625 25.47 27.225 46.39125 27.9425 21.11625.7225 39.91875-5.20625 39.91875-5.20625l.8675 19.09s-14.77 7.93125-41.08125 9.39c-14.50875.7975-32.52375-.365-53.50625-5.91875C9.23234 213.82 1.40609 165.31125.20859 116.09125c-.365-14.61375-.14-28.39375-.14-39.91875 0-50.33 32.97625-65.0825 32.97625-65.0825C49.67234 3.45375 78.20359.2425 107.86484 0h.72875c29.66125.2425 58.21125 3.45375 74.8375 11.09 0 0 32.975 14.7525 32.975 65.0825 0 0 .41375 37.13375-4.59875 62.915"/>
+						<path fill="#fff" d="M177.50984 80.077v60.94125h-24.14375v-59.15c0-12.46875-5.24625-18.7975-15.74-18.7975-11.6025 0-17.4175 7.5075-17.4175 22.3525v32.37625H96.20734V85.42325c0-14.845-5.81625-22.3525-17.41875-22.3525-10.49375 0-15.74 6.32875-15.74 18.7975v59.15H38.90484V80.077c0-12.455 3.17125-22.3525 9.54125-29.675 6.56875-7.3225 15.17125-11.07625 25.85-11.07625 12.355 0 21.71125 4.74875 27.8975 14.2475l6.01375 10.08125 6.015-10.08125c6.185-9.49875 15.54125-14.2475 27.8975-14.2475 10.6775 0 19.28 3.75375 25.85 11.07625 6.36875 7.3225 9.54 17.22 9.54 29.675"/>
+					</svg>
+					<span class="username">Sidneys1</span>
+				</a>
+			</li>
+		</ul><ul class="social-media-list"><li><a href="https://github.com/Sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">Sidneys1</span></a></li><li><a href="https://youtube.com/Sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">Sidneys1</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</p>
+		<details class="snowflake"><summary><img src="https://sidneys1.github.io/assets/snowflake.svg" /> Tor Snowflake</summary>
+			<figure>
+				<blockquote>Snowflake is a system that <strong>allows people from all over the world to access censored websites and applications</strong>. Similar to how VPNs assist users in getting around Internet censorship, Snowflake helps you avoid being noticed by Internet censors by making your Internet activity appear as though you're using the Internet for a regular video or voice call.</blockquote>
+				<figcaption>&mdash; <cite><a href="https://snowflake.torproject.org/" target="_blank" rel="noreferrer">The Tor Project</a></cite></figcaption>
+			</figure>
+			<iframe src="https://snowflake.torproject.org/embed.html" width="320" height="240" frameborder="0" scrolling="no"></iframe>
+		</details>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -164,7 +164,7 @@ blockquote cite { display: block; font-size: small; text-align: right; }
 
 blockquote cite code { font-size: small; background-color: initial; border: none; padding: initial; }
 
-blockquote cite::before { content: "— "; font-size: small; }
+blockquote cite::before { content: "—"; font-size: small; margin-right: 1ex; }
 
 details { margin-bottom: 15px; }
 
