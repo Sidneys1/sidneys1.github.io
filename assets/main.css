@@ -1,5 +1,7 @@
-/** Reset some basic elements */
+@charset "UTF-8";
 @import url(monokai.css);
+@use "sass:color";
+/** Reset some basic elements */
 body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure { margin: 0; padding: 0; }
 
 /** Basic styling */
@@ -156,6 +158,16 @@ figure { background-color: #e8e8e8; border-radius: 1em; padding: 1em; }
 
 figure blockquote { border-left-color: #b5b5b5; }
 
+blockquote { max-width: fit-content; }
+
+blockquote cite { display: block; font-size: small; text-align: right; }
+
+blockquote cite code { font-size: small; background-color: initial; border: none; padding: initial; }
+
+blockquote cite::before { content: "— "; font-size: small; }
+
+details { margin-bottom: 15px; }
+
 details.snowflake > summary { font-size: larger; }
 
 details.snowflake > summary > img { height: 1em; }
@@ -198,7 +210,7 @@ ul.post-list ul { clear: both; }
 
 ul.post-list h3 { margin-bottom: 0; }
 
-ul.post-list h4 { font-weight: bolder; }
+ul.post-list h4 { font-weight: bolder; margin-bottom: 0; }
 
 kbd { display: inline-block; padding: 3px 5px; font: 11px ui-monospace,Consolas,monospace; line-height: 10px; color: var(--color-fg-default); vertical-align: middle; background-color: #f7f5f2; border: solid 1px #c6bbb1; border-bottom-color: #c6bbb1; border-radius: 6px; box-shadow: inset 0 -1px 0 #c6bbb1; overflow-wrap: break-word; }
 
@@ -230,6 +242,8 @@ div.note:hover { box-shadow: 0px 0px 10px #00000066; transition: 250ms linear; }
 
 .post-content img { box-shadow: 0px 0px 10px #00000033; transition: 250ms linear; margin: 0 auto; display: block; }
 
+.post-content img[align="left"] { margin-right: 1em; }
+
 .post-content img:hover { box-shadow: 0px 0px 10px #00000066; transition: 250ms linear; }
 
 .post-content pre { box-shadow: 0px 0px 10px #00000033; transition: 250ms linear; }
@@ -250,6 +264,10 @@ pre.highlight { border-radius: 5px; tab-size: 4; }
 
 .language-cpp::before { content: '.cpp'; color: #f8f8f2; font-size: x-small; font-family: monospace; background-color: #272822; border-radius: 0.5em; padding: 0 0.25em; position: relative; top: 1em; left: 1em; }
 
+.language-c { margin-top: -1em; }
+
+.language-c::before { content: '.c'; color: #f8f8f2; font-size: x-small; font-family: monospace; background-color: #272822; border-radius: 0.5em; padding: 0 0.25em; position: relative; top: 1em; left: 1em; }
+
 .language-powershell { margin-top: -1em; }
 
 .language-powershell::before { content: '.ps1'; color: #f8f8f2; font-size: x-small; font-family: monospace; background-color: #272822; border-radius: 0.5em; padding: 0 0.25em; position: relative; top: 1em; left: 1em; }
@@ -257,6 +275,10 @@ pre.highlight { border-radius: 5px; tab-size: 4; }
 .language-c\+\+ { margin-top: -1em; }
 
 .language-c\+\+::before { content: '.cpp'; color: #f8f8f2; font-size: x-small; font-family: monospace; background-color: #272822; border-radius: 0.5em; padding: 0 0.25em; position: relative; top: 1em; left: 1em; }
+
+.language-ini { margin-top: -1em; }
+
+.language-ini::before { content: '.ini'; color: #f8f8f2; font-size: x-small; font-family: monospace; background-color: #272822; border-radius: 0.5em; padding: 0 0.25em; position: relative; top: 1em; left: 1em; }
 
 div.popunder { text-align: center; }
 
@@ -278,7 +300,9 @@ img.pop-in { max-height: 90%; max-width: 90%; }
 
 li.anchor { padding-left: 1em; }
 
-li.anchor:target { font-weight: bolder; border-radius: 1em; text-decoration: underline dotted black; }
+li.anchor:target { font-weight: bolder; }
+
+li.anchor:target::before { content: "⚓"; position: absolute; margin-left: -1.5em; }
 
 div.series { font-size: 14px; color: #828282; }
 
@@ -341,5 +365,13 @@ hr { height: 1px; border: none; border-top: 1px solid #e8e8e8; margin: 1em 0; }
 summary { cursor: pointer; }
 
 #mastodon-logo:first-of-type(path) { fill: green; }
+
+.pill { background-color: #2a7ae2; border: 2px solid #2a7ae2; border-radius: 1em; color: white; padding: 0 0.5ex; font-weight: initial; font-size: x-small; vertical-align: middle; }
+
+.pill.clickable:hover { cursor: pointer; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); transition: 250ms linear; color: white; text-decoration: none; }
+
+.pill.clickable:visited { color: white; }
+
+.pill.multipart { background-color: #e2922a; border-color: #e2922a; }
 
 /*# sourceMappingURL=main.css.map */
