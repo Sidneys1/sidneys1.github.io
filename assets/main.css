@@ -168,9 +168,17 @@ blockquote cite::before { content: "—"; font-size: small; margin-right: 1ex; }
 
 details { margin-bottom: 15px; }
 
-details.snowflake > summary { font-size: larger; }
+details.snowflake > summary > div { display: inline-flex; align-items: baseline; }
 
-details.snowflake > summary > img { height: 1em; }
+details.snowflake > summary > div img.snowflake { opacity: 50%; height: 1em; margin-right: 4px; position: relative; top: 2px; }
+
+details.snowflake blockquote { font-size: 15px; margin-left: 3px; }
+
+details.snowflake button#load-snowflake { background: none !important; border: none; padding: 0 !important; /*optional*/ font-family: arial, sans-serif; /*input has OS specific font-family*/ color: #2a7ae2; cursor: pointer; font-size: larger; }
+
+details.snowflake button#load-snowflake:hover { color: #111; text-decoration: underline; }
+
+details.snowflake iframe#snowflake-iframe { margin: 0 auto; }
 
 .site-header .wrapper { display: flex; align-items: center; }
 
@@ -318,7 +326,7 @@ div.multipart a { font-style: italic; }
 
 div.multipart ul { margin-bottom: 0; }
 
-div.multipart.center { margin-left: auto; margin-right: auto; width: max-content; }
+div.multipart.center { margin-left: auto; margin-right: auto; }
 
 dl { margin: 0 20% 30px 20%; line-height: 1.8rem; padding: 1rem 1.5rem; border-radius: 4px; box-shadow: 0px 0px 10px #00000033; }
 
