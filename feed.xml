@@ -1,97 +1,92 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2023-08-18T15:15:56-04:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><entry><title type="html">Colloquial Skeuomorphisms</title><link href="https://sidneys1.github.io/Skeuomorphisms/" rel="alternate" type="text/html" title="Colloquial Skeuomorphisms" /><published>2023-08-18T00:00:00-04:00</published><updated>2023-08-18T00:00:00-04:00</updated><id>https://sidneys1.github.io/colloquial-skeuomorphisms</id><content type="html" xml:base="https://sidneys1.github.io/Skeuomorphisms/"><![CDATA[<!-- cSpell:words skeuomorph -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2023-08-22T16:02:54-04:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><entry><title type="html">Colloquial Skeuomorphisms</title><link href="https://sidneys1.github.io/Skeuomorphisms/" rel="alternate" type="text/html" title="Colloquial Skeuomorphisms" /><published>2023-08-18T00:00:00-04:00</published><updated>2023-08-18T00:00:00-04:00</updated><id>https://sidneys1.github.io/colloquial-skeuomorphisms</id><content type="html" xml:base="https://sidneys1.github.io/Skeuomorphisms/"><![CDATA[<!-- cSpell:words skeuomorph -->
 <!-- cSpell:ignore ˈskyo͞oəˌmôrf -->
 
-<p>Language is strange – why do we say “hang up the phone” even when using a cell phone? This page documents some
-examples of “skeuomorphisms” in our common vernacular.</p>
+Language is strange &ndash; why do we say "hang up the phone" even when using a cell phone? This page documents some
+examples of "skeuomorphisms" in our common vernacular.
 
-<p>I’ll be updating this page as I come across more!</p>
+I'll be updating this page as I come across more!
 
 <!--more-->
 
-<div class="card float">
-  <dl>
-    <dt><ruby><em>skeuomorph</em><rp>(</rp><rt>[ˈskyo͞oəˌmôrf]</rt><rp>)</rp></ruby></dt>
-    <dd>An object or feature which imitates the design of a similar artifact made from another material.</dd>
-    <dd><strong>In computing:</strong> An element of a graphical user interface which mimics a physical object.</dd>
-  </dl>
+<div class="card float" markdown=1>
+<ruby>*skeuomorph*<rp>(</rp><rt>[ˈskyo͞oəˌmôrf]</rt><rp>)</rp></ruby>
+: An object or feature which imitates the design of a similar artifact made from another material.
+: **In computing:** An element of a graphical user interface which mimics a physical object.
 </div>
 
-<ul id="markdown-toc">
-  <li><a href="#telecommunications" id="markdown-toc-telecommunications">Telecommunications</a></li>
-  <li><a href="#computers-and-the-internet" id="markdown-toc-computers-and-the-internet">Computers and the Internet</a></li>
-  <li><a href="#media-and-electronics" id="markdown-toc-media-and-electronics">Media and Electronics</a></li>
-  <li><a href="#home" id="markdown-toc-home">Home</a></li>
-  <li><a href="#transportation" id="markdown-toc-transportation">Transportation</a></li>
-</ul>
+* TOC
+{:toc}
 
-<div class="big-emoji">
+# Telecommunications
+---
 
-  <h1 id="telecommunications">Telecommunications</h1>
-  <hr />
+*📞* *"Hang up the Phone"*
+: Wall-mounted landline telephones had a hook to "hang" the receiver on.
 
-  <dl>
-    <dt><em>📞</em> <em>“Hang up the Phone”</em></dt>
-    <dd>Wall-mounted landline telephones had a hook to “hang” the receiver on.</dd>
-    <dt><em>🗣️</em> <em>“Call”</em></dt>
-    <dd>You don’t have to shout anymore.</dd>
-    <dt><em>☎️</em> (Re)dial</dt>
-    <dd>Early telephones had an actual rotary dial to select the numbers you would call.</dd>
-    <dt><em>🛎️</em> <em>“The Phone is Ringing”</em></dt>
-    <dt><em>🔊</em> Ringtone</dt>
-    <dd>Early telephones had an actual bell that would ring when a specific “<a href="https://en.wikipedia.org/wiki/Ringing_tone">ringing tone</a>” was received (in
-North America this is alternating 440 Hz and 480 Hz tones). As the ringing tone required to set off the bell
-<a href="https://en.wikipedia.org/wiki/Ringing_tone#National_characteristics">differed from region to region</a>, the term “ringtone” became synonymous with being able to
-<a href="https://en.wikipedia.org/wiki/Ringing_tone#Personalized_ringing_tones">change the sound</a> of an electronic telephone’s “ringing” audio.</dd>
-  </dl>
+*🗣️* *"Call"*
+: You don't have to shout anymore.
 
-  <h1 id="computers-and-the-internet">Computers and the Internet</h1>
-  <hr />
+*☎️* (Re)dial
+: Early telephones had an actual rotary dial to select the numbers you would call.
 
-  <dl>
-    <dt><em>✂️</em> Cut and Paste</dt>
-    <dd>Editing on paper involved actual scissors and glue.</dd>
-    <dt><em>📰</em> Message “Board”</dt>
-    <dd>A community message board is often a literal corkboard.</dd>
-    <dt><em>🌎</em> <em>“Get Online”</em></dt>
-    <dd>Before Wi-Fi, computers needed to be physically connected to a phone line and modem to access the Internet.</dd>
-    <dt><em>📧</em> Email “CC”</dt>
-    <dd>To send a physical letter in duplicate, you would need to create a <dfn><abbr title="Carbon Copy">CC</abbr></dfn>,
-or “<a href="https://en.wikipedia.org/wiki/Carbon_copy">Carbon Copy</a>”.</dd>
-  </dl>
+*🛎️* *"The Phone is Ringing"*
+*🔊* Ringtone
+: Early telephones had an actual bell that would ring when a specific "[ringing tone][ringing-tone]" was received (in
+  North America this is alternating 440 Hz and 480 Hz tones). As the ringing tone required to set off the bell
+  [differed from region to region][national-characteristics], the term "ringtone" became synonymous with being able to
+  [change the sound][personalized-ringtones] of an electronic telephone's "ringing" audio.
 
-  <h1 id="media-and-electronics">Media and Electronics</h1>
-  <hr />
+[ringing-tone]: https://en.wikipedia.org/wiki/Ringing_tone
+[national-characteristics]: https://en.wikipedia.org/wiki/Ringing_tone#National_characteristics
+[personalized-ringtones]: https://en.wikipedia.org/wiki/Ringing_tone#Personalized_ringing_tones
 
-  <dl>
-    <dt><em>⏪</em> Rewind</dt>
-    <dt><em>📼</em> <em>“Tape it”</em></dt>
-    <dt><em>📹</em> <em>“Get it on Tape”</em></dt>
-    <dd>Cassettes, the primary storage medium before optical disks, contained magnetic tape wound around two spindles.</dd>
-    <dt><em>📻</em> <em>“Stay Tuned”</em></dt>
-    <dt><em>🎛️</em> Tune In / Tune Out</dt>
-    <dd>Radio and television broadcasts require frequency matching (just like tuning an instrument).</dd>
-    <dt><em>📴</em> “Turn” On/Off</dt>
-    <dd>Most early electronic devices featured a rotating power selector.</dd>
-  </dl>
+# Computers and the Internet
+---
 
-  <h1 id="home">Home</h1>
-  <hr />
+*✂️* Cut and Paste
+: Editing on paper involved actual scissors and glue.
 
-  <dl>
-    <dt><em>🧊</em> Icebox</dt>
-    <dd>Before refrigeration, keeping food fresh involved actual blocks of ice.</dd>
-    <dt><em>🪔</em> <em>“Turn out the Light”</em></dt>
-    <dd>Gas and oil lamps had a dial which, when turned, would snuff out the flame.</dd>
-  </dl>
+*📰* Message "Board"
+: A community message board is often a literal corkboard.
 
-  <h1 id="transportation">Transportation</h1>
+*🌎* *"Get Online"*
+: Before Wi-Fi, computers needed to be physically connected to a phone line and modem to access the Internet.
 
-  <dl>
-    <dt><em>🚗</em> <em>“Roll the Window Up/Down”</em></dt>
-    <dd>Sliding automobile passenger windows used to be operated via a hand crank.</dd>
-  </dl>
+*📧* Email "CC"
+: To send a physical letter in duplicate, you would need to create a <dfn><abbr title="Carbon Copy">CC</abbr></dfn>,
+  or "[Carbon Copy][cc]".
 
-</div>]]></content><author><name>Sidneys1</name></author><category term="other" /><category term="linguistics" /><summary type="html"><![CDATA[Language is strange – why do we say “hang up the phone” even when using a cell phone? This page documents some examples of “skeuomorphisms” in our common vernacular. I’ll be updating this page as I come across more!]]></summary></entry><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2023-03-16T00:00:00-04:00</published><updated>2023-03-16T00:00:00-04:00</updated><id>https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun Ghidra -->
+[cc]: https://en.wikipedia.org/wiki/Carbon_copy
+
+# Media and Electronics
+---
+
+*⏪* Rewind
+*📼* *"Tape it"*
+*📹* *"Get it on Tape"*
+: Cassettes, the primary storage medium before optical disks, contained magnetic tape wound around two spindles.
+
+*📻* *"Stay Tuned"*
+*🎛️* Tune In / Tune Out
+: Radio and television broadcasts require frequency matching (just like tuning an instrument).
+
+*📴* "Turn" On/Off
+: Most early electronic devices featured a rotating power selector.
+
+# Home
+---
+
+*🧊* Icebox
+: Before refrigeration, keeping food fresh involved actual blocks of ice.
+
+*🪔* *"Turn out the Light"*
+: Gas and oil lamps had a dial which, when turned, would snuff out the flame.
+
+# Transportation
+---
+
+*🚗* *"Roll the Window Up/Down"*
+: Sliding automobile passenger windows used to be operated via a hand crank.]]></content><author><name>Sidneys1</name></author><category term="other" /><category term="linguistics" /><summary type="html"><![CDATA[Language is strange – why do we say “hang up the phone” even when using a cell phone? This page documents some examples of “skeuomorphisms” in our common vernacular. I’ll be updating this page as I come across more!]]></summary></entry><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2023-03-16T00:00:00-04:00</published><updated>2023-03-16T00:00:00-04:00</updated><id>https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun Ghidra -->
 <!-- cSpell:ignore sspyth MATHINV mbscpy strcmp -->
 
 I recently rediscovered an obscure 1997 Simon & Schuster / Marshall Media edutainment game for Windows 95 that I played

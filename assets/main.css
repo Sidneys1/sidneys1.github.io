@@ -194,6 +194,8 @@ details.snowflake iframe#snowflake-iframe { margin: 0 auto; }
 
 .site-header .wrapper .coffee img:hover { opacity: 100%; transition: 250ms linear; }
 
+.center { text-align: center; margin-left: auto; margin-right: auto; }
+
 .donate { text-align: center; }
 
 .donate img { max-height: 50px; opacity: 75%; transition: 250ms linear; }
@@ -255,6 +257,14 @@ div.note:hover { box-shadow: 0px 0px 10px #00000066; transition: 250ms linear; }
 .post-image > img { box-shadow: 0px 0px 10px #00000033; transition: 250ms linear; max-height: 600px; }
 
 .post-image > img:hover { box-shadow: 0px 0px 10px #00000066; transition: 250ms linear; }
+
+.post-content.hanging > p:first-child:first-letter { font-weight: bold; font-family: serif; font-weight: 100; }
+
+@supports not (initial-letter: 2) { .post-content.hanging > p:first-child:first-letter { float: left; font-size: 3em; line-height: 1.5em; margin-top: calc(1ex / 2); } }
+
+@supports (initial-letter: 2) { .post-content.hanging > p:first-child:first-letter { initial-letter: 2; initial-letter-align: hanging; } }
+
+.post-content.hanging > p:nth-child(2) { clear: left; }
 
 .post-content img { box-shadow: 0px 0px 10px #00000033; transition: 250ms linear; margin: 0 auto; display: block; }
 
@@ -344,6 +354,8 @@ div.card :last-child { margin-bottom: 0; }
 
 div.card :first-child { margin-top: 0; }
 
+div.card.yellow { background-color: #fff9b1; border-color: #b1a300; }
+
 dl { margin-bottom: 1em; }
 
 dl dt:first-child { margin-top: 0; }
@@ -417,5 +429,59 @@ summary { cursor: pointer; }
 .pill.multipart { background-color: #e2922a; border-color: #e2922a; }
 
 @media screen and (max-width: 600px) { #nav-placeholder { width: 36px; height: 36px; } }
+
+post-content a[target="_blank"]::after, section#comments a[target="_blank"]::after { content: ' '; background-image: url(http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png); background-size: calc(min(1em, 12px)) calc(min(1em, 12px)); margin: 0 0 0 0.25em; width: calc(min(1em, 12px)); height: calc(min(1em, 12px)); display: inline-block; }
+
+section#comments ol.comments { list-style-type: none; margin: 0 0 0 5%; padding: 0; display: inline-block; }
+
+section#comments > ol.comments { margin: 0 auto; }
+
+section#comments article.comment { margin-top: 2em; display: grid; gap: .4em; grid-template-columns: 3.5em 1fr; }
+
+section#comments div.avatar { grid-column: 1; grid-row: 1 / 4; }
+
+section#comments img.avatar { width: 3em; aspect-ratio: 1 / 1; border-radius: 50%; box-shadow: 0 0 3px #0004; }
+
+section#comments .header { grid-column: 2; grid-row: 1; display: flex; flex-wrap: wrap; align-items: baseline; gap: .4em; }
+
+section#comments .header .displayname { font-weight: bold; }
+
+section#comments .header .handle { margin-left: .4em; font-size: .8em; }
+
+section#comments .header .link { opacity: .7; font-size: .8em; transition: opacity 0.5s ease-in-out; }
+
+section#comments .header .link:hover { color: #2a7ae2; opacity: 1; font-size: .8em; transition: opacity 0.5s ease-in-out; }
+
+section#comments div.content { grid-column: 2; grid-row: 2; }
+
+section#comments picture.emoji { vertical-align: baseline; }
+
+section#comments picture.emoji img { width: 1em; aspect-ratio: 1 / 1; vertical-align: middle; }
+
+section#comments div.content p { margin: .6em 0; }
+
+section#comments div.content p:first-child { margin-top: 0; }
+
+section#comments div.content p:last-child { margin-bottom: 0; }
+
+section#comments div.content .ellipsis::after { content: '…'; }
+
+section#comments .tidbits { grid-column: 2; grid-row: 3; display: flex; gap: 1em; flex-wrap: wrap; font-size: .8em; }
+
+section#comments .tidbits:empty { display: none; }
+
+section#comments .tidbits > * { display: flex; gap: .4em; }
+
+.todo { background-color: rgba(255, 0, 255, 0.75); font-family: "Comic Sans MS", "Comic Sans", cursive; }
+
+.disabled { color: #828282; }
+
+section#comments #stats { grid-column: 2; grid-row: 3; display: inline-flex; gap: 0.5em; flex-wrap: wrap; font-size: .8em; }
+
+section#comments #stats:empty { display: none; }
+
+section#comments span.social-handle { font-size: .8em; }
+
+#comment-credit { font-style: inherit; font-size: x-small; }
 
 /*# sourceMappingURL=main.css.map */
