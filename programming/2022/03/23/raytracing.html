@@ -24,7 +24,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sidneys1"},"dateModified":"2022-03-23T13:04:39-04:00","datePublished":"2022-03-23T13:04:39-04:00","description":"Since I started programming I’ve had a dream in the back of my mind: raytracers are super cool, and I’d like to build one myself. But with that dream accompanied another thought: raytracers are nearly a pure expression of math, a discipline I am poorly qualified for. However this winter I discovered a new programming community, OneLoneCoder, and its leader, javidx9. Watching the videos produced by javidx9 inspired me to take a leap of faith in myself and start this raytracing project. The result has been amazing to see unfold as I developed first a working prototype in C#, then in C++, and finally as I produced what hopefully is an easy to follow “tutorial” style Git repository. So, lets dive in!","headline":"Raytracing!","image":"https://sidneys1.github.io/images/2022-03-23-raytracing/hero.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://sidneys1.github.io/programming/2022/03/23/raytracing.html"},"url":"https://sidneys1.github.io/programming/2022/03/23/raytracing.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="https://sidneys1.github.io/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><!-- KaTeX -->
+<link rel="stylesheet" href="https://sidneys1.github.io/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><script defer src="https://sidneys1.github.io/assets/mastodon_comments.js" onload="initComments()"></script><!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
 
   <!-- The loading of KaTeX is deferred to speed up page rendering -->
@@ -204,11 +204,11 @@ returns a <code class="language-plaintext highlighter-rouge">olc::Pixel</code> f
     <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="nf">Sample</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">Sample</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
     <span class="c1">// Called to get the color of a specific point on the screen.</span>
     <span class="c1">// For now we're returning a color based on the screen coordinates.</span>
     <span class="k">return</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">255</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
-<span class="err">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <div class="note">
@@ -527,9 +527,9 @@ itself):</p>
 <span class="p">}</span>
 
 <span class="c1">// Return a normalized version of this vf3d (magnitude == 1).</span>
-<span class="k">const</span> <span class="n">vf3d</span> <span class="nf">normalize</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<span class="k">const</span> <span class="n">vf3d</span> <span class="n">normalize</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
     <span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrtf</span><span class="p">((</span><span class="o">*</span><span class="k">this</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">));</span>
-<span class="err">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>By normalizing this ray we get rays properly fanning out in a perspective.</p>
@@ -625,7 +625,7 @@ the perspective rendering we added last time really pop.</p>
 	<span class="k">if</span> <span class="p">(</span><span class="n">color</span><span class="p">)</span>
 		<span class="k">return</span> <span class="n">fill</span><span class="p">;</span>
 	<span class="k">return</span> <span class="n">olc</span><span class="o">::</span><span class="n">DARK_GREY</span><span class="p">;</span>
-<span class="err">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>To do this we’ll also be adding some new operator overloads to both <code class="language-plaintext highlighter-rouge">vf3d</code> and <code class="language-plaintext highlighter-rouge">ray</code>, and we’ll also add a new method to
@@ -1165,7 +1165,7 @@ away the light is from the current hit point. To do this we’ll add a short met
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Return the length of this vf3d.</span>
 <span class="k">const</span> <span class="kt">float</span> <span class="nf">length</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
 	<span class="k">return</span> <span class="n">sqrtf</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">);</span>
-<span class="err">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>Next, to avoid the lighting ray intersecting with the current object itself we’ll offset the light ray origin by a tiny
@@ -1403,7 +1403,7 @@ in Release mode.</p>
 		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer"></a>
 			<img height="50px" title="Buy me a Coffee" src="https://sidneys1.github.io/assets/coffee-cup-1.svg"/>
 		</a>
-	</div><a class="u-url" href="https://sidneys1.github.io/programming/2022/03/23/raytracing.html" hidden></a>
+	</div><p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p><a class="u-url" href="https://sidneys1.github.io/programming/2022/03/23/raytracing.html" hidden></a>
 </article>
 
       </div>

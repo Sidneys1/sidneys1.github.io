@@ -24,7 +24,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sidneys1"},"dateModified":"2023-03-16T00:00:00-04:00","datePublished":"2023-03-16T00:00:00-04:00","description":"I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. In this part, we’ll investigate disassembling and reverse engineering the binary to identify an undocumented settings file format.","headline":"Reverse Engineering a Windows 95 Game","image":"https://sidneys1.github.io/images/reverse-engineering-a-win95-game-II/hero.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html"},"url":"https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="https://sidneys1.github.io/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><!-- KaTeX -->
+<link rel="stylesheet" href="https://sidneys1.github.io/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><script defer src="https://sidneys1.github.io/assets/mastodon_comments.js" onload="initComments()"></script><!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
 
   <!-- The loading of KaTeX is deferred to speed up page rendering -->
@@ -94,6 +94,8 @@
 						
 					
 				
+					
+				
 				
 			</ul>
 		</div></header><div class="post-image"><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-II/hero.png" style="box-shadow: none;"></div><!-- <div class="post-toc"> -->
@@ -101,8 +103,8 @@
 	<!-- </div> -->
 
 	<div class="post-content e-content" itemprop="articleBody">
-		<!-- cSpell:words Schuster DirectX autorun pakrat -->
-<!-- cSpell:ignore PAKS AMOVIE DSETUP DSETUPE DSETUPJ MATHINV SSPUNINS Bmps Ihighsco RIFFÀ -->
+		<!-- cSpell:words Schuster DirectX autorun Ghidra -->
+<!-- cSpell:ignore sspyth MATHINV mbscpy strcmp -->
 
 <p>I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played
 as a kid: <a href="https://archive.org/details/MathInvaders">Math Invaders</a>. In this part, we’ll investigate disassembling and
@@ -125,7 +127,7 @@ PE Property[FileDescription]: SSPYTH MFC Application
 <p>Interesting - the project in visual studio seems to have originally been called “sspyth”, short for “S.S. Pythagoras”,
 the name of the protagonist’s ship within the game. Let’s try and identify the entrypoint. This is a Windows MFC program,
 which means the actual entrypoint is “runtime code” that will identify the main MFC module within the program and
-initialize it. So instead of looking for this enrtypoint (which Ghidra finds for us and names <code class="language-plaintext highlighter-rouge">entry</code>), we will try and
+initialize it. So instead of looking for this entrypoint (which Ghidra finds for us and names <code class="language-plaintext highlighter-rouge">entry</code>), we will try and
 find the main MFC module initializer by searching for something we know happens early in the program’s execution.</p>
 
 <p>When first run, the game checks that DirectX, DirectPlay, and the game CD are inserted. Using Ghidra’s <kbd>Search</kbd>
@@ -305,6 +307,8 @@ if we can activate that?</p>
 					
 				
 			
+				
+			
 			
 		</ul>
 	</div><hr>
@@ -318,7 +322,7 @@ if we can activate that?</p>
 		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer"></a>
 			<img height="50px" title="Buy me a Coffee" src="https://sidneys1.github.io/assets/coffee-cup-1.svg"/>
 		</a>
-	</div><a class="u-url" href="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html" hidden></a>
+	</div><p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p><a class="u-url" href="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html" hidden></a>
 </article>
 
       </div>
