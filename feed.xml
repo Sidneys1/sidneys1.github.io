@@ -1,75 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-02-01T16:11:46-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2024-02-01T00:00:00-05:00</published><updated>2024-02-01T00:00:00-05:00</updated><id>https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun pakrat -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-02-01T16:19:53-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2024-02-01T00:00:00-05:00</published><updated>2024-02-01T00:00:00-05:00</updated><id>https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun pakrat -->
 <!-- cSpell:ignore PAKS AMOVIE DSETUP DSETUPE DSETUPJ MATHINV SSPUNINS Bmps Ihighsco RIFFÀ -->
 
-<p>I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played
-as a kid: <a href="https://archive.org/details/MathInvaders">Math Invaders</a>. In this part, we’ll investigate whether we can
-enter an “editor mode”, hinted at within the <code class="language-plaintext highlighter-rouge">strings</code> contained within the program. There’s even a
-✨<span class="shimmer">surprise ending</span>✨ that I didn’t see coming!</p>
+I recently rediscovered an obscure 1997 Simon & Schuster / Marshall Media edutainment game for Windows 95 that I played
+as a kid: [Math Invaders](https://archive.org/details/MathInvaders). In this part, we'll investigate whether we can
+enter an "editor mode", hinted at within the `strings` contained within the program. There's even a
+✨<span class="shimmer">surprise ending</span>✨ that I didn't see coming!
 
 <!--more-->
-<hr />
+---
 
-<p>Here’s where we left off, investigating the disassembly of a function that references a mysterious string:
-<code class="language-plaintext highlighter-rouge">*** EDITOR MODE ***</code>. Cleaning the disassembly up and commenting to be a bit to be more readable gives us:</p>
+Here's where we left off, investigating the disassembly of a function that references a mysterious string:
+`*** EDITOR MODE ***`. Cleaning the disassembly up and commenting to be a bit to be more readable gives us:
 
-<div style="--left: 8;" class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Because `param_1` from the disassembly (aka `this`) is passed to</span>
-<span class="c1">// `CWnd::SetWindowTextA` at the end, this function probably belongs</span>
-<span class="c1">// to a class inheriting `CWnd`.</span>
-<span class="k">class</span> <span class="nc">CGameWnd</span> <span class="o">:</span> <span class="k">public</span> <span class="n">CWnd</span><span class="p">;</span>
+```cpp
+// Because `param_1` from the disassembly (aka `this`) is passed to
+// `CWnd::SetWindowTextA` at the end, this function probably belongs
+// to a class inheriting `CWnd`.
+class CGameWnd : public CWnd;
 
-<span class="kt">void</span> <span class="n">CGameWnd</span><span class="o">::</span><span class="n">_updateWindowTitle</span><span class="p">()</span> <span class="p">{</span>
-	<span class="c1">// Don't do anything if we're in fullscreen mode.</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">gFullscreen</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-	<span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
-	<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">unknown_334</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-		<span class="c1">// If the variable at offset 0x334 is not 0/FALSE/NULL,</span>
-		<span class="c1">// we have a file loaded.</span>
-</code></pre></div></div>
+void CGameWnd::_updateWindowTitle() {
+	// Don't do anything if we're in fullscreen mode.
+	if (gFullscreen) return;
+	char buffer[256];
+	if (this->unknown_334 != 0) {
+		// If the variable at offset 0x334 is not 0/FALSE/NULL,
+		// we have a file loaded.
+```
+{:style="--left: 8;"}
 
-<div class="language-cpp code-split highlighter-rouge" style="--left: 8;"><div class="highlight"><pre class="highlight"><code>		<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">unknown_3714</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-			<span class="c1">// If the variable at offset 0x3714 is 0/FALSE/NULL,</span>
-			<span class="c1">// we're in "editor mode"... whatever that is!</span>
-			<span class="c1">// Append text indicating this to the buffer.</span>
-			<span class="n">strcat</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">" - *** EDITOR MODE ***"</span><span class="p">);</span>
-		<span class="p">}</span>
-</code></pre></div></div>
+```cpp
+		if (this->unknown_3714 == 0) {
+			// If the variable at offset 0x3714 is 0/FALSE/NULL,
+			// we're in "editor mode"... whatever that is!
+			// Append text indicating this to the buffer.
+			strcat(buffer, " - *** EDITOR MODE ***");
+		}
+```
+{:.code-split style="--left: 8;"}
 
-<div class="language-cpp code-split highlighter-rouge" style="--left: 4;"><div class="highlight"><pre class="highlight"><code>	<span class="p">}</span>
-</code></pre></div></div>
+```cpp
+	}
+```
+{:.code-split style="--left: 4;"}
 
-<div class="language-cpp code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="c1">// Set the window title to the contents of the buffer.</span>
-	<span class="k">this</span><span class="o">-&gt;</span><span class="n">SetWindowTextA</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
+```cpp
+	// Set the window title to the contents of the buffer.
+	this->SetWindowTextA(buffer);
+}
+```
+{:.code-split}
 
-<p>Ok! So to activate editor mode, we need to <strong>1)</strong> not be fullscreen, <strong>2)</strong> have <code class="language-plaintext highlighter-rouge">CGameWnd-&gt;unknown_334</code> be non-zero,
-and <strong>3)</strong> have <code class="language-plaintext highlighter-rouge">CGameWnd-&gt;unknown_3714</code> be zero. Enabling fullscreen (via the <samp>3d.ini</samp> file described in
+Ok! So to activate editor mode, we need to **1)** not be fullscreen, **2)** have `CGameWnd->unknown_334` be non-zero,
+and **3)** have `CGameWnd->unknown_3714` be zero. Enabling fullscreen (via the <samp>3d.ini</samp> file described in
 part II) no longer seems to crash my game (that must have been a mistake of mine!). The game starts and plays in
-fullscreen, and the title even updates between “Paused, Press ‘p’ to resume.” and “Running…” when we press
-<kbd>P</kbd>!</p>
+fullscreen, and the title even updates between "Paused, Press 'p' to resume." and "Running..." when we press
+<kbd>P</kbd>!
 
-<div>
+<div markdown="1">
 
-  <aside>
+<aside markdown=1>
 
-    <p>While I could use a debugger to change the value at runtime, this is the only place the value is read, so we can assume
-that any editor mode functionality has also been stripped out…</p>
+While I could use a debugger to change the value at runtime, this is the only place the value is read, so we can assume
+that any editor mode functionality has also been stripped out...
 
-  </aside>
+</aside>
 
-  <p>But try as I might, <span class="aside-attn">no amount of reverse engineering is allowing me to toggle the
-<code class="language-plaintext highlighter-rouge">unknown_3714</code> variable</span>. No code even exists (that I can find) to change it, except during initialization or
-loading of levels, when it’s always set to <code class="language-plaintext highlighter-rouge">TRUE</code>. So I have a theory: there <em>was</em> an editor mode, but its functionality
-has been “removed” behind something like <code class="language-plaintext highlighter-rouge">#ifdef EDITOR</code>.</p>
+But try as I might, <span class="aside-attn">no amount of reverse engineering is allowing me to toggle the
+`unknown_3714` variable</span>. No code even exists (that I can find) to change it, except during initialization or
+loading of levels, when it's always set to `TRUE`. So I have a theory: there *was* an editor mode, but its functionality
+has been "removed" behind something like `#ifdef EDITOR`.
 
 </div>
 
-<p>Well then! Without a deus ex machina, it looks like we’ll never break into the “editor mode”. I reached out to the
+Well then! Without a deus ex machina, it looks like we'll never break into the "editor mode". I reached out to the
 community to see if anyone knew more about the game itself, or had heard of a source code leak for this nearly 30 year
 old game. A few people were even so kind as to search Usenet for me. But nothing was turning up. A few months passed and
-I’d pretty much given up on ever finishing this part III post.</p>
+I'd pretty much given up on ever finishing this part III post.
 
-<h2 id="vindication"><a href="https://c.tenor.com/vV7u0Ur7I0YAAAAd/tenor.gif" target="_blank" referrerpolicy="no-referrer">Vindication!</a></h2>
+## [Vindication!](https://c.tenor.com/vV7u0Ur7I0YAAAAd/tenor.gif){:target="_blank" referrerpolicy="no-referrer"}
 
 <div class="chat rfloat">
 	<div class="bubble from-them">
@@ -80,461 +88,98 @@ I’d pretty much given up on ever finishing this part III post.</p>
 	</div>
 </div>
 
-<p>Months after I’d given up I received an encrypted message, sent to the SimpleX address listed in my website footer. It
-didn’t contain much more than a Freenet hash. I hurriedly installed a client and accessed the hash — the file
-downloaded — the password worked — and inside? <span class="shimmer">Beautiful, wonderful source
-code</span>, with “last modified” dates ranging from <em>December 1995 to January 1997</em>! And sure enough, there are several
-instances of <code class="language-plaintext highlighter-rouge">#ifdef EDITOR</code> that block the “Editor Mode” from being used, as I suspected! In fact, editor mode is
+Months after I'd given up I received an encrypted message, sent to the SimpleX address listed in my website footer. It
+didn't contain much more than a Freenet hash. I hurriedly installed a client and accessed the hash &mdash; the file
+downloaded &mdash; the password worked &mdash; and inside? <span class="shimmer">Beautiful, wonderful source
+code</span>, with "last modified" dates ranging from *December 1995 to January 1997*! And sure enough, there are several
+instances of `#ifdef EDITOR` that block the "Editor Mode" from being used, as I suspected! In fact, editor mode is
 implemented as a completely separate static library, that is only linked into the executable when editor mode is to be
-used. No wonder none of the relevant code can be found when reverse engineering the released binary!</p>
+used. No wonder none of the relevant code can be found when reverse engineering the released binary!
 
-<p>Now that we have source code and can fully analyze the game in the ground truth, let’s poke around and see what we can
-find. The source code is laid out as follows:</p>
+Now that we have source code and can fully analyze the game in the ground truth, let's poke around and see what we can
+find. The source code is laid out as follows:
 
-<ul>
-  <li>📁 <samp>3DLIB</samp> - <em>The core 3D engine.</em>
-    <ul>
-      <li>📄 <em>Various Assembly, and C++ source and header files.</em></li>
-    </ul>
-  </li>
-  <li>📁 <samp>EditLib</samp> - <em>Editor Mode functionality.</em>
-    <ul>
-      <li>📄 <em>Various C++ source and header files.</em></li>
-    </ul>
-  </li>
-  <li>📁 <samp>RES</samp> - <em>The game icon in BMP and ICO formats.</em></li>
-  <li>🔨 <em>Various Microsoft Developer Studio (Visual C++) files.</em></li>
-  <li>📄 <em>Various C++ source and header files.</em></li>
-  <li>📄 <em>Some example save files.</em></li>
-  <li>⚙️ <samp>SSPYTH.EXE</samp> - <em>A compiled binary.</em></li>
-  <li>🔧 <samp>3D.INI</samp> - <em>An example configuration file.</em></li>
-</ul>
+* 📁 <samp>3DLIB</samp> - *The core 3D engine.*
+  * 📄 *Various Assembly, and C++ source and header files.*
+* 📁 <samp>EditLib</samp> - *Editor Mode functionality.*
+  * 📄 *Various C++ source and header files.*
+* 📁 <samp>RES</samp> - *The game icon in BMP and ICO formats.*
+* 🔨 *Various Microsoft Developer Studio (Visual C++) files.*
+* 📄 *Various C++ source and header files.*
+* 📄 *Some example save files.*
+* ⚙️ <samp>SSPYTH.EXE</samp> - *A compiled binary.*
+* 🔧 <samp>3D.INI</samp> - *An example configuration file.*
 
-<h3 id="cheat-codes">Cheat Codes</h3>
+### Cheat Codes
 
-<div>
+<div markdown=1>
 
-  <aside>
+<aside markdown=1>
 
-    <p>A little more digging in Ghidra and I would have found them, as they print certain messages when activated and these
-messages are visible as strings in the binary (even the unused codes!).</p>
+A little more digging in Ghidra and I would have found them, as they print certain messages when activated and these
+messages are visible as strings in the binary (even the unused codes!).
 
-  </aside>
+</aside>
 
-  <p><span class="aside-attn">The game has a few cheat codes!</span> They can be activated by typing the code in during play,
+<span class="aside-attn">The game has a few cheat codes!</span> They can be activated by typing the code in during play,
 as it keeps a buffer of the last 20 key presses. All cheat codes begin with <kbd>K</kbd> and are committed with
-<kbd>L</kbd>:</p>
+<kbd>L</kbd>:
 
 </div>
 
-<div>
+<div markdown=1>
 
-  <aside>
+<aside markdown=1>
 
-    <p>The strings <code class="language-plaintext highlighter-rouge">Add Key</code>, <code class="language-plaintext highlighter-rouge">Add Everything</code>, and <code class="language-plaintext highlighter-rouge">Problem Debug Mode %s</code> do actually exist in the release binary, but the
-code to activate them (as well as the <code class="language-plaintext highlighter-rouge">KHJ#L</code> code) is not present. The source code I have does not have any mechanism
+The strings `Add Key`, `Add Everything`, and `Problem Debug Mode %s` do actually exist in the release binary, but the
+code to activate them (as well as the `KHJ#L` code) is not present. The source code I have does not have any mechanism
 to remove it (e.g., a preprocessor directive), so my assumption is that some of the cheat codes were removed from the
-“final” build of the game, but that these changes were not committed to the version of the source code I have access to.</p>
+"final" build of the game, but that these changes were not committed to the version of the source code I have access to.
 
-  </aside>
+</aside>
 
-  <table>
-    <thead>
-      <tr>
-        <th style="text-align: right">                Cheat Code</th>
-        <th style="text-align: center">Message</th>
-        <th style="text-align: left">Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="text-align: right"><span class="aside-attn"><kbd><kbd>K</kbd><kbd>E</kbd><kbd>Y</kbd><kbd>1-4</kbd><kbd>L</kbd></kbd></span></td>
-        <td style="text-align: center"><samp>Add Key</samp></td>
-        <td style="text-align: left">Gives the specified key (1-4).</td>
-      </tr>
-      <tr>
-        <td style="text-align: right"><kbd><kbd>K</kbd><kbd>W</kbd><kbd>N</kbd><kbd>0-9</kbd><kbd>L</kbd></kbd></td>
-        <td style="text-align: center"><samp>Add Weapon</samp></td>
-        <td style="text-align: left">Gives the specified weapon (0-9) with max ammo.</td>
-      </tr>
-      <tr>
-        <td style="text-align: right"><kbd><kbd>K</kbd><kbd>V</kbd><kbd>U</kbd><kbd>R</kbd><kbd>L</kbd></kbd></td>
-        <td style="text-align: center"><samp>Add Strength, Shield</samp></td>
-        <td style="text-align: left">Sets max strength, max shield, and dons the spacesuit.</td>
-      </tr>
-      <tr>
-        <td style="text-align: right"><span class="aside-attn"><kbd><kbd>K</kbd><kbd>H</kbd><kbd>J</kbd><kbd>1-6</kbd><kbd>L</kbd></kbd></span></td>
-        <td style="text-align: center"><em>None</em></td>
-        <td style="text-align: left">Gives the specified item (1-6), however items 2, 3, and 6 are not allowed to be given via this cheat.<br />The items 1-6 are: “health pack”, “light divider”, “time warper”, “drainer field”, “ultra drainer field,” and “reflection”.</td>
-      </tr>
-      <tr>
-        <td style="text-align: right"><span class="aside-attn"><kbd><kbd>K</kbd><kbd>Y</kbd><kbd>H</kbd><kbd>R</kbd><kbd>L</kbd></kbd></span></td>
-        <td style="text-align: center"><samp>Add Everything</samp></td>
-        <td style="text-align: left">Adds all keys, weapons, and allowed items.</td>
-      </tr>
-      <tr>
-        <td style="text-align: right"><span class="aside-attn"><kbd><kbd>K</kbd><kbd>N</kbd><kbd>N</kbd><kbd>L</kbd></kbd></span></td>
-        <td style="text-align: center"><samp>Problem Debug Mode ON</samp><br /><samp>Problem Debug Mode OFF</samp></td>
-        <td style="text-align: left">Toggles a mode in which math problems’ expected answers are printed.</td>
-      </tr>
-      <tr>
-        <td style="text-align: right"><kbd><kbd>K</kbd><kbd>01-27</kbd><kbd>L</kbd></kbd></td>
-        <td style="text-align: center"><em>None</em></td>
-        <td style="text-align: left">Go to level 01-27.</td>
-      </tr>
-    </tbody>
-  </table>
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cheat&nbsp;Code | Message | Description |
+|-----------------------:|:-------:|:------------|
+| <span class="aside-attn"><kbd><kbd>K</kbd><kbd>E</kbd><kbd>Y</kbd><kbd>1-4</kbd><kbd>L</kbd></kbd></span> | <samp>Add Key</samp> | Gives the specified key (1-4). |
+| <kbd><kbd>K</kbd><kbd>W</kbd><kbd>N</kbd><kbd>0-9</kbd><kbd>L</kbd></kbd> | <samp>Add Weapon</samp> | Gives the specified weapon (0-9) with max ammo. |
+| <kbd><kbd>K</kbd><kbd>V</kbd><kbd>U</kbd><kbd>R</kbd><kbd>L</kbd></kbd> | <samp>Add Strength, Shield</samp> | Sets max strength, max shield, and dons the spacesuit. |
+| <span class="aside-attn"><kbd><kbd>K</kbd><kbd>H</kbd><kbd>J</kbd><kbd>1-6</kbd><kbd>L</kbd></kbd></span> | *None* | Gives the specified item (1-6), however items 2, 3, and 6 are not allowed to be given via this cheat.<br/>The items 1-6 are: "health pack", "light divider", "time warper", "drainer field", "ultra drainer field," and "reflection". |
+| <span class="aside-attn"><kbd><kbd>K</kbd><kbd>Y</kbd><kbd>H</kbd><kbd>R</kbd><kbd>L</kbd></kbd></span> | <samp>Add Everything</samp> | Adds all keys, weapons, and allowed items. |
+| <span class="aside-attn"><kbd><kbd>K</kbd><kbd>N</kbd><kbd>N</kbd><kbd>L</kbd></kbd></span> | <samp>Problem Debug Mode ON</samp><br/><samp>Problem Debug Mode OFF</samp> | Toggles a mode in which math problems' expected answers are printed. |
+| <kbd><kbd>K</kbd><kbd>01-27</kbd><kbd>L</kbd></kbd> | *None* | Go to level 01-27. |
 
 </div>
 
-<h3 id="building-a-27-year-old-game">Building a 27 Year Old Game</h3>
+### Building a 27 Year Old Game
 
-<div class="carousel__holder" style="float: right; max-width: 50%; margin: 0 0 0 1em;">
-    <div id="carousel0" class="carousel">
-        
-          <input class="carousel__activator" type="radio" name="carousel0" id="0a" checked="checked" />
-        
-          <input class="carousel__activator" type="radio" name="carousel0" id="0b" />
-        
-          <input class="carousel__activator" type="radio" name="carousel0" id="0c" />
-        
-          <input class="carousel__activator" type="radio" name="carousel0" id="0d" />
-        
-        
-          
-          
-          
-          
-          <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0d">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0b">⮞</label>
-          </div>
-        
-          
-          
-          
-          
-          <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0a">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0c">⮞</label>
-          </div>
-        
-          
-          
-          
-          
-          <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0b">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0d">⮞</label>
-          </div>
-        
-          
-          
-          
-          
-          <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0c">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0a">⮞</label>
-          </div>
-        
-        <div class="carousel__track">
-          <ul>
-            
-            <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/dev-studio-opt.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/dev-studio-opt.png" style="" /></li>
-            
-            <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/open-workspace-opt.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/open-workspace-opt.png" style="" /></li>
-            
-            <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/select-project.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/select-project.png" style="image-rendering: pixelated;" /></li>
-            
-            <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/rebuild-all.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/rebuild-all.png" style="" /></li>
-            
-          </ul>
-        </div>
-        <div class="carousel__indicators">
-            
-              <label class="carousel__indicator" for="0a"></label>
-            
-              <label class="carousel__indicator" for="0b"></label>
-            
-              <label class="carousel__indicator" for="0c"></label>
-            
-              <label class="carousel__indicator" for="0d"></label>
-            
-        </div>
-    </div>
-</div>
+{% include carousel.html height="460" unit="px" number="1" style="float: right; max-width: 50%; margin: 0 0 0 1em;" %}
 
-<style>
-.carousel__holder {width: 100%; position: relative; padding-bottom: 460px; margin: 1rem 0 1rem;}
-.carousel {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  text-align: center;
-  position: absolute;
-  padding: 0;
-}
-.carousel__controls,
-.carousel__activator {
-  display: none;
-}
+Of course, the pièces de résistance of having access to the source code: editor mode! Let's see what it takes to get it
+working. First, we'll need to get the source code building. Thanks to the lovely project [DOSBox-X][dbx], emulating
+older Windows operating systems is as simple as following [a guide][w95dbx]. I also sourced the following disk images:
+[Windows 95 OSR2][w95osr2][^osr2], [Visual C++ 4.2][vcpp42], the [DirectX 1.0 SDK][dxsdk], and the
+[ActiveMovie SDK][netcd][^amalt] (this disk contains many other interesting installers as well). If you're planning on
+building up such a virtual machine yourself, you'll have to find your own product keys, sorry.
 
-.carousel__activator:nth-of-type(1):checked ~ .carousel__track {
-  -webkit-transform: translateX(-000%);
-          transform: translateX(-000%);
-}
-.carousel__activator:nth-of-type(1):checked ~ .carousel__slide:nth-of-type(1) {
-  transition: opacity 0.5s, -webkit-transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
-  top: 0;
-  left: 0;
-  right: 0;
-  opacity: 1;
-  -webkit-transform: scale(1);
-          transform: scale(1);
-}
-.carousel__activator:nth-of-type(1):checked ~ .carousel__controls:nth-of-type(1) {
-  display: block;
-  opacity: 1;
-}
-.carousel__activator:nth-of-type(1):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(1) {
-  opacity: 1;
-}
+[dbx]: https://dosbox-x.com/
+[w95dbx]: https://dosbox-x.com/wiki/Guide%3AInstalling-Windows-95
+[w95osr2]: https://archive.org/details/win-95-osr-2
+[vcpp42]: https://winworldpc.com/product/visual-c/4x
+[dxsdk]: https://archive.org/details/gamesdk
+[netcd]: https://archive.org/details/the-net-cd
+[^osr2]: The [3rd release of Windows 95](https://en.wikipedia.org/wiki/Windows_95#Editions), "OEM Release 2", added support for FAT32 drives.
+[^amalt]: Alternative source in disk 4 of [Storm #1 - Internet Archive](https://archive.org/details/storm-1).
 
-.carousel__activator:nth-of-type(2):checked ~ .carousel__track {
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
-}
-.carousel__activator:nth-of-type(2):checked ~ .carousel__slide:nth-of-type(2) {
-  transition: opacity 0.5s, -webkit-transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
-  top: 0;
-  left: 0;
-  right: 0;
-  opacity: 1;
-  -webkit-transform: scale(1);
-          transform: scale(1);
-}
-.carousel__activator:nth-of-type(2):checked ~ .carousel__controls:nth-of-type(2) {
-  display: block;
-  opacity: 1;
-}
-.carousel__activator:nth-of-type(2):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(2) {
-  opacity: 1;
-}
+Breezing through the guide leaves us with a fully functional Windows 95 install, with Visual C++ 4.2 (which includes the
+Microsoft Developer Studio IDE - which we'll need), the DirectX SDK, and the ActiveMovie SDK. Our source code contains
+an `.mdp` file, which is a Developer Studio project, so let's open it and build the default project with
+<kbd><kbd>Ctrl</kbd>+<kbd>B</kbd></kbd>!
 
-.carousel__activator:nth-of-type(3):checked ~ .carousel__track {
-  -webkit-transform: translateX(-200%);
-          transform: translateX(-200%);
-}
-.carousel__activator:nth-of-type(3):checked ~ .carousel__slide:nth-of-type(3) {
-  transition: opacity 0.5s, -webkit-transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
-  top: 0;
-  left: 0;
-  right: 0;
-  opacity: 1;
-  -webkit-transform: scale(1);
-          transform: scale(1);
-}
-.carousel__activator:nth-of-type(3):checked ~ .carousel__controls:nth-of-type(3) {
-  display: block;
-  opacity: 1;
-}
-.carousel__activator:nth-of-type(3):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(3) {
-  opacity: 1;
-}
-
-.carousel__activator:nth-of-type(4):checked ~ .carousel__track {
-  -webkit-transform: translateX(-300%);
-          transform: translateX(-300%);
-}
-.carousel__activator:nth-of-type(4):checked ~ .carousel__slide:nth-of-type(4) {
-  transition: opacity 0.5s, -webkit-transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
-  top: 0;
-  left: 0;
-  right: 0;
-  opacity: 1;
-  -webkit-transform: scale(1);
-          transform: scale(1);
-}
-.carousel__activator:nth-of-type(4):checked ~ .carousel__controls:nth-of-type(4) {
-  display: block;
-  opacity: 1;
-}
-.carousel__activator:nth-of-type(4):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(4) {
-  opacity: 1;
-}
-
-
-.carousel__control {
-  height: 100%;
-  vertical-align: middle;
-  /* width: 30px; */
-  margin-top: -15px;
-  top: calc(50% - 0.5em);
-  position: absolute;
-  display: block;
-  cursor: pointer;
-  /* border-width: 5px 5px 0 0;
-  border-style: solid;
-  border-color: #fafafa; */
-  font-size: 48pt;
-  color: #fafafa;
-  font-weight: 900;
-  text-shadow: 0 0 10px  black;
-  opacity: 0.35;
-  /* opacity: 1; */
-  outline: 0;
-  z-index: 3;
-  transition: opacity 250ms linear;
-  /* box-shadow: 0 0 10px black; */
-}
-.carousel__control:hover {
-  opacity: 1;
-  transition: opacity 250ms linear;
-}
-.carousel__control--backward {
-  left: 20px;
-  /* -webkit-transform: rotate(-135deg);
-          transform: rotate(-135deg); */
-}
-.carousel__control--forward {
-  right: 20px;
-  /* -webkit-transform: rotate(45deg);
-          transform: rotate(45deg); */
-}
-.carousel__indicators {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-}
-.carousel__indicator {
-  height: 10px;
-  width: 10px;
-  border-radius: 100%;
-  display: inline-block;
-  z-index: 2;
-  cursor: pointer;
-  opacity: 0.35;
-  margin: 0 2.5px 0 2.5px;
-  box-shadow: 0 0 10px black;
-  transition: opacity 250ms linear;
-}
-.carousel__indicator:hover {
-  opacity: 0.75;
-  transition: opacity 250ms linear;
-}
-.carousel__track {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 0;
-  margin: 0;
-  transition: -webkit-transform 0.5s ease 0s;
-  transition: transform 0.5s ease 0s;
-  transition: transform 0.5s ease 0s, -webkit-transform 0.5s ease 0s;
-}
-.carousel__track .carousel__slide {
-  display: block;
-  top: 0;
-  left: 0;
-  right: 0;
-  opacity: 1;
-}
-
-.carousel__track .carousel__slide:nth-of-type(1) {
-  -webkit-transform: translateX(000%);
-          transform: translateX(000%);
-}
-
-.carousel__track .carousel__slide:nth-of-type(2) {
-  -webkit-transform: translateX(100%);
-          transform: translateX(100%);
-}
-
-.carousel__track .carousel__slide:nth-of-type(3) {
-  -webkit-transform: translateX(200%);
-          transform: translateX(200%);
-}
-
-.carousel__track .carousel__slide:nth-of-type(4) {
-  -webkit-transform: translateX(300%);
-          transform: translateX(300%);
-}
-
-
-.carousel--scale .carousel__slide {
-  -webkit-transform: scale(0);
-          transform: scale(0);
-}
-.carousel__slide {
-  height: 100%;
-  position: absolute;
-  opacity: 0;
-  overflow: hidden;
-
-  /* background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center; */
-}
-.carousel__slide img {
-	display: block;
-	width: auto;
-	height: auto;
-	max-width: 100%;
-	max-height: 460px;
-}
-.carousel__slide .overlay {height: 100%;}
-.carousel--thumb .carousel__indicator {
-  height: 30px;
-  width: 30px;
-}
-.carousel__indicator {
-  background-color: #fafafa;
-}
-
-.carousel__slide:nth-of-type(1),
-.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(1) {
-}
-
-.carousel__slide:nth-of-type(2),
-.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(2) {
-}
-
-.carousel__slide:nth-of-type(3),
-.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(3) {
-}
-
-.carousel__slide:nth-of-type(4),
-.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(4) {
-}
-
-</style>
-
-<p>Of course, the pièces de résistance of having access to the source code: editor mode! Let’s see what it takes to get it
-working. First, we’ll need to get the source code building. Thanks to the lovely project <a href="https://dosbox-x.com/">DOSBox-X</a>, emulating
-older Windows operating systems is as simple as following <a href="https://dosbox-x.com/wiki/Guide%3AInstalling-Windows-95">a guide</a>. I also sourced the following disk images:
-<a href="https://archive.org/details/win-95-osr-2">Windows 95 OSR2</a><sup id="fnref:osr2" role="doc-noteref"><a href="#fn:osr2" class="footnote" rel="footnote">1</a></sup>, <a href="https://winworldpc.com/product/visual-c/4x">Visual C++ 4.2</a>, the <a href="https://archive.org/details/gamesdk">DirectX 1.0 SDK</a>, and the
-<a href="https://archive.org/details/the-net-cd">ActiveMovie SDK</a><sup id="fnref:amalt" role="doc-noteref"><a href="#fn:amalt" class="footnote" rel="footnote">2</a></sup> (this disk contains many other interesting installers as well). If you’re planning on
-building up such a virtual machine yourself, you’ll have to find your own product keys, sorry.</p>
-
-<p>Breezing through the guide leaves us with a fully functional Windows 95 install, with Visual C++ 4.2 (which includes the
-Microsoft Developer Studio IDE - which we’ll need), the DirectX SDK, and the ActiveMovie SDK. Our source code contains
-an <code class="language-plaintext highlighter-rouge">.mdp</code> file, which is a Developer Studio project, so let’s open it and build the default project with
-<kbd><kbd>Ctrl</kbd>+<kbd>B</kbd></kbd>!</p>
-
-<div data-file-name=".log" style="clear: both;" class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--------------------Configuration: 3dlib - Win32 Debug--------------------
+```
+--------------------Configuration: 3dlib - Win32 Debug--------------------
 Compiling...
-</code></pre></div></div>
+```
+{:data-file-name=".log" style="clear: both;"}
 
 <div class="language-plaintext highlighter-rouge code-split"><div class="highlight">
 <pre class="highlight">
@@ -545,10 +190,10 @@ Error executing cl.exe.
 Sspyth.exe - 1 error(s), 4 warning(s)
 </code></pre></div></div>
 
-<p>Alright, some errors, but nothing we can’t solve. The first thing we notice is we’re missing a file
-<samp>3DLIB\DECOMP.CPP</samp>. Poking around, we find there’s a file named <samp>3DLIB\aviDECOMP.CPP</samp>. A simple
-file rename gets us past this error. Re-running the build gives us another error, now in the linking process. It can’t
-seem to find the 3DLib and ActiveMovie libraries:</p>
+Alright, some errors, but nothing we can't solve. The first thing we notice is we're missing a file
+<samp>3DLIB\DECOMP.CPP</samp>. Poking around, we find there's a file named <samp>3DLIB\aviDECOMP.CPP</samp>. A simple
+file rename gets us past this error. Re-running the build gives us another error, now in the linking process. It can't
+seem to find the 3DLib and ActiveMovie libraries:
 
 <div class="language-plaintext highlighter-rouge" data-file-name=".log"><div class="highlight">
 <pre class="highlight">
@@ -556,36 +201,39 @@ seem to find the 3DLib and ActiveMovie libraries:</p>
 .\.\ztest.hpp(9) : <span class="err">fatal error C1083: Cannot open include file: 'strmif.h': No such file or directory</span>
 </code></pre></div></div>
 
-<div class="float-reverse">
+<div markdown=1 class="float-reverse">
 
-  <p class="rfloat"><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/game-not-installed.png" alt="Game not installed" /></p>
+![Game not installed]({{ "/images/reverse-engineering-a-win95-game-III/game-not-installed.png" | absolute_url }})
+{: .rfloat }
 
-  <p>That’s as easy as adding the full path to the ActiveMovie SDK’s include directory to the compiler path, and adding the
+That's as easy as adding the full path to the ActiveMovie SDK's include directory to the compiler path, and adding the
 <samp>lib\StrmBase.lib</samp> file and the 3DLib output file to the linker properties. Our project now builds, and we
 can verify that the game runs! Well, it tells us <samp>Game not installed, run the setup program.</samp>, but commenting
-out a few lines in <code class="language-plaintext highlighter-rouge">CSspythApp::InitInstance()</code> fixes that:</p>
+out a few lines in `CSspythApp::InitInstance()` fixes that:
 
 </div>
 
-<div style="clear: both;" data-file-name="SSPYTH.CPP" class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Check for game installed</span>
-<span class="c1">// char buffer[260];</span>
-<span class="c1">// strcpy(buffer, "");</span>
-<span class="c1">// GetRegString("Version", buffer, 20);</span>
-<span class="c1">// if (strcmp(SSP_VERSION, buffer)) {</span>
-<span class="c1">// 	AfxMessageBox("Game not installed, run the setup program.", MB_OK | MB_ICONSTOP);</span>
-<span class="c1">// 	return FALSE;</span>
-<span class="c1">// }</span>
-</code></pre></div></div>
+```cpp
+// Check for game installed
+// char buffer[260];
+// strcpy(buffer, "");
+// GetRegString("Version", buffer, 20);
+// if (strcmp(SSP_VERSION, buffer)) {
+// 	AfxMessageBox("Game not installed, run the setup program.", MB_OK | MB_ICONSTOP);
+// 	return FALSE;
+// }
+```
+{: style="clear: both;" data-file-name="SSPYTH.CPP" }
 
-<p>Installing the game and pointing the <code class="language-plaintext highlighter-rouge">pakpath</code> setting in <samp>3D.INI</samp> to the install directory allows the game
-to load assets and run!</p>
+Installing the game and pointing the `pakpath` setting in <samp>3D.INI</samp> to the install directory allows the game
+to load assets and run!
 
-<p><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/game-running.png" alt="Game running" /></p>
+![Game running]({{ "/images/reverse-engineering-a-win95-game-III/game-running.png" | absolute_url }})
 
-<h3 id="editor-mode">Editor Mode</h3>
+### Editor Mode
 
-<p>So what do we need to enable editor mode? Let’s create a new build configuration just for this use case. We already know
-we have to add <code class="language-plaintext highlighter-rouge">/D EDITOR</code> to the compiler settings, and doing so builds… and fails. Why now?</p>
+So what do we need to enable editor mode? Let's create a new build configuration just for this use case. We already know
+we have to add `/D EDITOR` to the compiler settings, and doing so builds... and fails. Why now?
 
 <div class="language-plaintext highlighter-rouge" data-file-name=".log"><div class="highlight">
 <pre class="highlight">
@@ -595,148 +243,142 @@ Error executing link.exe.
 Sspyth.exe - 8 error(s), 0 warning(s)
 </code></pre></div></div>
 
-<p>Ah, EditLib! Let’s add that to our linker options as well and try again. This time the build succeeds and
-we can run the game as before. Now, how do we activate it? We know so far that: <strong>1)</strong> the game has to be in windowed mode,
-so we set <code class="language-plaintext highlighter-rouge">fullscreen=0</code> in <samp>3D.INI</samp>; and <strong>2)</strong> there are some mystery values in the main window class that must be
-set just-so to be “in editor mode”. Thankfully now we can look at actual code! It turns out our
-<code class="language-plaintext highlighter-rouge">CGameWnd::_updateWindowTitle()</code> decompilation above is actually named <code class="language-plaintext highlighter-rouge">CMainFrame::ShowPauseState()</code>:</p>
+Ah, EditLib! Let's add that to our linker options as well and try again. This time the build succeeds and
+we can run the game as before. Now, how do we activate it? We know so far that: **1)** the game has to be in windowed mode,
+so we set `fullscreen=0` in <samp>3D.INI</samp>; and **2)** there are some mystery values in the main window class that must be
+set just-so to be "in editor mode". Thankfully now we can look at actual code! It turns out our
+`CGameWnd::_updateWindowTitle()` decompilation above is actually named `CMainFrame::ShowPauseState()`:
 
-<div data-file-name="MainFrm.cpp" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">CMainFrame</span><span class="o">::</span><span class="n">ShowPauseState</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">g_FullScreen</span><span class="p">)</span>
-		<span class="k">return</span><span class="p">;</span>
+```c++
+void CMainFrame::ShowPauseState(void)
+{
+	if (g_FullScreen)
+		return;
 
-	<span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">m_game</span><span class="p">.</span><span class="n">m_pscene</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-		<span class="kt">char</span> <span class="n">drive</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span><span class="n">directory</span><span class="p">[</span><span class="mi">200</span><span class="p">],</span> <span class="n">name</span><span class="p">[</span><span class="mi">30</span><span class="p">],</span> <span class="n">extension</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
-		<span class="n">_splitpath</span><span class="p">(</span><span class="n">FileName</span><span class="p">,</span> <span class="n">drive</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">extension</span><span class="p">);</span>
-		<span class="n">sprintf</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">"  S.S. Pythagoras  -  '%s'  "</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
-		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">m_game</span><span class="p">.</span><span class="n">m_GameMode</span><span class="p">)</span>
-			<span class="n">strcat</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">" - *** EDITOR MODE ***"</span><span class="p">);</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">m_game</span><span class="p">.</span><span class="n">Paused</span><span class="p">())</span>
-			<span class="n">strcat</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">" - Paused,  press 'p' to resume."</span><span class="p">);</span>
-		<span class="k">else</span>
-			<span class="n">strcat</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">" - Running..."</span><span class="p">);</span>
-	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-		<span class="n">sprintf</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">"  S.S. Pythagoras  -  NO ACTIVE LEVEL"</span><span class="p">);</span>
-	<span class="p">}</span>
+	char buffer[256];
+	if (m_game.m_pscene != NULL) {
+		char drive[5],directory[200], name[30], extension[5];
+		_splitpath(FileName, drive, directory, name, extension);
+		sprintf(buffer, "  S.S. Pythagoras  -  '%s'  ", name);
+		if (!m_game.m_GameMode)
+			strcat(buffer, " - *** EDITOR MODE ***");
+		if (m_game.Paused())
+			strcat(buffer, " - Paused,  press 'p' to resume.");
+		else
+			strcat(buffer, " - Running...");
+	} else {
+		sprintf(buffer, "  S.S. Pythagoras  -  NO ACTIVE LEVEL");
+	}
 
-	<span class="n">SetWindowText</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
+	SetWindowText(buffer);
+}
+```
+{:data-file-name="MainFrm.cpp"}
 
-<div class="float-reverse">
+<div markdown=1 class="float-reverse">
 
-  <div class="rfloat">
+<div markdown=1 class="rfloat">
 
-    <div style="--left: 4" data-file-name="GAME.CPP" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">CGame</span><span class="o">::</span><span class="n">Update</span><span class="p">(</span><span class="n">CKeyboard</span><span class="o">&amp;</span> <span class="n">keys</span><span class="p">)</span> <span class="p">{</span>
-</code></pre></div>    </div>
+```c++
+void CGame::Update(CKeyboard& keys) {
+```
+{:style="--left: 4" data-file-name="GAME.CPP"}
 
-    <div class="language-c++ code-split highlighter-rouge" style="--left: 4"><div class="highlight"><pre class="highlight"><code>	<span class="k">if</span> <span class="p">(</span><span class="n">keys</span><span class="p">.</span><span class="n">KeyDownWasUp</span><span class="p">(</span><span class="sc">'G'</span><span class="p">))</span>	<span class="p">{</span>
-		<span class="n">m_GameMode</span> <span class="o">=</span> <span class="o">!</span><span class="n">m_GameMode</span><span class="p">;</span>
-		<span class="n">GetMainFrame</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">ShowPauseState</span><span class="p">();</span>
-	<span class="p">}</span>
-</code></pre></div>    </div>
+```c++
+	if (keys.KeyDownWasUp('G'))	{
+		m_GameMode = !m_GameMode;
+		GetMainFrame()->ShowPauseState();
+	}
+```
+{:.code-split style="--left: 4"}
 
-    <div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">}</span>
-</code></pre></div>    </div>
+```c++
+}
+```
+{:.code-split}
 
-  </div>
+</div>
 
-  <p>Awesome, my guesses were <em>really</em> close. <code class="language-plaintext highlighter-rouge">unknown_334</code> is <code class="language-plaintext highlighter-rouge">m_game.m_pscene</code>, and <code class="language-plaintext highlighter-rouge">unknown_3714</code> is <code class="language-plaintext highlighter-rouge">m_game.m_GameMode</code>.
-Let’s see if I’m right, and <code class="language-plaintext highlighter-rouge">m_GameMode</code> is changed with a <code class="language-plaintext highlighter-rouge">#ifdef EDITOR</code>-surrounded key input. <code class="language-plaintext highlighter-rouge">m_GameMode</code> is only
+Awesome, my guesses were *really* close. `unknown_334` is `m_game.m_pscene`, and `unknown_3714` is `m_game.m_GameMode`.
+Let's see if I'm right, and `m_GameMode` is changed with a `#ifdef EDITOR`-surrounded key input. `m_GameMode` is only
 changed in two places in the code, both in <samp>GAME.CPP</samp>. The first is during initialization, where it is set to
-<code class="language-plaintext highlighter-rouge">TRUE</code>. The second place is further down the file, in <code class="language-plaintext highlighter-rouge">CGame::Update(CKeyboard&amp;)</code>:</p>
+`TRUE`. The second place is further down the file, in `CGame::Update(CKeyboard&)`:
 
 </div>
 
-<p>Ok, this isn’t surrounded by <code class="language-plaintext highlighter-rouge">#ifdef EDITOR</code>… I suspect again that the “final” version of the game saw a few code
-changes that weren’t included in the copy of the code I have. But a little digging shows that <code class="language-plaintext highlighter-rouge">m_GameMode</code> alone has no
-real effect, because just a little further down is the code to actually <em>perform</em> editor mode:</p>
+Ok, this isn't surrounded by `#ifdef EDITOR`... I suspect again that the "final" version of the game saw a few code
+changes that weren't included in the copy of the code I have. But a little digging shows that `m_GameMode` alone has no
+real effect, because just a little further down is the code to actually *perform* editor mode:
 
-<div data-file-name="GAME.CPP" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">////////////////////////////////////////// EDITOR</span>
-<span class="cp">#ifdef EDITOR
-</span></code></pre></div></div>
+```c++
+////////////////////////////////////////// EDITOR
+#ifdef EDITOR
+```
+{:data-file-name="GAME.CPP"}
 
-<div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">keys</span><span class="p">.</span><span class="n">KeyDownWasUp</span><span class="p">(</span><span class="sc">'I'</span><span class="p">))</span> <span class="p">{</span>
-	<span class="n">GetApp</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">ShowEditFrame</span><span class="p">();</span>
-	<span class="n">GetApp</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">m_editframe</span><span class="o">-&gt;</span><span class="n">OnInsertButton</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></div></div>
+```c++
+if (keys.KeyDownWasUp('I')) {
+	GetApp()->ShowEditFrame();
+	GetApp()->m_editframe->OnInsertButton();
+}
+```
+{:.code-split}
 
-<div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#endif
-</span></code></pre></div></div>
+```c++
+#endif
+```
+{:.code-split}
 
-<div>
+<div markdown=1>
 
-  <aside>
+<aside markdown=1>
 
-    <p>I’ve skipped over some steps I had to take related to the release version PAK files referencing unused — and
-unincluded — textures and models. I suspect the released game runs fine without them because it only loads used
-textures, while the editor mode loads all textures (in case you want to use them) that are defined. As I don’t have the
-original game assets (I only have source code and the PAK files distributed with the released game) I can’t recover
-these textures and models, and so I just copied existing files and gave them the expected name.</p>
+I've skipped over some steps I had to take related to the release version PAK files referencing unused &mdash; and
+unincluded &mdash; textures and models. I suspect the released game runs fine without them because it only loads used
+textures, while the editor mode loads all textures (in case you want to use them) that are defined. As I don't have the
+original game assets (I only have source code and the PAK files distributed with the released game) I can't recover
+these textures and models, and so I just copied existing files and gave them the expected name.
 
-    <p>Another item of interest is that in activating editor mode <em>no</em> textures will load properly, as the files on-disk are
-expected to be <a href="https://en.wikipedia.org/wiki/PCX">PCX</a> format, but when packing a PAK file the raw data is stored
+Another item of interest is that in activating editor mode *no* textures will load properly, as the files on-disk are
+expected to be [PCX](https://en.wikipedia.org/wiki/PCX) format, but when packing a PAK file the raw data is stored
 unencoded (likely to increase loading speed). My extractor from Part I, PAKrat, just extracts the raw data into the
-specified file path, leaving me with invalid PCX files. The actual format, as stored in the PAK, is like so:</p>
+specified file path, leaving me with invalid PCX files. The actual format, as stored in the PAK, is like so:
 
-    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="p">{</span>
-  <span class="c1">// Width and height of the data:</span>
-  <span class="kt">int</span> <span class="n">columns</span><span class="p">,</span> <span class="n">rows</span><span class="p">;</span>
-  <span class="c1">// The data itself (pretend C supports this):</span>
-  <span class="kt">unsigned</span> <span class="kt">char</span><span class="p">[</span><span class="n">columns</span> <span class="o">*</span> <span class="n">rows</span><span class="p">];</span>
-  <span class="c1">// The width, height, and x-y offset</span>
-  <span class="c1">// of the desired sub-image:</span>
-  <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">offset_x</span><span class="p">,</span> <span class="n">offset_y</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre></div>    </div>
+```c
+struct {
+  // Width and height of the data:
+  int columns, rows;
+  // The data itself (pretend C supports this):
+  unsigned char[columns * rows];
+  // The width, height, and x-y offset
+  // of the desired sub-image:
+  int width, height, offset_x, offset_y;
+};
+```
 
-  </aside>
+</aside>
 
-  <p style="clear: both;">So, we need to press <kbd>G</kbd> to switch the game mode, and then <kbd>I</kbd> (I suspect for <strong>I</strong>nsert or
-<strong>I</strong>nspect) <span class="aside-attn">will show the editor controls</span>! Once editor mode is active you can also
-press <kbd>E</kbd> to <strong>E</strong>dit door and entity instances, or <kbd>T</kbd> to edit the focused object’s <strong>T</strong>ype. Let’s
-give it a go:</p>
+So, we need to press <kbd>G</kbd> to switch the game mode, and then <kbd>I</kbd> (I suspect for **I**nsert or
+**I**nspect) <span class="aside-attn">will show the editor controls</span>! Once editor mode is active you can also
+press <kbd>E</kbd> to **E**dit door and entity instances, or <kbd>T</kbd> to edit the focused object's **T**ype. Let's
+give it a go:
+{:style="clear: both;"}
 
-  <div class="popunder">
-	
-		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('205-editor-mode').showModal()" />
-	
-	<em>Click to zoom.</em>
-</div>
-
-  <dialog class="popover" id="205-editor-mode" onclick="document.getElementById('205-editor-mode').close()">
-	<!-- <form method="dialog">
-		<button class="close">X</button>
-	  </form> -->
-	<img class="pop-in" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-opt.png" alt="Editor Mode" title="Editor Mode" loading="lazy" />
-</dialog>
+{% capture editor_mode %}{{ "/images/reverse-engineering-a-win95-game-III/editor-mode-opt.png" | absolute_url }}{% endcapture %}
+{% capture editor_mode_thumb %}{{ "/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" | absolute_url }}{% endcapture %}
+{% include popimg.html src=editor_mode thumb=editor_mode_thumb alt="Editor Mode" %}
 
 </div>
 
-<h2 id="next-steps">Next Steps</h2>
+## Next Steps
 
-<p>If there’s ever going to be a follow-up to this three-part post, there’s a few things I’d like to try:</p>
+If there's ever going to be a follow-up to this three-part post, there's a few things I'd like to try:
 
-<ul>
-  <li>Add modern <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> keyboard controls — the current control scheme is
-<kbd>A</kbd>/<kbd>Z</kbd> for forward/back, and <kbd>Shift</kbd>/<kbd>X</kbd> for left/right.</li>
-  <li>Get the game running on modern versions of Windows — I’d like to do this by getting it running “well” on each
-newer OS starting with Windows XP and moving forward.</li>
-  <li>Properly handle texture files when extracting — PAKrat (from part I) doesn’t extract the PCX textures correctly.</li>
-</ul>
-<div class="footnotes" role="doc-endnotes">
-  <ol>
-    <li id="fn:osr2" role="doc-endnote">
-      <p>The <a href="https://en.wikipedia.org/wiki/Windows_95#Editions">3rd release of Windows 95</a>, “OEM Release 2”, added support for FAT32 drives. <a href="#fnref:osr2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:amalt" role="doc-endnote">
-      <p>Alternative source in disk 4 of <a href="https://archive.org/details/storm-1">Storm #1 - Internet Archive</a>. <a href="#fnref:amalt" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-  </ol>
-</div>]]></content><author><name>Sidneys1</name></author><category term="reverse-engineering" /><category term="programming" /><category term="reverse-engineering" /><category term="ghidra" /><summary type="html"><![CDATA[I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. In this part, we’ll investigate whether we can enter an “editor mode”, hinted at within the strings contained within the program. There’s even a ✨surprise ending✨ that I didn’t see coming!]]></summary></entry><entry><title type="html">Colloquial Skeuomorphisms</title><link href="https://sidneys1.github.io/Skeuomorphisms/" rel="alternate" type="text/html" title="Colloquial Skeuomorphisms" /><published>2023-08-18T00:00:00-04:00</published><updated>2023-08-18T00:00:00-04:00</updated><id>https://sidneys1.github.io/colloquial-skeuomorphisms</id><content type="html" xml:base="https://sidneys1.github.io/Skeuomorphisms/"><![CDATA[<!-- cSpell:words skeuomorph -->
+* Add modern <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> keyboard controls &mdash; the current control scheme is
+  <kbd>A</kbd>/<kbd>Z</kbd> for forward/back, and <kbd>Shift</kbd>/<kbd>X</kbd> for left/right.
+* Get the game running on modern versions of Windows &mdash; I'd like to do this by getting it running "well" on each
+  newer OS starting with Windows XP and moving forward.
+* Properly handle texture files when extracting &mdash; PAKrat (from part I) doesn't extract the PCX textures correctly.]]></content><author><name>Sidneys1</name></author><category term="reverse-engineering" /><category term="programming" /><category term="reverse-engineering" /><category term="ghidra" /><summary type="html"><![CDATA[I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. In this part, we’ll investigate whether we can enter an “editor mode”, hinted at within the strings contained within the program. There’s even a ✨surprise ending✨ that I didn’t see coming!]]></summary></entry><entry><title type="html">Colloquial Skeuomorphisms</title><link href="https://sidneys1.github.io/Skeuomorphisms/" rel="alternate" type="text/html" title="Colloquial Skeuomorphisms" /><published>2023-08-18T00:00:00-04:00</published><updated>2023-08-18T00:00:00-04:00</updated><id>https://sidneys1.github.io/colloquial-skeuomorphisms</id><content type="html" xml:base="https://sidneys1.github.io/Skeuomorphisms/"><![CDATA[<!-- cSpell:words skeuomorph -->
 <!-- cSpell:ignore ˈskyo͞oəˌmôrf -->
 
 Language is strange &ndash; why do we say "hang up the phone" even when using a cell phone? This page documents some
