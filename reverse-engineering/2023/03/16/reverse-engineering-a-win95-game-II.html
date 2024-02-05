@@ -96,6 +96,13 @@
 				
 					
 				
+					
+						
+							<li><a href="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html">Reverse Engineering a Windows 95 Game &ndash; Editor Mode, and Conclusion</a> (Part III)</li>
+						
+						
+					
+				
 				
 			</ul>
 		</div></header><div class="post-image"><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-II/hero.png" style="box-shadow: none;"></div><!-- <div class="post-toc"> -->
@@ -130,17 +137,17 @@ which means the actual entrypoint is “runtime code” that will identify the m
 initialize it. So instead of looking for this entrypoint (which Ghidra finds for us and names <code class="language-plaintext highlighter-rouge">entry</code>), we will try and
 find the main MFC module initializer by searching for something we know happens early in the program’s execution.</p>
 
-<p>When first run, the game checks that DirectX, DirectPlay, and the game CD are inserted. Using Ghidra’s <kbd>Search</kbd>
-→ <kbd>For Strings...</kbd> tool we’ll find the “Please insert CD” message.</p>
+<p>When first run, the game checks that DirectX, DirectPlay, and the game CD are inserted. Using Ghidra’s
+<kbd class="menu"><kbd>Search</kbd><kbd>For Strings...</kbd></kbd> tool we’ll find the “Please insert CD” message.</p>
 
 <p><img src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-II/string-search.png" alt="string search" /></p>
 
 <p>Clicking the result will select the data in the CodeBrowser, and right-clicking the automatically created symbol allows
-us to click <kbd>References</kbd> → <kbd>Find references to s_Please_insert...</kbd> to find all references to this
-particular value within the codebase. Doing so brings up one result at 0x0042cb86. Clicking the result takes us to the
-relevant address. The disassembly shows us a function called <code class="language-plaintext highlighter-rouge">FUN_0042ca2f(CWinApp *param_1)</code>, which we’ll renamed to
-<code class="language-plaintext highlighter-rouge">CWinAppEntrypoint</code>. As this function is not called anywhere else in the code, we can be fairly confident that this is
-only called by runtime code that gets its address programmatically.</p>
+us to click <kbd class="menu"><kbd>References</kbd><kbd>Find references to s_Please_insert...</kbd></kbd> to find all
+references to this particular value within the codebase. Doing so brings up one result at 0x0042cb86. Clicking the
+result takes us to the relevant address. The disassembly shows us a function called <code class="language-plaintext highlighter-rouge">FUN_0042ca2f(CWinApp *param_1)</code>,
+which we’ll renamed to <code class="language-plaintext highlighter-rouge">CWinAppEntrypoint</code>. As this function is not called anywhere else in the code, we can be fairly
+confident that this is only called by runtime code that gets its address programmatically.</p>
 
 <details>
   <summary>Disassembly of <code>CWinAppEntrypoint</code> (click to expand).</summary>
@@ -307,6 +314,13 @@ if we can activate that?</p>
 					
 				
 			
+				
+			
+				
+					
+						<li><a href="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html">Reverse Engineering a Windows 95 Game &ndash; Editor Mode, and Conclusion</a> (Part III)</li>
+					
+					
 				
 			
 			
