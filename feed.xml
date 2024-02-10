@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-02-05T15:24:24-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2024-02-01T00:00:00-05:00</published><updated>2024-02-01T00:00:00-05:00</updated><id>https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun pakrat -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-02-09T20:43:56-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>your-email@domain.com</email></author><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2024-02-01T00:00:00-05:00</published><updated>2024-02-01T00:00:00-05:00</updated><id>https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun pakrat -->
 <!-- cSpell:ignore PAKS AMOVIE DSETUP DSETUPE DSETUPJ MATHINV SSPUNINS Bmps Ihighsco RIFFÀ -->
 
 <p>I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played
@@ -12,7 +12,9 @@ enter an “editor mode”, hinted at within the <code class="language-plaintext
 <p>Here’s where we left off, investigating the disassembly of a function that references a mysterious string:
 <code class="language-plaintext highlighter-rouge">*** EDITOR MODE ***</code>. Cleaning the disassembly up and commenting to be a bit to be more readable gives us:</p>
 
-<div style="--left: 8;" class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Because `param_1` from the disassembly (aka `this`) is passed to</span>
+<div class="code-split-root" data-file-name=".cpp"><div class="code-split-scroll">
+
+    <div style="--left: 8;" class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Because `param_1` from the disassembly (aka `this`) is passed to</span>
 <span class="c1">// `CWnd::SetWindowTextA` at the end, this function probably belongs</span>
 <span class="c1">// to a class inheriting `CWnd`.</span>
 <span class="k">class</span> <span class="nc">CGameWnd</span> <span class="o">:</span> <span class="k">public</span> <span class="n">CWnd</span><span class="p">;</span>
@@ -24,23 +26,25 @@ enter an “editor mode”, hinted at within the <code class="language-plaintext
 	<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">unknown_334</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 		<span class="c1">// If the variable at offset 0x334 is not 0/FALSE/NULL,</span>
 		<span class="c1">// we have a file loaded.</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
 
-<div class="language-cpp code-split highlighter-rouge" style="--left: 8;"><div class="highlight"><pre class="highlight"><code>		<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">unknown_3714</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <div class="language-cpp code-split highlighter-rouge" style="--left: 8;"><div class="highlight"><pre class="highlight"><code>		<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">unknown_3714</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 			<span class="c1">// If the variable at offset 0x3714 is 0/FALSE/NULL,</span>
 			<span class="c1">// we're in "editor mode"... whatever that is!</span>
 			<span class="c1">// Append text indicating this to the buffer.</span>
 			<span class="n">strcat</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">" - *** EDITOR MODE ***"</span><span class="p">);</span>
 		<span class="p">}</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
 
-<div class="language-cpp code-split highlighter-rouge" style="--left: 4;"><div class="highlight"><pre class="highlight"><code>	<span class="p">}</span>
-</code></pre></div></div>
+    <div class="language-cpp code-split highlighter-rouge" style="--left: 4;"><div class="highlight"><pre class="highlight"><code>	<span class="p">}</span>
+</code></pre></div>    </div>
 
-<div class="language-cpp code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="c1">// Set the window title to the contents of the buffer.</span>
+    <div class="language-cpp code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="c1">// Set the window title to the contents of the buffer.</span>
 	<span class="k">this</span><span class="o">-&gt;</span><span class="n">SetWindowTextA</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
+
+  </div></div>
 
 <p>Ok! So to activate editor mode, we need to <strong>1)</strong> not be fullscreen, <strong>2)</strong> have <code class="language-plaintext highlighter-rouge">CGameWnd-&gt;unknown_334</code> be non-zero,
 and <strong>3)</strong> have <code class="language-plaintext highlighter-rouge">CGameWnd-&gt;unknown_3714</code> be zero. Enabling fullscreen (via the <samp>3d.ini</samp> file described in
@@ -189,7 +193,9 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
 
 <h3 id="building-a-27-year-old-game">Building a 27 Year Old Game</h3>
 
-<div class="carousel__holder" style="float: right; max-width: 50%; margin: 0 0 0 1em;">
+<div class="clearfix">
+
+  <div class="carousel__holder rfloat" style="" data-height="300px">
     <div id="carousel0" class="carousel">
         
           <input class="carousel__activator" type="radio" name="carousel0" id="0a" checked="checked" />
@@ -206,8 +212,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
           
           
           <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0d">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0b">⮞</label>
+              <label class="carousel__control carousel__control--backward" for="0d">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0b">&gt;</label>
           </div>
         
           
@@ -215,8 +221,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
           
           
           <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0a">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0c">⮞</label>
+              <label class="carousel__control carousel__control--backward" for="0a">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0c">&gt;</label>
           </div>
         
           
@@ -224,8 +230,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
           
           
           <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0b">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0d">⮞</label>
+              <label class="carousel__control carousel__control--backward" for="0b">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0d">&gt;</label>
           </div>
         
           
@@ -233,8 +239,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
           
           
           <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0c">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0a">⮞</label>
+              <label class="carousel__control carousel__control--backward" for="0c">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0a">&gt;</label>
           </div>
         
         <div class="carousel__track">
@@ -244,7 +250,7 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
             
             <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/open-workspace-opt.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/open-workspace-opt.png" style="" /></li>
             
-            <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/select-project.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/select-project.png" style="image-rendering: pixelated;" /></li>
+            <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/select-project.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/select-project.png" style="" /></li>
             
             <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/rebuild-all.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/rebuild-all.png" style="" /></li>
             
@@ -264,8 +270,26 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
     </div>
 </div>
 
-<style>
-.carousel__holder {width: 100%; position: relative; padding-bottom: 460px; margin: 1rem 0 1rem;}
+  <style>
+.carousel__holder {
+	width: 100%;
+	position: relative;
+	padding-bottom: 300px;
+	margin: 1rem 0 1rem;
+}
+
+@media screen and (max-width: 1800px) {
+	.carousel__holder {
+		padding-bottom: calc(min(40vh, 300px));
+	}
+}
+
+@media screen and (min-width: 1800px) {
+	.carousel__holder:is(.rfloat, .lfloat) {
+		padding-bottom: calc(min(40%, 300px));
+	}
+}
+
 .carousel {
   height: 100%;
   width: 100%;
@@ -444,7 +468,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
   transition: transform 0.5s ease 0s, -webkit-transform 0.5s ease 0s;
 }
 .carousel__track .carousel__slide {
-  display: block;
+  display: flex;
+  align-items: center;
   top: 0;
   left: 0;
   right: 0;
@@ -491,8 +516,13 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
 	width: auto;
 	height: auto;
 	max-width: 100%;
-	max-height: 460px;
+	max-height: 100%;
+	box-shadow: unset;
 }
+.carousel__slide img:hover {
+	box-shadow: unset;
+}
+
 .carousel__slide .overlay {height: 100%;}
 .carousel--thumb .carousel__indicator {
   height: 30px;
@@ -520,23 +550,27 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
 
 </style>
 
-<p>Of course, the pièces de résistance of having access to the source code: editor mode! Let’s see what it takes to get it
+  <p>Of course, the pièces de résistance of having access to the source code: editor mode! Let’s see what it takes to get it
 working. First, we’ll need to get the source code building. Thanks to the lovely project <a href="https://dosbox-x.com/">DOSBox-X</a>, emulating
 older Windows operating systems is as simple as following <a href="https://dosbox-x.com/wiki/Guide%3AInstalling-Windows-95">a guide</a>. I also sourced the following disk images:
 <a href="https://archive.org/details/win-95-osr-2">Windows 95 OSR2</a><sup id="fnref:osr2" role="doc-noteref"><a href="#fn:osr2" class="footnote" rel="footnote">1</a></sup>, <a href="https://winworldpc.com/product/visual-c/4x">Visual C++ 4.2</a>, the <a href="https://archive.org/details/gamesdk">DirectX 1.0 SDK</a>, and the
 <a href="https://archive.org/details/the-net-cd">ActiveMovie SDK</a><sup id="fnref:amalt" role="doc-noteref"><a href="#fn:amalt" class="footnote" rel="footnote">2</a></sup> (this disk contains many other interesting installers as well). If you’re planning on
 building up such a virtual machine yourself, you’ll have to find your own product keys, sorry.</p>
 
-<p>Breezing through the guide leaves us with a fully functional Windows 95 install, with Visual C++ 4.2 (which includes the
+  <p>Breezing through the guide leaves us with a fully functional Windows 95 install, with Visual C++ 4.2 (which includes the
 Microsoft Developer Studio IDE - which we’ll need), the DirectX SDK, and the ActiveMovie SDK. Our source code contains
 an <code class="language-plaintext highlighter-rouge">.mdp</code> file, which is a Developer Studio project, so let’s open it and build the default project with
 <kbd><kbd>Ctrl</kbd>+<kbd>B</kbd></kbd>!</p>
 
-<div data-file-name=".log" style="clear: both;" class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--------------------Configuration: 3dlib - Win32 Debug--------------------
-Compiling...
-</code></pre></div></div>
+</div>
 
-<div class="language-plaintext highlighter-rouge code-split"><div class="highlight">
+<div class="code-split-root" data-file-name=".log"><div class="code-split-scroll">
+
+    <div style="clear: both;" class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--------------------Configuration: 3dlib - Win32 Debug--------------------
+Compiling...
+</code></pre></div>    </div>
+
+    <div class="language-plaintext highlighter-rouge code-split"><div class="highlight">
 <pre class="highlight">
 <code>decomp.cpp
 <span class="err">fatal error C1083: Cannot open source file: 'C:\Sspyth\3dlib\decomp.cpp': No such file or directory</span>
@@ -544,6 +578,8 @@ Compiling...
 Error executing cl.exe.
 Sspyth.exe - 1 error(s), 4 warning(s)
 </code></pre></div></div>
+
+  </div></div>
 
 <p>Alright, some errors, but nothing we can’t solve. The first thing we notice is we’re missing a file
 <samp>3DLIB\DECOMP.CPP</samp>. Poking around, we find there’s a file named <samp>3DLIB\aviDECOMP.CPP</samp>. A simple
@@ -627,21 +663,21 @@ set just-so to be “in editor mode”. Thankfully now we can look at actual cod
 
 <div class="float-reverse">
 
-  <div class="rfloat">
+  <div class="rfloat"><div class="code-split-root" data-file-name="GAME.CPP"><div class="code-split-scroll">
 
-    <div style="--left: 4" data-file-name="GAME.CPP" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">CGame</span><span class="o">::</span><span class="n">Update</span><span class="p">(</span><span class="n">CKeyboard</span><span class="o">&amp;</span> <span class="n">keys</span><span class="p">)</span> <span class="p">{</span>
-</code></pre></div>    </div>
+        <div style="--left: 4" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">CGame</span><span class="o">::</span><span class="n">Update</span><span class="p">(</span><span class="n">CKeyboard</span><span class="o">&amp;</span> <span class="n">keys</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div>        </div>
 
-    <div class="language-c++ code-split highlighter-rouge" style="--left: 4"><div class="highlight"><pre class="highlight"><code>	<span class="k">if</span> <span class="p">(</span><span class="n">keys</span><span class="p">.</span><span class="n">KeyDownWasUp</span><span class="p">(</span><span class="sc">'G'</span><span class="p">))</span>	<span class="p">{</span>
+        <div class="language-c++ code-split highlighter-rouge" style="--left: 4"><div class="highlight"><pre class="highlight"><code>	<span class="k">if</span> <span class="p">(</span><span class="n">keys</span><span class="p">.</span><span class="n">KeyDownWasUp</span><span class="p">(</span><span class="sc">'G'</span><span class="p">))</span>	<span class="p">{</span>
 		<span class="n">m_GameMode</span> <span class="o">=</span> <span class="o">!</span><span class="n">m_GameMode</span><span class="p">;</span>
 		<span class="n">GetMainFrame</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">ShowPauseState</span><span class="p">();</span>
 	<span class="p">}</span>
-</code></pre></div>    </div>
+</code></pre></div>        </div>
 
-    <div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">}</span>
-</code></pre></div>    </div>
+        <div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">}</span>
+</code></pre></div>        </div>
 
-  </div>
+      </div></div></div>
 
   <p>Awesome, my guesses were <em>really</em> close. <code class="language-plaintext highlighter-rouge">unknown_334</code> is <code class="language-plaintext highlighter-rouge">m_game.m_pscene</code>, and <code class="language-plaintext highlighter-rouge">unknown_3714</code> is <code class="language-plaintext highlighter-rouge">m_game.m_GameMode</code>.
 Let’s see if I’m right, and <code class="language-plaintext highlighter-rouge">m_GameMode</code> is changed with a <code class="language-plaintext highlighter-rouge">#ifdef EDITOR</code>-surrounded key input. <code class="language-plaintext highlighter-rouge">m_GameMode</code> is only
@@ -654,18 +690,22 @@ changed in two places in the code, both in <samp>GAME.CPP</samp>. The first is d
 changes that weren’t included in the copy of the code I have. But a little digging shows that <code class="language-plaintext highlighter-rouge">m_GameMode</code> alone has no
 real effect, because just a little further down is the code to actually <em>perform</em> editor mode:</p>
 
-<div data-file-name="GAME.CPP" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">////////////////////////////////////////// EDITOR</span>
-<span class="cp">#ifdef EDITOR
-</span></code></pre></div></div>
+<div class="code-split-root" data-file-name="GAME.CPP"><div class="code-split-scroll">
 
-<div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">keys</span><span class="p">.</span><span class="n">KeyDownWasUp</span><span class="p">(</span><span class="sc">'I'</span><span class="p">))</span> <span class="p">{</span>
+    <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">////////////////////////////////////////// EDITOR</span>
+<span class="cp">#ifdef EDITOR
+</span></code></pre></div>    </div>
+
+    <div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">keys</span><span class="p">.</span><span class="n">KeyDownWasUp</span><span class="p">(</span><span class="sc">'I'</span><span class="p">))</span> <span class="p">{</span>
 	<span class="n">GetApp</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">ShowEditFrame</span><span class="p">();</span>
 	<span class="n">GetApp</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">m_editframe</span><span class="o">-&gt;</span><span class="n">OnInsertButton</span><span class="p">();</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
 
-<div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#endif
-</span></code></pre></div></div>
+    <div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#endif
+</span></code></pre></div>    </div>
+
+  </div></div>
 
 <div>
 
@@ -702,12 +742,12 @@ give it a go:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('235-editor-mode').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('222-editor-mode').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="235-editor-mode" onclick="document.getElementById('235-editor-mode').close()">
+  <dialog class="popover" id="222-editor-mode" onclick="document.getElementById('222-editor-mode').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -766,31 +806,31 @@ examples of “skeuomorphisms” in our common vernacular.</p>
 <hr />
 
 <dl>
-  <dt><em>📞</em> <em>“Hang up the Phone”</em></dt>
+  <dt><em>📞</em> <em>“<u>Hang</u> up the Phone”</em></dt>
   <dd>Wall-mounted landline telephones had a hook to “hang” the receiver on.</dd>
-  <dt><em>🗣️</em> <em>“Call”</em></dt>
+  <dt><em>🗣️</em> <em>“<u>Call</u> me”</em></dt>
   <dd>You don’t have to shout anymore.</dd>
-  <dt><em>☎️</em> (Re)dial</dt>
+  <dt><em>☎️</em> (Re)<u>dial</u></dt>
   <dd>Early telephones had an actual rotary dial to select the numbers you would call.</dd>
-  <dt><em>🛎️</em> <em>“The Phone is Ringing”</em></dt>
-  <dt><em>🔊</em> Ringtone</dt>
+  <dt><em>🛎️</em> <em>“The Phone is <u>Ringing</u>”</em></dt>
+  <dt><em>🔊</em> <u>Ring</u>tone</dt>
   <dd>Early telephones had an actual bell that would ring when a specific “<a href="https://en.wikipedia.org/wiki/Ringing_tone">ringing tone</a>” was received (in
-North America this is alternating 440 Hz and 480 Hz tones). As the ringing tone required to set off the bell
-<a href="https://en.wikipedia.org/wiki/Ringing_tone#National_characteristics">differed from region to region</a>, the term “ringtone” became synonymous with being able to
-<a href="https://en.wikipedia.org/wiki/Ringing_tone#Personalized_ringing_tones">change the sound</a> of an electronic telephone’s “ringing” audio.</dd>
+North America this is alternating 440 Hz and 480 Hz tones). The ringing tone required to set off the bell
+<a href="https://en.wikipedia.org/wiki/Ringing_tone#National_characteristics">differed from region to region</a>. The term “ringtone” eventually became synonymous with
+being able to <a href="https://en.wikipedia.org/wiki/Ringing_tone#Personalized_ringing_tones">change the sound</a> of an electronic telephone’s “ringing” audio.</dd>
 </dl>
 
 <h1 id="computers-and-the-internet">Computers and the Internet</h1>
 <hr />
 
 <dl>
-  <dt><em>✂️</em> Cut and Paste</dt>
+  <dt><em>✂️</em> <u>Cut</u> and <u>Paste</u></dt>
   <dd>Editing on paper involved actual scissors and glue.</dd>
-  <dt><em>📰</em> Message “Board”</dt>
+  <dt><em>📰</em> Message <u>Board</u></dt>
   <dd>A community message board is often a literal corkboard.</dd>
-  <dt><em>🌎</em> <em>“Get Online”</em></dt>
+  <dt><em>🌎</em> <em>“Get On<u>line</u>”</em></dt>
   <dd>Before Wi-Fi, computers needed to be physically connected to a phone line and modem to access the Internet.</dd>
-  <dt><em>📧</em> Email “CC”</dt>
+  <dt><em>📧</em> Email <u>CC</u></dt>
   <dd>To send a physical letter in duplicate, you would need to create a <dfn><abbr title="Carbon Copy">CC</abbr></dfn>,
 or “<a href="https://en.wikipedia.org/wiki/Carbon_copy">Carbon Copy</a>”.</dd>
 </dl>
@@ -799,14 +839,14 @@ or “<a href="https://en.wikipedia.org/wiki/Carbon_copy">Carbon Copy</a>”.</d
 <hr />
 
 <dl>
-  <dt><em>⏪</em> Rewind</dt>
-  <dt><em>📼</em> <em>“Tape it”</em></dt>
-  <dt><em>📹</em> <em>“Get it on Tape”</em></dt>
+  <dt><em>⏪</em> Re<u>wind</u></dt>
+  <dt><em>📼</em> <em>“<u>Tape</u> it”</em></dt>
+  <dt><em>📹</em> <em>“Get it on <u>Tape</u>”</em></dt>
   <dd>Cassettes, the primary storage medium before optical disks, contained magnetic tape wound around two spindles.</dd>
-  <dt><em>📻</em> <em>“Stay Tuned”</em></dt>
-  <dt><em>🎛️</em> Tune In / Tune Out</dt>
+  <dt><em>📻</em> <em>“Stay <u>Tune</u>d”</em></dt>
+  <dt><em>🎛️</em> <u>Tune</u> In / <u>Tune</u> Out</dt>
   <dd>Radio and television broadcasts require frequency matching (just like tuning an instrument).</dd>
-  <dt><em>📴</em> “Turn” On/Off</dt>
+  <dt><em>📴</em> <u>Turn</u> On/Off</dt>
   <dd>Most early electronic devices featured a rotating power selector.</dd>
 </dl>
 
@@ -814,9 +854,9 @@ or “<a href="https://en.wikipedia.org/wiki/Carbon_copy">Carbon Copy</a>”.</d
 <hr />
 
 <dl>
-  <dt><em>🧊</em> Icebox</dt>
+  <dt><em>🧊</em> <u>Ice</u>box</dt>
   <dd>Before refrigeration, keeping food fresh involved actual blocks of ice.</dd>
-  <dt><em>🪔</em> <em>“Turn out the Light”</em></dt>
+  <dt><em>🪔</em> <em>“<u>Turn</u> out the Light”</em></dt>
   <dd>Gas and oil lamps had a dial which, when turned, would snuff out the flame.</dd>
 </dl>
 
@@ -824,7 +864,7 @@ or “<a href="https://en.wikipedia.org/wiki/Carbon_copy">Carbon Copy</a>”.</d
 <hr />
 
 <dl>
-  <dt><em>🚗</em> <em>“Roll the Window Up/Down”</em></dt>
+  <dt><em>🚗</em> <em>“<u>Roll</u> the Window Up/Down”</em></dt>
   <dd>Sliding automobile passenger windows used to be operated via a hand crank.</dd>
 </dl>]]></content><author><name>Sidneys1</name></author><category term="other" /><category term="linguistics" /><summary type="html"><![CDATA[Language is strange – why do we say “hang up the phone” even when using a cell phone? This page documents some examples of “skeuomorphisms” in our common vernacular. I’ll be updating this page as I come across more!]]></summary></entry><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2023-03-16T00:00:00-04:00</published><updated>2023-03-16T00:00:00-04:00</updated><id>https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2023/03/16/reverse-engineering-a-win95-game-II.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun Ghidra -->
 <!-- cSpell:ignore sspyth MATHINV mbscpy strcmp -->
@@ -1264,7 +1304,7 @@ Let’s get started with this:</p>
 	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="s">"PAKrat 0.1</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
 
 
-	<span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">file</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="nf">file</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
 	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">)</span> <span class="p">{</span>
 		<span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"Error opening '"</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">"': "</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
 		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
@@ -1376,7 +1416,7 @@ operations and <code class="language-plaintext highlighter-rouge">#include &lt;a
 	<span class="p">}</span>
 
 	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Creating file "</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">quoted</span><span class="p">(</span><span class="n">path_str</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
-	<span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">out_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">out</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="nf">out_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">out</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">fstream</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
 	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">out_file</span><span class="p">)</span> <span class="p">{</span>
 		<span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"Error creating file: "</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
 		<span class="k">continue</span><span class="p">;</span>
@@ -1960,12 +2000,12 @@ our game class to match our needs.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('72-pixel-barf').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('46-pixel-barf').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="72-pixel-barf" onclick="document.getElementById('72-pixel-barf').close()">
+  <dialog class="popover" id="46-pixel-barf" onclick="document.getElementById('46-pixel-barf').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2019,7 +2059,7 @@ returns a <code class="language-plaintext highlighter-rouge">olc::Pixel</code> f
     <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="n">Sample</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span> <span class="nf">Sample</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
     <span class="c1">// Called to get the color of a specific point on the screen.</span>
     <span class="c1">// For now we're returning a color based on the screen coordinates.</span>
     <span class="k">return</span> <span class="n">olc</span><span class="o">::</span><span class="n">Pixel</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">255</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
@@ -2033,12 +2073,12 @@ color pattern converging in the center of the canvas:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.png" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('187-coordinate-identity').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.png" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('142-coordinate-identity').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="187-coordinate-identity" onclick="document.getElementById('187-coordinate-identity').close()">
+  <dialog class="popover" id="142-coordinate-identity" onclick="document.getElementById('142-coordinate-identity').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2061,7 +2101,7 @@ directional magnitude out from that point.</p>
     <span class="c1">// Explicit constructor that initializes x, y, and z.</span>
     <span class="k">constexpr</span> <span class="n">vf3d</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="p">{}</span>
     <span class="c1">// Explicit constructor that initializes x, y, and z to the same value.</span>
-    <span class="k">constexpr</span> <span class="n">vf3d</span><span class="p">(</span><span class="kt">float</span> <span class="n">f</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="k">constexpr</span> <span class="nf">vf3d</span><span class="p">(</span><span class="kt">float</span> <span class="n">f</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">{}</span>
 <span class="p">};</span>
 
 <span class="c1">// Struct to describe a 3D floating point ray (vector with origin point).</span>
@@ -2268,12 +2308,12 @@ explaining the geometry here: this is a well-documented process and can be resea
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('224-flat-sphere').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('19-flat-sphere').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="224-flat-sphere" onclick="document.getElementById('224-flat-sphere').close()">
+  <dialog class="popover" id="19-flat-sphere" onclick="document.getElementById('19-flat-sphere').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2311,8 +2351,8 @@ of that origin point. Update <code class="language-plaintext highlighter-rouge">
 
 <div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">- ray sample_ray({ x, y, 0 }, { 0, 0, 1 });
 </span><span class="gi">+ ray sample_ray({ 0, 0, -800 }, { (x / (float)WIDTH) * 100, (y / (float)HEIGHT) * 100, 200});
-</span>
-  // Sample this ray - if the ray doesn't hit anything, use the color of
+</span><span class="err">
+</span>  // Sample this ray - if the ray doesn't hit anything, use the color of
   // the surrounding fog.
 <span class="gd">- return SampleRay(sample_ray).value_or(FOG);
 </span><span class="gi">+ return SampleRay(sample_ray.normalize()).value_or(FOG);
@@ -2342,7 +2382,7 @@ itself):</p>
 <span class="p">}</span>
 
 <span class="c1">// Return a normalized version of this vf3d (magnitude == 1).</span>
-<span class="k">const</span> <span class="n">vf3d</span> <span class="n">normalize</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<span class="k">const</span> <span class="n">vf3d</span> <span class="nf">normalize</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
     <span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrtf</span><span class="p">((</span><span class="o">*</span><span class="k">this</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">));</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -2356,12 +2396,12 @@ depths.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('30-perspective-rendering').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('165-perspective-rendering').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="30-perspective-rendering" onclick="document.getElementById('30-perspective-rendering').close()">
+  <dialog class="popover" id="165-perspective-rendering" onclick="document.getElementById('165-perspective-rendering').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2545,12 +2585,12 @@ into the distance.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('131-floor-and-fog').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('141-floor-and-fog').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="131-floor-and-fog" onclick="document.getElementById('131-floor-and-fog').close()">
+  <dialog class="popover" id="141-floor-and-fog" onclick="document.getElementById('141-floor-and-fog').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2629,8 +2669,8 @@ reflective.</p>
 <div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // Create a new Sphere and add it to our scene.
 <span class="gd">-shapes.emplace_back(std::make_unique&lt;Sphere&gt;(vf3d(0, 0, 200), olc::GREY, 100));
 </span><span class="gi">+shapes.emplace_back(std::make_unique&lt;Sphere&gt;(vf3d(0, 0, 200), olc::GREY, 100, 0.9f));
-</span>
- // Add some additional Spheres at different positions.
+</span><span class="err">
+</span> // Add some additional Spheres at different positions.
 <span class="gd">-shapes.emplace_back(std::make_unique&lt;Sphere&gt;(vf3d(-150, +75, +300), olc::RED, 100));
 </span><span class="gi">+shapes.emplace_back(std::make_unique&lt;Sphere&gt;(vf3d(-150, +75, +300), olc::RED, 100, 0.5f));
 </span></code></pre></div></div>
@@ -2716,12 +2756,12 @@ center <code class="language-plaintext highlighter-rouge">Sphere</code>.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('158-reflections').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('208-reflections').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="158-reflections" onclick="document.getElementById('158-reflections').close()">
+  <dialog class="popover" id="208-reflections" onclick="document.getElementById('208-reflections').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2846,14 +2886,14 @@ class member instead of a constant so that we can change the position of the lig
 the constructor to be 500 units behind and 500 units above our origin.</p>
 
 <div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // ---✂--- Add a class member to our OlPixelRayTracer:
-
-+// The position of our point light.
-<span class="gi">+vf3d light_point;
-</span>
- // ---✂--- Update our game constructor:
-
--OlcPixelRayTracer() {
-<span class="gi">+OlcPixelRayTracer() : light_point(0, -500, -500) {
+<span class="err">
+</span><span class="gi">+// The position of our point light.
++vf3d light_point;
+</span><span class="err">
+</span> // ---✂--- Update our game constructor:
+<span class="err">
+</span><span class="gd">-OlcPixelRayTracer() {
+</span><span class="gi">+OlcPixelRayTracer() : light_point(0, -500, -500) {
 </span></code></pre></div></div>
 
 <p>Diffuse lighting is frighteningly simple - we already know that a dot product between two vectors returns a value that
@@ -2915,13 +2955,13 @@ constant.</p>
 darkens our scene.</p>
 
 <div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // ---✂--- Add a new constant:
-
-+// Lighting
-<span class="gi">+constexpr float AMBIENT_LIGHT = 0.5f;
-</span>
- // ---✂--- Update our diffuse lighting:
-
- // Next we'll compute the dot product between our surface normal and the light ray.
+<span class="err">
+</span><span class="gi">+// Lighting
++constexpr float AMBIENT_LIGHT = 0.5f;
+</span><span class="err">
+</span> // ---✂--- Update our diffuse lighting:
+<span class="err">
+</span> // Next we'll compute the dot product between our surface normal and the light ray.
  // We need to clamp this between 0 and 1, because negative values have no meaning here.
 <span class="gi">+// Additionally, we'll add in our ambient light so no surfaces are entirely dark.
 </span><span class="gd">-float dot = std::clamp(light_ray.direction * normal.direction, 0.0f, 1.0f);
@@ -2935,12 +2975,12 @@ darkens our scene.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('49-diffuse-lighting').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('90-diffuse-lighting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="49-diffuse-lighting" onclick="document.getElementById('49-diffuse-lighting').close()">
+  <dialog class="popover" id="90-diffuse-lighting" onclick="document.getElementById('90-diffuse-lighting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3045,12 +3085,12 @@ Otherwise we calculate the diffuse lighting as before.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('167-shadow-casting').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('88-shadow-casting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="167-shadow-casting" onclick="document.getElementById('167-shadow-casting').close()">
+  <dialog class="popover" id="88-shadow-casting" onclick="document.getElementById('88-shadow-casting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3136,8 +3176,8 @@ and so slows down our frame times. I’ve placed my constant defining the number
 if as my reflection count to help keep debug runs at an acceptable pace.</p>
 
 <div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">-constexpr int SAMPLES = 3;
-</span>
- #ifdef DEBUG
+</span><span class="err">
+</span> #ifdef DEBUG
  constexpr int BOUNCES = 2;
 <span class="gi">+constexpr int SAMPLES = 2;
 </span> #else
@@ -3154,12 +3194,12 @@ in Release mode.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('14-multisampling').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('210-multisampling').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="14-multisampling" onclick="document.getElementById('14-multisampling').close()">
+  <dialog class="popover" id="210-multisampling" onclick="document.getElementById('210-multisampling').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->

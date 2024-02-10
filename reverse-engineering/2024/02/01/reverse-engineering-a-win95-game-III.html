@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en"><head>
   <meta charset="utf-8">
-  <link rel="preload" href="https://sidneys1.github.io/assets/main.css" as="style"/>
+
+  <link rel="preload" href="https://sidneys1.github.io/assets/css/main.css" as="style" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="onion-location" content="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" />
-  <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <meta http-equiv="onion-location"
+    content="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" />
+  <link rel="icon" type="image/png" sizes="16x16"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" /><!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Reverse Engineering a Windows 95 Game | Sidneys1.com on GitHub Pages</title>
-<meta name="generator" content="Jekyll v4.2.2" />
+<meta name="generator" content="Jekyll v4.3.3" />
 <meta property="og:title" content="Reverse Engineering a Windows 95 Game" />
 <meta name="author" content="Sidneys1" />
 <meta property="og:locale" content="en_US" />
@@ -22,36 +27,38 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sidneys1"},"dateModified":"2024-02-01T00:00:00-05:00","datePublished":"2024-02-01T00:00:00-05:00","description":"I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. In this part, we’ll investigate whether we can enter an “editor mode”, hinted at within the strings contained within the program. There’s even a ✨surprise ending✨ that I didn’t see coming!","headline":"Reverse Engineering a Windows 95 Game","mainEntityOfPage":{"@type":"WebPage","@id":"https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html"},"url":"https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="https://sidneys1.github.io/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><script defer src="https://sidneys1.github.io/assets/mastodon_comments.js" onload="initComments()"></script><!-- KaTeX -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<link rel="stylesheet" href="https://sidneys1.github.io/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><script defer src="https://sidneys1.github.io/assets/mastodon_comments.js" onload="initComments()"></script><!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 
   <!-- The loading of KaTeX is deferred to speed up page rendering -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+    crossorigin="anonymous"></script>
 
   <!-- To automatically render math in text elements, include the auto-render extension: -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
-      onload="renderMathInElement(document.body);"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
 </head>
 <body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="https://sidneys1.github.io/">Sidneys1.com on GitHub Pages</a>
 
 	<span class="coffee"><a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
-		<img height="25px" title="Buy me a Coffee" src="https://sidneys1.github.io/assets/coffee-cup-1.svg"/>
-	</a></span><div id="nav-placeholder">
-			<nav class="site-nav">
-				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
-				<label for="nav-trigger">
-				<span class="menu-icon">
-					<svg viewBox="0 0 18 15" width="18px" height="15px">
-					<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
-					</svg>
-				</span>
-				</label>
+		<img height="24px" title="Buy me a Coffee" src="https://sidneys1.github.io/assets/coffee-cup-1.svg"/>
+	</a></span><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
 
-				<div class="trigger"><a class="page-link" href="https://sidneys1.github.io/tags.html">Tags</a><a class="page-link" href="https://sidneys1.github.io/categories.html">Categories</a><a class="page-link" href="https://sidneys1.github.io/series.html">Series</a></div>
-			</nav>
-			</div></div>
+        <div class="trigger"><a class="page-link" href="https://sidneys1.github.io/tags.html">Tags</a><a class="page-link" href="https://sidneys1.github.io/categories.html">Categories</a><a class="page-link" href="https://sidneys1.github.io/series.html">Series</a></div>
+      </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
@@ -122,7 +129,9 @@ enter an “editor mode”, hinted at within the <code class="language-plaintext
 <p>Here’s where we left off, investigating the disassembly of a function that references a mysterious string:
 <code class="language-plaintext highlighter-rouge">*** EDITOR MODE ***</code>. Cleaning the disassembly up and commenting to be a bit to be more readable gives us:</p>
 
-<div style="--left: 8;" class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Because `param_1` from the disassembly (aka `this`) is passed to</span>
+<div class="code-split-root" data-file-name=".cpp"><div class="code-split-scroll">
+
+    <div style="--left: 8;" class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Because `param_1` from the disassembly (aka `this`) is passed to</span>
 <span class="c1">// `CWnd::SetWindowTextA` at the end, this function probably belongs</span>
 <span class="c1">// to a class inheriting `CWnd`.</span>
 <span class="k">class</span> <span class="nc">CGameWnd</span> <span class="o">:</span> <span class="k">public</span> <span class="n">CWnd</span><span class="p">;</span>
@@ -134,23 +143,25 @@ enter an “editor mode”, hinted at within the <code class="language-plaintext
 	<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">unknown_334</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 		<span class="c1">// If the variable at offset 0x334 is not 0/FALSE/NULL,</span>
 		<span class="c1">// we have a file loaded.</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
 
-<div class="language-cpp code-split highlighter-rouge" style="--left: 8;"><div class="highlight"><pre class="highlight"><code>		<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">unknown_3714</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <div class="language-cpp code-split highlighter-rouge" style="--left: 8;"><div class="highlight"><pre class="highlight"><code>		<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">unknown_3714</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 			<span class="c1">// If the variable at offset 0x3714 is 0/FALSE/NULL,</span>
 			<span class="c1">// we're in "editor mode"... whatever that is!</span>
 			<span class="c1">// Append text indicating this to the buffer.</span>
 			<span class="n">strcat</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">" - *** EDITOR MODE ***"</span><span class="p">);</span>
 		<span class="p">}</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
 
-<div class="language-cpp code-split highlighter-rouge" style="--left: 4;"><div class="highlight"><pre class="highlight"><code>	<span class="p">}</span>
-</code></pre></div></div>
+    <div class="language-cpp code-split highlighter-rouge" style="--left: 4;"><div class="highlight"><pre class="highlight"><code>	<span class="p">}</span>
+</code></pre></div>    </div>
 
-<div class="language-cpp code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="c1">// Set the window title to the contents of the buffer.</span>
+    <div class="language-cpp code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="c1">// Set the window title to the contents of the buffer.</span>
 	<span class="k">this</span><span class="o">-&gt;</span><span class="n">SetWindowTextA</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
+
+  </div></div>
 
 <p>Ok! So to activate editor mode, we need to <strong>1)</strong> not be fullscreen, <strong>2)</strong> have <code class="language-plaintext highlighter-rouge">CGameWnd-&gt;unknown_334</code> be non-zero,
 and <strong>3)</strong> have <code class="language-plaintext highlighter-rouge">CGameWnd-&gt;unknown_3714</code> be zero. Enabling fullscreen (via the <samp>3d.ini</samp> file described in
@@ -299,7 +310,9 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
 
 <h3 id="building-a-27-year-old-game">Building a 27 Year Old Game</h3>
 
-<div class="carousel__holder" style="float: right; max-width: 50%; margin: 0 0 0 1em;">
+<div class="clearfix">
+
+  <div class="carousel__holder rfloat" style="" data-height="300px">
     <div id="carousel0" class="carousel">
         
           <input class="carousel__activator" type="radio" name="carousel0" id="0a" checked="checked" />
@@ -316,8 +329,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
           
           
           <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0d">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0b">⮞</label>
+              <label class="carousel__control carousel__control--backward" for="0d">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0b">&gt;</label>
           </div>
         
           
@@ -325,8 +338,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
           
           
           <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0a">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0c">⮞</label>
+              <label class="carousel__control carousel__control--backward" for="0a">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0c">&gt;</label>
           </div>
         
           
@@ -334,8 +347,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
           
           
           <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0b">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0d">⮞</label>
+              <label class="carousel__control carousel__control--backward" for="0b">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0d">&gt;</label>
           </div>
         
           
@@ -343,8 +356,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
           
           
           <div class="carousel__controls">
-              <label class="carousel__control carousel__control--backward" for="0c">⮜</label>
-              <label class="carousel__control carousel__control--forward" for="0a">⮞</label>
+              <label class="carousel__control carousel__control--backward" for="0c">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0a">&gt;</label>
           </div>
         
         <div class="carousel__track">
@@ -354,7 +367,7 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
             
             <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/open-workspace-opt.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/open-workspace-opt.png" style="" /></li>
             
-            <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/select-project.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/select-project.png" style="image-rendering: pixelated;" /></li>
+            <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/select-project.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/select-project.png" style="" /></li>
             
             <li class="carousel__slide"><img alt="/images/reverse-engineering-a-win95-game-III/rebuild-all.png" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/rebuild-all.png" style="" /></li>
             
@@ -374,8 +387,26 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
     </div>
 </div>
 
-<style>
-.carousel__holder {width: 100%; position: relative; padding-bottom: 460px; margin: 1rem 0 1rem;}
+  <style>
+.carousel__holder {
+	width: 100%;
+	position: relative;
+	padding-bottom: 300px;
+	margin: 1rem 0 1rem;
+}
+
+@media screen and (max-width: 1800px) {
+	.carousel__holder {
+		padding-bottom: calc(min(40vh, 300px));
+	}
+}
+
+@media screen and (min-width: 1800px) {
+	.carousel__holder:is(.rfloat, .lfloat) {
+		padding-bottom: calc(min(40%, 300px));
+	}
+}
+
 .carousel {
   height: 100%;
   width: 100%;
@@ -554,7 +585,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
   transition: transform 0.5s ease 0s, -webkit-transform 0.5s ease 0s;
 }
 .carousel__track .carousel__slide {
-  display: block;
+  display: flex;
+  align-items: center;
   top: 0;
   left: 0;
   right: 0;
@@ -601,8 +633,13 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
 	width: auto;
 	height: auto;
 	max-width: 100%;
-	max-height: 460px;
+	max-height: 100%;
+	box-shadow: unset;
 }
+.carousel__slide img:hover {
+	box-shadow: unset;
+}
+
 .carousel__slide .overlay {height: 100%;}
 .carousel--thumb .carousel__indicator {
   height: 30px;
@@ -630,23 +667,27 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
 
 </style>
 
-<p>Of course, the pièces de résistance of having access to the source code: editor mode! Let’s see what it takes to get it
+  <p>Of course, the pièces de résistance of having access to the source code: editor mode! Let’s see what it takes to get it
 working. First, we’ll need to get the source code building. Thanks to the lovely project <a href="https://dosbox-x.com/">DOSBox-X</a>, emulating
 older Windows operating systems is as simple as following <a href="https://dosbox-x.com/wiki/Guide%3AInstalling-Windows-95">a guide</a>. I also sourced the following disk images:
 <a href="https://archive.org/details/win-95-osr-2">Windows 95 OSR2</a><sup id="fnref:osr2" role="doc-noteref"><a href="#fn:osr2" class="footnote" rel="footnote">1</a></sup>, <a href="https://winworldpc.com/product/visual-c/4x">Visual C++ 4.2</a>, the <a href="https://archive.org/details/gamesdk">DirectX 1.0 SDK</a>, and the
 <a href="https://archive.org/details/the-net-cd">ActiveMovie SDK</a><sup id="fnref:amalt" role="doc-noteref"><a href="#fn:amalt" class="footnote" rel="footnote">2</a></sup> (this disk contains many other interesting installers as well). If you’re planning on
 building up such a virtual machine yourself, you’ll have to find your own product keys, sorry.</p>
 
-<p>Breezing through the guide leaves us with a fully functional Windows 95 install, with Visual C++ 4.2 (which includes the
+  <p>Breezing through the guide leaves us with a fully functional Windows 95 install, with Visual C++ 4.2 (which includes the
 Microsoft Developer Studio IDE - which we’ll need), the DirectX SDK, and the ActiveMovie SDK. Our source code contains
 an <code class="language-plaintext highlighter-rouge">.mdp</code> file, which is a Developer Studio project, so let’s open it and build the default project with
 <kbd><kbd>Ctrl</kbd>+<kbd>B</kbd></kbd>!</p>
 
-<div data-file-name=".log" style="clear: both;" class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--------------------Configuration: 3dlib - Win32 Debug--------------------
-Compiling...
-</code></pre></div></div>
+</div>
 
-<div class="language-plaintext highlighter-rouge code-split"><div class="highlight">
+<div class="code-split-root" data-file-name=".log"><div class="code-split-scroll">
+
+    <div style="clear: both;" class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--------------------Configuration: 3dlib - Win32 Debug--------------------
+Compiling...
+</code></pre></div>    </div>
+
+    <div class="language-plaintext highlighter-rouge code-split"><div class="highlight">
 <pre class="highlight">
 <code>decomp.cpp
 <span class="err">fatal error C1083: Cannot open source file: 'C:\Sspyth\3dlib\decomp.cpp': No such file or directory</span>
@@ -654,6 +695,8 @@ Compiling...
 Error executing cl.exe.
 Sspyth.exe - 1 error(s), 4 warning(s)
 </code></pre></div></div>
+
+  </div></div>
 
 <p>Alright, some errors, but nothing we can’t solve. The first thing we notice is we’re missing a file
 <samp>3DLIB\DECOMP.CPP</samp>. Poking around, we find there’s a file named <samp>3DLIB\aviDECOMP.CPP</samp>. A simple
@@ -737,21 +780,21 @@ set just-so to be “in editor mode”. Thankfully now we can look at actual cod
 
 <div class="float-reverse">
 
-  <div class="rfloat">
+  <div class="rfloat"><div class="code-split-root" data-file-name="GAME.CPP"><div class="code-split-scroll">
 
-    <div style="--left: 4" data-file-name="GAME.CPP" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">CGame</span><span class="o">::</span><span class="n">Update</span><span class="p">(</span><span class="n">CKeyboard</span><span class="o">&amp;</span> <span class="n">keys</span><span class="p">)</span> <span class="p">{</span>
-</code></pre></div>    </div>
+        <div style="--left: 4" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">CGame</span><span class="o">::</span><span class="n">Update</span><span class="p">(</span><span class="n">CKeyboard</span><span class="o">&amp;</span> <span class="n">keys</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div>        </div>
 
-    <div class="language-c++ code-split highlighter-rouge" style="--left: 4"><div class="highlight"><pre class="highlight"><code>	<span class="k">if</span> <span class="p">(</span><span class="n">keys</span><span class="p">.</span><span class="n">KeyDownWasUp</span><span class="p">(</span><span class="sc">'G'</span><span class="p">))</span>	<span class="p">{</span>
+        <div class="language-c++ code-split highlighter-rouge" style="--left: 4"><div class="highlight"><pre class="highlight"><code>	<span class="k">if</span> <span class="p">(</span><span class="n">keys</span><span class="p">.</span><span class="n">KeyDownWasUp</span><span class="p">(</span><span class="sc">'G'</span><span class="p">))</span>	<span class="p">{</span>
 		<span class="n">m_GameMode</span> <span class="o">=</span> <span class="o">!</span><span class="n">m_GameMode</span><span class="p">;</span>
 		<span class="n">GetMainFrame</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">ShowPauseState</span><span class="p">();</span>
 	<span class="p">}</span>
-</code></pre></div>    </div>
+</code></pre></div>        </div>
 
-    <div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">}</span>
-</code></pre></div>    </div>
+        <div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">}</span>
+</code></pre></div>        </div>
 
-  </div>
+      </div></div></div>
 
   <p>Awesome, my guesses were <em>really</em> close. <code class="language-plaintext highlighter-rouge">unknown_334</code> is <code class="language-plaintext highlighter-rouge">m_game.m_pscene</code>, and <code class="language-plaintext highlighter-rouge">unknown_3714</code> is <code class="language-plaintext highlighter-rouge">m_game.m_GameMode</code>.
 Let’s see if I’m right, and <code class="language-plaintext highlighter-rouge">m_GameMode</code> is changed with a <code class="language-plaintext highlighter-rouge">#ifdef EDITOR</code>-surrounded key input. <code class="language-plaintext highlighter-rouge">m_GameMode</code> is only
@@ -764,18 +807,22 @@ changed in two places in the code, both in <samp>GAME.CPP</samp>. The first is d
 changes that weren’t included in the copy of the code I have. But a little digging shows that <code class="language-plaintext highlighter-rouge">m_GameMode</code> alone has no
 real effect, because just a little further down is the code to actually <em>perform</em> editor mode:</p>
 
-<div data-file-name="GAME.CPP" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">////////////////////////////////////////// EDITOR</span>
-<span class="cp">#ifdef EDITOR
-</span></code></pre></div></div>
+<div class="code-split-root" data-file-name="GAME.CPP"><div class="code-split-scroll">
 
-<div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">keys</span><span class="p">.</span><span class="n">KeyDownWasUp</span><span class="p">(</span><span class="sc">'I'</span><span class="p">))</span> <span class="p">{</span>
+    <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">////////////////////////////////////////// EDITOR</span>
+<span class="cp">#ifdef EDITOR
+</span></code></pre></div>    </div>
+
+    <div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">keys</span><span class="p">.</span><span class="n">KeyDownWasUp</span><span class="p">(</span><span class="sc">'I'</span><span class="p">))</span> <span class="p">{</span>
 	<span class="n">GetApp</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">ShowEditFrame</span><span class="p">();</span>
 	<span class="n">GetApp</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">m_editframe</span><span class="o">-&gt;</span><span class="n">OnInsertButton</span><span class="p">();</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
 
-<div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#endif
-</span></code></pre></div></div>
+    <div class="language-c++ code-split highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#endif
+</span></code></pre></div>    </div>
+
+  </div></div>
 
 <div>
 
@@ -812,12 +859,12 @@ give it a go:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('235-editor-mode').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('222-editor-mode').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="235-editor-mode" onclick="document.getElementById('235-editor-mode').close()">
+  <dialog class="popover" id="222-editor-mode" onclick="document.getElementById('222-editor-mode').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -909,94 +956,114 @@ newer OS starting with Windows XP and moving forward.</li>
 
 	<div class="wrapper">
 
-		<h2 class="footer-heading">Sidneys1.com on GitHub Pages</h2>
-
 		<div class="footer-col-wrapper">
-			<div class="footer-col footer-col-1">
+			<div class="footer-col">
 				<ul class="contact-list">
 					<li class="p-name">Contact</li><li>
-						<a class="u-email" href="mailto:admin@sidneys1.com">admin@sidneys1.com</a>
-					</li><li>
-						<a class="u-email" href="mailto:sidneys1@proton.me">sidneys1@proton.me</a>
-					</li>
-					<li>
-						<a class="u-email" href="https://matrix.to/#/@sidneys1:matrix.org">
-							Matrix Chat
-						</a>
-					</li>
-					<li>
-						<a class="u-email"
-							href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FQwoc8ketLODmigLCuVhCt8Eio_ruJFnj%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAtEpK9f8ocpGt_MYmDVj0FrCIorSk7PSIVI-BmxLHUHE%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion">
-							SimpleX Chat
-						</a>
-					</li>
-					<li class="p-name" style="margin-top: 1em;">Alternative Access</li>
-					<li>
-						<a href="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/">
-							<img class="svg-icon" alt="Tor Logo" style="opacity: 50%; width: 26px; height: 16px;"
-								width="26px" height="16px" src="https://sidneys1.github.io/assets/tor.svg"></img>
-							<span>Sidneys1.com on Tor</span>
-						</a>
-					</li>
-					<li>
-						<a href="https://ipfs.io/ipns/sidneys1.com">
-							<img class="svg-icon" alt="IPFS Logo" style="opacity: 50%; width: 26px; height: 16px;"
-								width="16px" height="16px" src="https://sidneys1.github.io/assets/ipfs.svg"></img>
-							<span>Sidneys1.com on IPFS</span>
-						</a>
-					</li>
-					<li>
-						<a href="https://sidneys1.github.io">
-							<img class="svg-icon" alt="GitHub Logo" style="opacity: 50%; width: 26px; height: 16px;"
-								width="16px" height="16px" src="https://sidneys1.github.io/assets/github.svg"></img>
-							<span>Sidneys1.com on GitHub Pages</span>
-						</a>
-					</li>
-				</ul>
+	<a rel="me" href="mailto:Sidneys1@proton.me" target="_blank" title="ProtonMail">
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#protonmail"></use>
+		</svg>
+		<span>ProtonMail</span>
+	</a>
+</li>
+<li>
+	<a rel="me" href="mailto:admin@sSidneys1.com" target="_blank" title="Site Support">
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#email"></use>
+		</svg>
+		<span>Site Support</span>
+	</a>
+</li>
+<li>
+	<a rel="me" href="https://matrix.to/#/@sidneys1:matrix.org" target="_blank" title="Matrix Chat">
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#matrix"></use>
+		</svg>
+		<span>Matrix Chat</span>
+	</a>
+</li>
+<li>
+	<a rel="me" href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FQwoc8ketLODmigLCuVhCt8Eio_ruJFnj%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAtEpK9f8ocpGt_MYmDVj0FrCIorSk7PSIVI-BmxLHUHE%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion" target="_blank" title="SimpleX Chat">
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#simplex"></use>
+		</svg>
+		<span>SimpleX Chat</span>
+	</a>
+</li>
+</ul>
 			</div>
-
-			<div class="footer-col footer-col-2">
-				<ul class="social-media-list" style="margin-bottom: 5px;">
-					<li>
-						<a rel="me" href="https://infosec.exchange/@Sidneys1">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
-								viewBox="0 0 216.4144 232.00976">
-								<path fill="#828282"
-									d="M211.80734 139.0875c-3.18125 16.36625-28.4925 34.2775-57.5625 37.74875-15.15875 1.80875-30.08375 3.47125-45.99875 2.74125-26.0275-1.1925-46.565-6.2125-46.565-6.2125 0 2.53375.15625 4.94625.46875 7.2025 3.38375 25.68625 25.47 27.225 46.39125 27.9425 21.11625.7225 39.91875-5.20625 39.91875-5.20625l.8675 19.09s-14.77 7.93125-41.08125 9.39c-14.50875.7975-32.52375-.365-53.50625-5.91875C9.23234 213.82 1.40609 165.31125.20859 116.09125c-.365-14.61375-.14-28.39375-.14-39.91875 0-50.33 32.97625-65.0825 32.97625-65.0825C49.67234 3.45375 78.20359.2425 107.86484 0h.72875c29.66125.2425 58.21125 3.45375 74.8375 11.09 0 0 32.975 14.7525 32.975 65.0825 0 0 .41375 37.13375-4.59875 62.915" />
-								<path fill="#fff"
-									d="M177.50984 80.077v60.94125h-24.14375v-59.15c0-12.46875-5.24625-18.7975-15.74-18.7975-11.6025 0-17.4175 7.5075-17.4175 22.3525v32.37625H96.20734V85.42325c0-14.845-5.81625-22.3525-17.41875-22.3525-10.49375 0-15.74 6.32875-15.74 18.7975v59.15H38.90484V80.077c0-12.455 3.17125-22.3525 9.54125-29.675 6.56875-7.3225 15.17125-11.07625 25.85-11.07625 12.355 0 21.71125 4.74875 27.8975 14.2475l6.01375 10.08125 6.015-10.08125c6.185-9.49875 15.54125-14.2475 27.8975-14.2475 10.6775 0 19.28 3.75375 25.85 11.07625 6.36875 7.3225 9.54 17.22 9.54 29.675" />
-							</svg>
-							<span class="username">Sidneys1</span>
-						</a>
-					</li>
-				</ul><ul class="social-media-list"><li><a href="https://github.com/Sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">Sidneys1</span></a></li><li><a href="https://youtube.com/Sidneys1"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">Sidneys1</span></a></li></ul>
-</div>
-
-			<div class="footer-col footer-col-3">
+			<div class="footer-col site-desc">
 				<p>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</p>
-				<details class="snowflake">
-					<summary><div><img class="snowflake" src="https://sidneys1.github.io/assets/snowflake.svg" /> Tor Snowflake</div></summary>
-						<blockquote>Snowflake is a system that <strong>allows people from all over the world to access
-								censored websites and applications</strong>. Similar to how VPNs assist users in getting
-							around Internet censorship, Snowflake helps you avoid being noticed by Internet censors by
-							making your Internet activity appear as though you're using the Internet for a regular video
-							or voice call.
-							<cite><a href="https://snowflake.torproject.org/" target="_blank"
-									rel="noreferrer">The Tor Project</a></cite>
-						</blockquote>
-					<script>
-						function load_snowflake() {
-							const button = document.getElementById('load-snowflake');
-							button.remove();
-							const iframe = document.getElementById('snowflake-iframe');
-							iframe.style.display = 'block';
-							iframe.setAttribute('src', 'https://snowflake.torproject.org/embed.html')
-							return false;
-						}
-					</script>
-					<div style="text-align: center;"><button id="load-snowflake" onclick="return load_snowflake()">Help Stifle Censorship - Load Snowflake</button></div>
-					<iframe id="snowflake-iframe" style="display: none;" src="" width="320" height="240" frameborder="0" scrolling="no"></iframe>
-				</details>
+				<hr>
+			</div>
+			<div class="footer-col">
+				<ul class="access-list">
+					<li class="p-name">Alternative Access</li><li>
+	<a rel="me" href="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion" target="_blank" title="Tor">
+		<span>Tor</span>
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#tor"></use>
+		</svg>
+	</a>
+</li>
+<li>
+	<a rel="me" href="https://ipfs.io/ipns/sidneys1.com" target="_blank" title="IPFS (IPFS.io)">
+		<span>IPFS (IPFS.io)</span>
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#ipfs"></use>
+		</svg>
+	</a>
+</li>
+<li>
+	<a rel="me" href="https://cloudflare-ipfs.com/ipns/sidneys1.com" target="_blank" title="IPFS (Cloudflare)">
+		<span>IPFS (Cloudflare)</span>
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#ipfs"></use>
+		</svg>
+	</a>
+</li>
+<li>
+	<a rel="me" href="https://sidneys1.github.io" target="_blank" title="GitHub Pages">
+		<span>GitHub Pages</span>
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#github"></use>
+		</svg>
+	</a>
+</li>
+</ul>
+			</div>
+			<div class="footer-col">
+				<div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://github.com/Sidneys1" target="_blank" title="GitHub">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#github"></use>
+    </svg>
+  </a>
+</li>
+<li>
+  <a href="/feed.xml" target="_blank" title="Sidneys1.com RSS Feed">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+    </svg>
+  </a>
+</li>
+<li>
+  <a rel="me" href="https://www.youtube.com/channel/UCoCiN9Yd8ifG1PeVb6wY0jg" target="_blank" title="YouTube Channel">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#youtube"></use>
+    </svg>
+  </a>
+</li>
+<li>
+  <a rel="me" href="https://infosec.exchange/@Sidneys1" target="_blank" title="Mastodon (infosec.exchange)">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#mastodon"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
 			</div>
 		</div>
 
