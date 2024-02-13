@@ -985,23 +985,26 @@ table td {
 /*** Additional colors. ***/
 /*** Base Minima theme. ***/
 :root {
+  --sidneys1-sticky-note: #ffc;
+  --sidneys1-sticky-note-title: rgb(234, 234, 169);
   --sidneys1-link-compliment-color: #9D174D;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sidneys1-link-compliment-color: #9E3B63;
-  }
-}
-:root {
   --sidneys1-accent-color: #2a7ae2;
   --sidneys1-accent-compliment-color: #e2922a;
+  --sidneys1-highlight-1: rgba(214, 92, 198, 0.5);
+  --sidneys1-highlight-2: rgba(131, 76, 203, 0.5);
+  --sidneys1-highlight-3: rgba(77, 177, 188, 0.5);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --sidneys1-accent-compliment-color: #e2922a;
-    --sidneys1-accent-color: #2a7ae2;
+    --sidneys1-sticky-note: rgb(79, 79, 50);
+    --sidneys1-sticky-note-title: rgb(104, 104, 77);
+    --sidneys1-link-compliment-color: #9E3B63;
+    --sidneys1-accent-color: #79b8ff;
+    --sidneys1-accent-compliment-color: #ffc079;
+    --sidneys1-highlight-1: rgba(214, 92, 198, 0.5);
+    --sidneys1-highlight-2: rgba(149, 107, 205, 0.5);
+    --sidneys1-highlight-3: rgba(77, 177, 188, 0.5);
   }
 }
 /*** Home customization rules. ***/
@@ -1056,11 +1059,14 @@ ul.post-list h4 {
   flex-grow: 1;
   text-align: center;
 }
-.site-header .wrapper .coffee img {
+.site-header .wrapper .coffee svg {
+  width: unset;
+  height: 24px;
   opacity: 50%;
   transition: 250ms linear;
+  color: var(--minima-text-color);
 }
-.site-header .wrapper .coffee img:hover {
+.site-header .wrapper .coffee svg:hover {
   opacity: 100%;
   transition: 250ms linear;
 }
@@ -1081,12 +1087,14 @@ ul.post-list h4 {
 .donate {
   text-align: center;
 }
-.donate img {
-  max-height: 50px;
+.donate svg {
+  width: 70px;
+  height: 50px;
   opacity: 75%;
   transition: 250ms linear;
+  color: var(--minima-text-color);
 }
-.donate img:hover {
+.donate svg:hover {
   opacity: 100%;
   transition: 250ms linear;
   cursor: pointer;
@@ -1129,7 +1137,7 @@ h2.post-title {
 }
 
 div.note {
-  background-color: #ffc;
+  background-color: var(--sidneys1-sticky-note);
   font-size: smaller;
   width: fit-content;
   max-width: 400px;
@@ -1137,38 +1145,20 @@ div.note {
   margin: 0 auto;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  transition: 250ms linear;
+  transition: color 250ms linear, box-shadow 250ms linear;
 }
 div.note:hover {
   color: black;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
-  transition: 250ms linear;
+  transition: color 250ms linear, box-shadow 250ms linear;
 }
 div.note.note-wide {
   max-width: 600px;
 }
-div.note.aside {
-  margin: 0;
-  margin-top: 0.5lh;
-  margin-bottom: 15px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-}
-div.note.aside .note-title {
-  padding: 0 0.5em;
-  font-size: small;
-}
-div.note.aside > p {
-  padding: 0.5em;
-  padding-top: 0;
-  font-style: italic;
-}
-div.note.aside code {
-  font-size: smaller;
-}
 div.note .note-title {
   font-size: larger;
   font-family: "MV Boli", cursive;
-  background-color: rgb(234, 234, 169);
+  background-color: var(--sidneys1-sticky-note-title);
   padding: 0.25em 1em;
   border-radius: 5px 5px 0 0;
 }
@@ -1190,10 +1180,6 @@ div.note > legend {
   color: var(--minima-text-color);
   font-style: italic;
   font-size: initial;
-}
-div.note code {
-  background-color: rgb(234, 234, 169);
-  font-size: small;
 }
 
 .post-image {
@@ -1290,7 +1276,7 @@ section#comments .header .link {
   transition: opacity 0.5s ease-in-out;
 }
 section#comments .header .link:hover {
-  color: #2a7ae2;
+  color: var(--sidneys1-accent-color);
   opacity: 1;
   font-size: 0.8em;
   transition: opacity 0.5s ease-in-out;
@@ -1356,6 +1342,7 @@ section#comments span.social-handle {
 
 /*** Markdown customization rules. ***/
 /*** Base Minima theme. ***/
+/*** Additional colors. ***/
 #markdown-toc::before {
   content: "Sections";
   font-weight: bolder;
@@ -1394,12 +1381,25 @@ details {
   margin-bottom: 15px;
 }
 
+:root {
+  --sidneys1-kbd-color: rgb(198, 187, 177);
+  --sidneys1-kbd-color-top: rgb(216, 214, 211);
+  --sidneys1-kbd-color-bottom: rgb(162, 154, 145);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --sidneys1-kbd-color: rgb(57, 54, 51);
+    --sidneys1-kbd-color-top: rgb(68, 64, 61);
+    --sidneys1-kbd-color-bottom: rgb(48, 45, 43);
+  }
+}
 kbd:has(kbd) {
   display: inline-block;
   font: 11px ui-monospace, Consolas, monospace;
   font-weight: bolder;
   line-height: 10px;
-  color: var(--color-fg-default);
+  color: var(--minima-text-color);
   vertical-align: middle;
   overflow-wrap: break-word;
 }
@@ -1409,37 +1409,22 @@ kbd:not(:has(kbd)) {
   font: 11px ui-monospace, Consolas, monospace;
   font-weight: bolder;
   line-height: 10px;
-  color: var(--color-fg-default);
+  color: var(--minima-text-color);
   vertical-align: middle;
-  background-color: rgb(247, 245, 242);
-  border: solid 1px rgb(198, 187, 177);
-  border-top-color: rgb(216, 214, 211);
-  border-bottom-color: rgb(162, 154, 145);
+  background-color: var(--minima-background-color);
+  border: solid 1px var(--sidneys1-kbd-color);
+  border-top-color: var(--sidneys1-kbd-color-top);
+  border-bottom-color: var(--sidneys1-kbd-color-bottom);
   border-radius: 6px;
   border-width: 1px 2px 5px;
   overflow-wrap: break-word;
-}
-kbd.ui {
-  font-size: initial;
-  display: inline-block;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-weight: initial;
-  line-height: initial;
-  color: var(--color-fg-default);
-  overflow-wrap: break-word;
-  vertical-align: initial;
-  padding: 0px 5px;
-  background-color: rgb(247, 245, 242);
-  border: solid 1px rgb(198, 187, 177);
-  border-width: 1px;
-  border-radius: 1px;
 }
 kbd.menu {
   font-size: initial;
   display: inline-block;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   line-height: 10px;
-  color: var(--color-fg-default);
+  color: var(--minima-text-color);
   overflow-wrap: break-word;
 }
 kbd.menu kbd {
@@ -1447,11 +1432,9 @@ kbd.menu kbd {
   padding: 3px 5px;
   font-weight: 600;
   line-height: 10px;
-  color: var(--color-fg-default);
-  background-color: rgb(247, 245, 242);
-  border: solid 1px rgb(198, 187, 177);
-  border-top-color: rgb(216, 214, 211);
-  border-bottom-color: rgb(162, 154, 145);
+  color: var(--minima-text-color);
+  background-color: var(--minima-background-color);
+  border: solid 1px var(--sidneys1-kbd-color);
   border-width: 1px;
   border-radius: 1px;
   overflow-wrap: break-word;
@@ -1700,11 +1683,12 @@ summary {
 
 :is(post-content, section#comments) a[target=_blank]::after {
   content: " ";
-  background-image: url(http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png);
-  background-size: min(1em, 12px) min(1em, 12px);
+  background-color: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiMyQTdBRTIiIHZpZXdCb3g9IjAgMCA4IDgiPjxwYXRoIGQ9Ik0wIDB2OGg4VjZIN3YxSDFWMWgxVjBIMHptNCAwIDEuNSAxLjVMMyA0bDEgMSAyLjUtMi41TDggNFYwSDR6Ii8+PC9zdmc+");
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiMyQTdBRTIiIHZpZXdCb3g9IjAgMCA4IDgiPjxwYXRoIGQ9Ik0wIDB2OGg4VjZIN3YxSDFWMWgxVjBIMHptNCAwIDEuNSAxLjVMMyA0bDEgMSAyLjUtMi41TDggNFYwSDR6Ii8+PC9zdmc+");
   margin: 0 0 0 0.25em;
-  width: min(1em, 12px);
-  height: min(1em, 12px);
+  width: min(1em, 8px);
+  height: min(1em, 8px);
   display: inline-block;
 }
 
@@ -1728,11 +1712,43 @@ audio {
   margin-right: auto;
 }
 
+.highlight-1 {
+  background-color: var(--sidneys1-highlight-1);
+}
+
+.highlight-2 {
+  background-color: var(--sidneys1-highlight-2);
+}
+
+.highlight-3 {
+  background-color: var(--sidneys1-highlight-3);
+}
+
+.highlighter-rouge .highlight-1 {
+  background-color: rgba(214, 92, 198, 0.5);
+}
+
+.highlighter-rouge .highlight-2 {
+  background-color: rgba(149, 107, 205, 0.5);
+}
+
+.highlighter-rouge .highlight-3 {
+  background-color: rgba(77, 177, 188, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  .highlight .gd {
+    background-color: rgb(83, 43, 43) !important;
+  }
+  .highlight .gi {
+    background-color: rgb(43, 83, 43) !important;
+  }
+}
 /*** Misc widgets. ***/
 /*** Base Minima theme. ***/
 /*** Additional colors. ***/
 .tag {
-  font-size: small;
+  font-size: smaller;
 }
 
 .tag::before {
@@ -1930,13 +1946,13 @@ p.c-compare:hover {
 }
 
 .pill {
-  background-color: #2a7ae2;
-  border: 2px solid #2a7ae2;
+  background-color: var(--sidneys1-accent-color);
+  border: 2px solid var(--sidneys1-accent-color);
   border-radius: 1em;
   color: white;
   padding: 0 0.5ex;
   font-weight: initial;
-  font-size: x-small;
+  font-size: smaller;
   vertical-align: middle;
   margin-right: 1ex;
   margin-bottom: 1ex;
@@ -1955,8 +1971,8 @@ p.c-compare:hover {
 }
 
 .pill.multipart {
-  background-color: #e2922a;
-  border-color: #e2922a;
+  background-color: var(--sidneys1-accent-compliment-color);
+  border-color: var(--sidneys1-accent-compliment-color);
 }
 
 .todo {
@@ -1968,27 +1984,28 @@ p.c-compare:hover {
   color: var(--minima-brand-color);
 }
 
-.shimmer {
-  color: rgba(0, 0, 0, 0.1);
-  background-color: black;
-  background: linear-gradient(135deg, rgb(34, 34, 34) 0%, rgb(34, 34, 34) 40%, rgb(248, 236, 100) 49%, rgb(255, 255, 255) 50%, rgb(248, 236, 100) 51%, rgb(34, 34, 34) 60%, rgb(34, 34, 34) 100%);
-  background-size: 125px 100%;
-  background-clip: text;
-  animation-name: shimmer;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  background-color: #222;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: top 0 left -130px;
+@supports (background-clip: text) {
+  .shimmer {
+    color: transparent;
+    background-color: black;
+    background: linear-gradient(135deg, var(--minima-text-color) 0%, var(--minima-text-color) 40%, rgb(248, 236, 100) 49%, white 50%, rgb(248, 236, 100) 51%, var(--minima-text-color) 60%, var(--minima-text-color) 100%);
+    background-size: 125px 100%;
+    background-clip: text;
+    animation-name: shimmer;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-color: var(--minima-text-color);
   }
-  100% {
-    background-position: top 0 right -130px;
+  @keyframes shimmer {
+    0% {
+      background-position: top 0 left -130px;
+    }
+    100% {
+      background-position: top 0 right -130px;
+    }
   }
 }
 div.chat {
@@ -2092,7 +2109,7 @@ div.chat .bubble {
   width: 0px;
 }
 .bubble.from-them::after {
-  background-color: #fff;
+  background-color: var(--minima-background-color);
   border-bottom-right-radius: 0.5rem;
   left: -0.5rem;
   width: 0.5rem;
@@ -2100,8 +2117,7 @@ div.chat .bubble {
 
 span.blur {
   user-select: none;
-  color: transparent;
-  text-shadow: 0 0 6px black;
+  filter: blur(4px);
 }
 
 span.redacted {
@@ -2128,13 +2144,47 @@ span.redacted::after {
 
 .aside-attn {
   border-radius: 5px;
-  outline: 2px solid transparent;
   padding: 0 0.25em;
   transition: 250ms linear;
-  background: #ffc;
+  border: 1px dashed color-mix(in srgb, var(--minima-brand-color), var(--minima-background-color));
 }
 .aside-attn::before {
   content: "💭 ";
+}
+
+aside {
+  opacity: 0.9;
+  width: max-content;
+  margin: 0 auto;
+  padding: 0.5em;
+  background-color: var(--sidneys1-sticky-note);
+  font-size: smaller;
+  color: rgba(var(--minima-text-color), 0.8);
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  transition: 250ms linear;
+}
+aside :last-child {
+  margin-bottom: 0;
+}
+aside::before {
+  content: "💭";
+  font-size: 200%;
+  float: left;
+  margin: 0;
+  margin-right: 0.25em;
+}
+
+div:has(aside:hover, .aside-attn:hover) .aside-attn {
+  background-color: color-mix(in srgb, var(--sidneys1-sticky-note) 90%, var(--minima-background-color));
+  border: 1px dashed color-mix(in srgb, var(--minima-brand-color), var(--minima-text-color));
+  transition: 250ms linear;
+}
+div:has(aside:hover, .aside-attn:hover) > aside {
+  opacity: 1;
+  color: var(--minima-text-color);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  transition: 250ms linear;
 }
 
 @media screen and (min-width: 1800px) {
@@ -2154,56 +2204,17 @@ span.redacted::after {
     z-index: 1;
     content: "";
   }
-  div:has(> aside):has(> aside:hover, .aside-attn:hover) .aside-attn {
-    outline: 2px solid rgb(198, 198, 142);
-    transition: 250ms linear;
-  }
   div:has(> aside):has(> aside:hover, .aside-attn:hover)::before {
-    box-shadow: 0 0 0px 100000px rgba(0, 0, 0, 0.25), inset 0 0 10px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 0px 100000px rgba(0, 0, 0, 0.75), inset 0 0 10px 5px rgba(0, 0, 0, 0.75);
     transition: box-shadow 500ms linear;
   }
-  div:has(> aside):has(> aside:hover, .aside-attn:hover) > aside {
-    opacity: 1;
-    color: black;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
-    transition: 250ms linear;
-  }
   div:has(> aside) > aside {
-    opacity: 0.9;
     position: absolute;
-    max-width: calc((100vw - (1200px + 30px * 2)) / 3);
+    max-width: calc((100vw - (1200px + 30px * 2)) / 2);
     left: calc(100% + 30px);
-    width: max-content;
-    margin: 1em 0;
-    padding: 0.25em;
     bottom: 0px;
-    background-color: #ffc;
-    font-size: smaller;
-    color: var(--minima-brand-color);
-    margin: 0 auto;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     transition: 250ms linear;
     z-index: 2;
-  }
-  div:has(> aside) > aside::before {
-    content: "💭";
-    font-size: 200%;
-    float: left;
-    margin: 0 0.25em;
-  }
-  div:has(> aside) > aside > p {
-    margin: 0em 0.5em;
-    margin-top: 0;
-    margin-bottom: 0.5em;
-  }
-  div:has(> aside) > aside code {
-    background-color: rgb(234, 234, 169);
-    font-size: small;
-  }
-  div:has(> aside) > aside > div[class^=language-] {
-    margin: 0.25em 0.5em;
-    margin-top: 0;
   }
 }
 @media screen and (max-width: 1800px) and (orientation: landscape) {
@@ -2226,37 +2237,10 @@ span.redacted::after {
     transition: 250ms linear;
   }
   div:has(> aside) > aside {
-    opacity: 0.9;
     float: right;
     max-width: 40%;
-    width: max-content;
-    background-color: #ffc;
-    font-size: smaller;
-    color: var(--minima-brand-color);
     margin-left: 1em;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    transition: 250ms linear;
     margin-bottom: 1em;
-  }
-  div:has(> aside) > aside::before {
-    content: "💭";
-    font-size: 200%;
-    float: left;
-    margin: 0 0.25em;
-  }
-  div:has(> aside) > aside > p {
-    margin: 0.25em 0.5em;
-    margin-top: 0;
-    margin-bottom: 0.5em;
-  }
-  div:has(> aside) > aside code {
-    background-color: rgb(234, 234, 169);
-    font-size: small;
-  }
-  div:has(> aside) > aside > div[class^=language-] {
-    margin: 0.25em 0.5em;
-    margin-top: 0;
   }
 }
 @media screen and (max-width: 1800px) and (orientation: portrait) {
@@ -2274,30 +2258,7 @@ span.redacted::after {
   }
   div:has(> aside) > aside {
     max-width: 100%;
-    background-color: #ffc;
-    font-size: smaller;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     margin-bottom: 1em;
-  }
-  div:has(> aside) > aside::before {
-    content: "💭";
-    font-size: 200%;
-    float: left;
-    margin: 0 0.25em;
-  }
-  div:has(> aside) > aside > p {
-    margin: 0.25em 0.5em;
-    margin-top: 0;
-    margin-bottom: 0.5em;
-  }
-  div:has(> aside) > aside code {
-    background-color: rgb(234, 234, 169);
-    font-size: small;
-  }
-  div:has(> aside) > aside > div[class^=language-] {
-    margin: 0.25em 0.5em;
-    margin-top: 0;
   }
 }
 @media screen and (min-width: 1800px) {
@@ -2328,15 +2289,18 @@ span.redacted::after {
 }
 
 /*** Footer customization rules. ***/
+/*** Base Minima theme. ***/
 :is(.contact-list, .access-list) li a > svg {
-  fill: black;
-  opacity: 0.5;
+  fill: var(--minima-text-color);
+  opacity: 0.75;
+  transition: opacity 100ms linear;
 }
 :is(.contact-list, .access-list) li a:hover {
   text-decoration: none;
 }
 :is(.contact-list, .access-list) li a:hover > svg {
   opacity: 1;
+  transition: opacity 100ms linear;
 }
 :is(.contact-list, .access-list) li a:hover > span {
   text-decoration: underline;
@@ -2391,7 +2355,8 @@ span.redacted::after {
     grid-row: 1;
   }
 }
-.contact-list, .access-list {
+.contact-list,
+.access-list {
   min-width: max-content;
 }
 
@@ -2702,5 +2667,8 @@ pre.highlight {
 .highlight .il {
   color: #ae81ff;
 } /* Literal.Number.Integer.Long */
+:root {
+  color-scheme: light dark;
+}
 
 /*# sourceMappingURL=main.css.map */
