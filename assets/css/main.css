@@ -1000,7 +1000,7 @@ pre, code {
   font-family: var(--minima-code-font-family);
 }
 
-@media screen and (max-width: 2200px) {
+@media screen and (max-width: 2000px) {
   .page-content {
     padding-top: 0 !important;
   }
@@ -1117,8 +1117,8 @@ pre, code {
 }
 
 :root:has(input:checked[name=font][value=od]) {
-  --minima-base-font-family: opendyslexic, -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Segoe UI Emoji, Segoe UI Symbol, Apple Color Emoji, Roboto, Helvetica, Arial, sans-serif;
-  --minima-code-font-family: opendyslexicmono, Menlo, Inconsolata, Consolas, Roboto Mono, Ubuntu Mono, Liberation Mono, Courier New, monospace;
+  --minima-base-font-family: OpenDyslexic, -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Segoe UI Emoji, Segoe UI Symbol, Apple Color Emoji, Roboto, Helvetica, Arial, sans-serif;
+  --minima-code-font-family: OpenDyslexicMono, Menlo, Inconsolata, Consolas, Roboto Mono, Ubuntu Mono, Liberation Mono, Courier New, monospace;
 }
 
 :root:has(input:checked[name=align][value=justify]) {
@@ -1241,18 +1241,19 @@ ul.post-list h4 {
   text-align: center;
 }
 .site-header .wrapper .coffee svg {
-  width: unset;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   opacity: 50%;
-  transition: 250ms linear;
+  transition: opacity 250ms linear;
   color: var(--minima-text-color);
+  margin: 0 0 4px 8px;
+  vertical-align: middle;
 }
 .site-header .wrapper .coffee svg:hover {
   opacity: 100%;
-  transition: 250ms linear;
+  transition: opacity 250ms linear;
 }
 .site-header .wrapper .site-nav {
-  position: initial !important;
   justify-self: right;
 }
 
@@ -1261,7 +1262,7 @@ ul.post-list h4 {
     opacity: 100%;
   }
   100% {
-    opacity: 25%;
+    opacity: 50%;
   }
 }
 @keyframes theme-select-pulse {
@@ -1281,17 +1282,35 @@ ul.post-list h4 {
 #theme-select {
   position: relative;
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
   border: 1px solid var(--minima-border-color-01);
   border-top: none;
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
-  padding: 0.25em 0.5em 0.5em 0.5em;
+  padding: 0 0.25em 0.25em 0.25em;
   width: max-content;
   margin-left: auto;
-  animation: 2s linear 3s 2 backwards theme-select-pulse, 2s ease-in-out 7s 1 backwards theme-select-fade-out;
   background-color: var(--minima-background-color);
-  opacity: 25%;
-  transition: opacity 1s ease-in-out;
+  opacity: 50%;
+  transition: opacity 1s ease-in-out, font-size 1s ease-in-out;
+  animation: 2s linear 3s 2 backwards theme-select-pulse, 2s ease-in-out 7s 1 backwards theme-select-fade-out;
+}
+#theme-select:is(:hover, :active, :focus-within, :focus) {
+  opacity: 1;
+  transition: opacity 100ms ease-in-out, font-size 1s ease-in-out;
+}
+#theme-select noscript {
+  flex-basis: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: x-small;
+  text-transform: uppercase;
+  width: 0;
+}
+#theme-select noscript em {
+  text-decoration: underline dotted;
 }
 #theme-select fieldset {
   display: flex;
@@ -1339,10 +1358,6 @@ ul.post-list h4 {
   border-color: transparent;
   color: var(--minima-background-color);
 }
-#theme-select:hover {
-  opacity: 1;
-  transition: opacity 100ms ease-in-out;
-}
 
 #theme-parent {
   position: -webkit-sticky;
@@ -1353,18 +1368,24 @@ ul.post-list h4 {
   max-width: calc((100vw - 1260px) / 2);
 }
 
-@media screen and (min-width: 2200px) {
+@media screen and (min-width: 2000px) {
   #theme-parent {
     height: 0;
   }
 }
 @media screen and (max-width: 1000px) {
   #theme-select {
-    margin-left: unset;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: calc(100vw - 60px);
+    opacity: 1;
+    animation: 2s linear 3s 2 backwards theme-select-pulse;
+    font-size: small;
   }
   #theme-parent {
     left: 30px;
-    max-width: calc((100vw - 1260px) / 2);
+    right: 30px;
+    max-width: unset;
   }
 }
 /*** Post layout rules. ***/
@@ -2045,6 +2066,11 @@ audio {
 /*** Misc widgets. ***/
 /*** Base Minima theme. ***/
 /*** Additional colors. ***/
+.flex-break {
+  flex-basis: 100%;
+  height: 0;
+}
+
 .tag {
   font-size: smaller;
 }

@@ -2,6 +2,8 @@
 <html lang="en"><head>
 	<meta charset="utf-8">
 
+	<link rel="preload" href="https://sidneys1.github.io/assets/OpenDyslexic3-Regular.otf" as="font" crossorigin="anonymous">
+	<link rel="preload" href="https://sidneys1.github.io/assets/OpenDyslexicMono-Regular.otf" as="font" crossorigin="anonymous">
 	<link rel="preload" href="https://sidneys1.github.io/assets/css/main.css" as="style" />
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,7 +53,7 @@
 		// Definition of preferences. Individual toggles should be
 		// `id`'d `${key}-${value}`.
 		const PREFERENCES = {
-			'color': ['red', 'green', 'blue'],
+			'color': ['blue', 'green', 'red'],
 			'mode': ['auto', 'light', 'dark', 'black'],
 			'align': ['left', 'justify'],
 			'font': ['default', 'od'],
@@ -132,8 +134,11 @@
 		<fieldset id="font-select">
 			<legend>Font</legend>
 			<input id="font-default" type="radio" name="font" value="default" checked /><label for="font-default" style="font-family: system-ui;" title="System Font">Aa</label>
-			<input id="font-od" type="radio" name="font" value="od" /><label for="font-od" style="font-family: opendyslexic;" title="OpenDyslexic">OpenDyslexic</label>
+			<input id="font-od" type="radio" name="font" value="od" /><label for="font-od" style="font-family: opendyslexic;" title="OpenDyslexic">Od</label>
 		</fieldset>
+		<noscript title="JavaScript is disabled. Preferences can not be saved to browser local storage.">
+			ℹ️ <em>Preferences can not be saved.</em>
+		</noscript>
 	</div>
 </div>
 <main class="page-content" aria-label="Content">
@@ -935,12 +940,12 @@ give it a go:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('167-editor-mode').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('160-editor-mode').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="167-editor-mode" onclick="document.getElementById('167-editor-mode').close()">
+  <dialog class="popover" id="160-editor-mode" onclick="document.getElementById('160-editor-mode').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
