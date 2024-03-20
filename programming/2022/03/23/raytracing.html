@@ -45,7 +45,7 @@
 		integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
 		onload="renderMathInElement(document.body);"></script>
 
-	<script>
+	<script type="module">
 		/*
 		 * This code is only used for loading/saving preferences
 		 * to/from `localstorage`. If scripts are disabled all
@@ -75,19 +75,20 @@
 		};
 
 		// Run at page load
-		document.addEventListener("DOMContentLoaded", function (_, __) {
-			// Load preferences once.
-			const p = JSON.parse(localStorage.getItem('preferences') || '{}');
-			Object.entries(PREFERENCES).forEach(([key, values]) =>
-				document.getElementById(`${key}-${p[key] || values[0]}`).checked = true);
+		// document.addEventListener("DOMContentLoaded", function (_, __) {
+		// Load preferences once.
+		const p = JSON.parse(localStorage.getItem('preferences') || '{}');
+		Object.entries(PREFERENCES).forEach(([key, values]) =>
+			document.getElementById(`${key}-${p[key] || values[0]}`).checked = true);
 
-			// Register change handlers.
-			Object.entries(PREFERENCES).forEach(([key, values]) =>
-				values.forEach(value =>
-					document.getElementById(`${key}-${value}`).addEventListener('change', e =>
-						savePreferences())));
-		});
+		// Register change handlers.
+		Object.entries(PREFERENCES).forEach(([key, values]) =>
+			values.forEach(value =>
+				document.getElementById(`${key}-${value}`).addEventListener('change', e =>
+					savePreferences())));
+		// });
 	</script>
+	<noscript><style> .jsonly { display: none } </style></noscript>
 </head>
 <body><header class="site-header" role="banner">
 
@@ -234,12 +235,12 @@ our game class to match our needs.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('29-pixel-barf').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('236-pixel-barf').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="29-pixel-barf" onclick="document.getElementById('29-pixel-barf').close()">
+  <dialog class="popover" id="236-pixel-barf" onclick="document.getElementById('236-pixel-barf').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -307,12 +308,12 @@ color pattern converging in the center of the canvas:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('54-coordinate-identity').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('171-coordinate-identity').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="54-coordinate-identity" onclick="document.getElementById('54-coordinate-identity').close()">
+  <dialog class="popover" id="171-coordinate-identity" onclick="document.getElementById('171-coordinate-identity').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -542,12 +543,12 @@ explaining the geometry here: this is a well-documented process and can be resea
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('247-flat-sphere').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('43-flat-sphere').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="247-flat-sphere" onclick="document.getElementById('247-flat-sphere').close()">
+  <dialog class="popover" id="43-flat-sphere" onclick="document.getElementById('43-flat-sphere').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -630,12 +631,12 @@ depths.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('123-perspective-rendering').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('88-perspective-rendering').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="123-perspective-rendering" onclick="document.getElementById('123-perspective-rendering').close()">
+  <dialog class="popover" id="88-perspective-rendering" onclick="document.getElementById('88-perspective-rendering').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -819,12 +820,12 @@ into the distance.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('21-floor-and-fog').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('93-floor-and-fog').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="21-floor-and-fog" onclick="document.getElementById('21-floor-and-fog').close()">
+  <dialog class="popover" id="93-floor-and-fog" onclick="document.getElementById('93-floor-and-fog').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -990,12 +991,12 @@ center <code class="language-plaintext highlighter-rouge">Sphere</code>.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('29-reflections').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('95-reflections').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="29-reflections" onclick="document.getElementById('29-reflections').close()">
+  <dialog class="popover" id="95-reflections" onclick="document.getElementById('95-reflections').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -1209,12 +1210,12 @@ darkens our scene.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('82-diffuse-lighting').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('172-diffuse-lighting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="82-diffuse-lighting" onclick="document.getElementById('82-diffuse-lighting').close()">
+  <dialog class="popover" id="172-diffuse-lighting" onclick="document.getElementById('172-diffuse-lighting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -1319,12 +1320,12 @@ Otherwise we calculate the diffuse lighting as before.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('125-shadow-casting').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('244-shadow-casting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="125-shadow-casting" onclick="document.getElementById('125-shadow-casting').close()">
+  <dialog class="popover" id="244-shadow-casting" onclick="document.getElementById('244-shadow-casting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -1428,12 +1429,12 @@ in Release mode.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('219-multisampling').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('77-multisampling').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="219-multisampling" onclick="document.getElementById('219-multisampling').close()">
+  <dialog class="popover" id="77-multisampling" onclick="document.getElementById('77-multisampling').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->

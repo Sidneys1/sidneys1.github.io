@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-02-14T13:10:37-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>your-email@domain.com</email></author><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2024-02-01T00:00:00-05:00</published><updated>2024-02-01T00:00:00-05:00</updated><id>https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun pakrat -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-03-20T15:30:57-04:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>your-email@domain.com</email></author><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2024-02-01T00:00:00-05:00</published><updated>2024-02-01T00:00:00-05:00</updated><id>https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun pakrat -->
 <!-- cSpell:ignore PAKS AMOVIE DSETUP DSETUPE DSETUPJ MATHINV SSPUNINS Bmps Ihighsco RIFFÀ -->
 
 <p>I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played
@@ -742,12 +742,12 @@ give it a go:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('160-editor-mode').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('129-editor-mode').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="160-editor-mode" onclick="document.getElementById('160-editor-mode').close()">
+  <dialog class="popover" id="129-editor-mode" onclick="document.getElementById('129-editor-mode').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2001,12 +2001,12 @@ our game class to match our needs.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('29-pixel-barf').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('236-pixel-barf').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="29-pixel-barf" onclick="document.getElementById('29-pixel-barf').close()">
+  <dialog class="popover" id="236-pixel-barf" onclick="document.getElementById('236-pixel-barf').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2074,12 +2074,12 @@ color pattern converging in the center of the canvas:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('54-coordinate-identity').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('171-coordinate-identity').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="54-coordinate-identity" onclick="document.getElementById('54-coordinate-identity').close()">
+  <dialog class="popover" id="171-coordinate-identity" onclick="document.getElementById('171-coordinate-identity').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2309,12 +2309,12 @@ explaining the geometry here: this is a well-documented process and can be resea
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('247-flat-sphere').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('43-flat-sphere').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="247-flat-sphere" onclick="document.getElementById('247-flat-sphere').close()">
+  <dialog class="popover" id="43-flat-sphere" onclick="document.getElementById('43-flat-sphere').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2397,12 +2397,12 @@ depths.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('123-perspective-rendering').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('88-perspective-rendering').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="123-perspective-rendering" onclick="document.getElementById('123-perspective-rendering').close()">
+  <dialog class="popover" id="88-perspective-rendering" onclick="document.getElementById('88-perspective-rendering').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2586,12 +2586,12 @@ into the distance.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('21-floor-and-fog').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('93-floor-and-fog').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="21-floor-and-fog" onclick="document.getElementById('21-floor-and-fog').close()">
+  <dialog class="popover" id="93-floor-and-fog" onclick="document.getElementById('93-floor-and-fog').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2757,12 +2757,12 @@ center <code class="language-plaintext highlighter-rouge">Sphere</code>.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('29-reflections').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('95-reflections').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="29-reflections" onclick="document.getElementById('29-reflections').close()">
+  <dialog class="popover" id="95-reflections" onclick="document.getElementById('95-reflections').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2976,12 +2976,12 @@ darkens our scene.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('82-diffuse-lighting').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('172-diffuse-lighting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="82-diffuse-lighting" onclick="document.getElementById('82-diffuse-lighting').close()">
+  <dialog class="popover" id="172-diffuse-lighting" onclick="document.getElementById('172-diffuse-lighting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3086,12 +3086,12 @@ Otherwise we calculate the diffuse lighting as before.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('125-shadow-casting').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('244-shadow-casting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="125-shadow-casting" onclick="document.getElementById('125-shadow-casting').close()">
+  <dialog class="popover" id="244-shadow-casting" onclick="document.getElementById('244-shadow-casting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3195,12 +3195,12 @@ in Release mode.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('219-multisampling').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('77-multisampling').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="219-multisampling" onclick="document.getElementById('219-multisampling').close()">
+  <dialog class="popover" id="77-multisampling" onclick="document.getElementById('77-multisampling').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->

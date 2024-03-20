@@ -2611,6 +2611,20 @@ div:has(aside:hover, .aside-attn:hover) > aside {
   clear: both;
 }
 
+button.link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: var(--minima-link-base-color);
+  cursor: pointer;
+}
+button.link:hover {
+  text-decoration: underline;
+}
+
 /*** Footer customization rules. ***/
 /*** Base Minima theme. ***/
 :is(.contact-list, .access-list) li a > svg {
