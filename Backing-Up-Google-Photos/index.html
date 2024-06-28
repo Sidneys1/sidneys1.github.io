@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<meta charset="utf-8">
+
+	<link rel="preload" href="https://sidneys1.github.io/assets/OpenDyslexic3-Regular.otf" as="font" crossorigin="anonymous">
+	<link rel="preload" href="https://sidneys1.github.io/assets/OpenDyslexicMono-Regular.otf" as="font" crossorigin="anonymous">
+	<link rel="preload" href="https://sidneys1.github.io/assets/css/main.css" as="style" />
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="onion-location"
+		content="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/Backing-Up-Google-Photos/" />
+	<link rel="icon" type="image/png" sizes="16x16"
+		href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How I Back Up Google Photos | Sidneys1.com on GitHub Pages</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="How I Back Up Google Photos" />
+<meta name="author" content="Sidneys1" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Google Photos is wonderful. It backs up my photos and videos, tags them, and makes them available to share with my family. But I also don’t trust that Google will never accidentally “loose” my photos. Here is the process I use to back up my Google Photos data to a self-hosted instance of Photoprism." />
+<meta property="og:description" content="Google Photos is wonderful. It backs up my photos and videos, tags them, and makes them available to share with my family. But I also don’t trust that Google will never accidentally “loose” my photos. Here is the process I use to back up my Google Photos data to a self-hosted instance of Photoprism." />
+<link rel="canonical" href="https://sidneys1.github.io/Backing-Up-Google-Photos/" />
+<meta property="og:url" content="https://sidneys1.github.io/Backing-Up-Google-Photos/" />
+<meta property="og:site_name" content="Sidneys1.com on GitHub Pages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-06-28T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How I Back Up Google Photos" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sidneys1"},"dateModified":"2024-06-28T00:00:00-04:00","datePublished":"2024-06-28T00:00:00-04:00","description":"Google Photos is wonderful. It backs up my photos and videos, tags them, and makes them available to share with my family. But I also don’t trust that Google will never accidentally “loose” my photos. Here is the process I use to back up my Google Photos data to a self-hosted instance of Photoprism.","headline":"How I Back Up Google Photos","mainEntityOfPage":{"@type":"WebPage","@id":"https://sidneys1.github.io/Backing-Up-Google-Photos/"},"url":"https://sidneys1.github.io/Backing-Up-Google-Photos/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="https://sidneys1.github.io/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><script defer src="https://sidneys1.github.io/assets/mastodon_comments.js" onload="initComments()"></script><!-- KaTeX -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+		integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+
+	<!-- The loading of KaTeX is deferred to speed up page rendering -->
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+		integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+		crossorigin="anonymous"></script>
+
+	<!-- To automatically render math in text elements, include the auto-render extension: -->
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+		integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+		onload="renderMathInElement(document.body);"></script>
+
+	<script type="module">
+		/*
+		 * This code is only used for loading/saving preferences
+		 * to/from `localstorage`. If scripts are disabled all
+		 * the theming still works, they just won't persist. :^)
+		 */
+
+		// Definition of preferences. Individual toggles should be
+		// `id`'d `${key}-${value}`.
+		const PREFERENCES = {
+			'color': ['blue', 'green', 'red'],
+			'mode': ['auto', 'light', 'dark', 'black'],
+			'align': ['left', 'justify'],
+			'font': ['default', 'od'],
+		};
+
+		// Save preferences to `localstorage`.
+		function savePreferences() {
+			var p = {
+			};
+
+			Object.entries(PREFERENCES).forEach(([key, values]) => {
+				p[key] = values.find(value =>
+					document.getElementById(`${key}-${value}`).checked);
+			});
+
+			localStorage.setItem('preferences', JSON.stringify(p));
+		};
+
+		// Run at page load
+		// document.addEventListener("DOMContentLoaded", function (_, __) {
+		// Load preferences once.
+		const p = JSON.parse(localStorage.getItem('preferences') || '{}');
+		Object.entries(PREFERENCES).forEach(([key, values]) =>
+			document.getElementById(`${key}-${p[key] || values[0]}`).checked = true);
+
+		// Register change handlers.
+		Object.entries(PREFERENCES).forEach(([key, values]) =>
+			values.forEach(value =>
+				document.getElementById(`${key}-${value}`).addEventListener('change', e =>
+					savePreferences())));
+		// });
+	</script>
+	<noscript><style> .jsonly { display: none } </style></noscript>
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="https://sidneys1.github.io/">Sidneys1.com on GitHub Pages</a>
+
+	<span class="coffee"><a title="Buy me a Coffee" href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
+    <svg class="svg-icon">
+			<use xlink:href="/assets/coffee-cup-1.svg#coffee"></use>
+    </svg>
+
+	</a></span><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="https://sidneys1.github.io/tags.html">Tags</a><a class="page-link" href="https://sidneys1.github.io/categories.html">Categories</a><a class="page-link" href="https://sidneys1.github.io/series.html">Series</a></div>
+      </nav></div>
+
+</header>
+
+<div id="theme-parent">
+	<div id="theme-select">
+		<fieldset id="color-select">
+			<legend align="bottom">Accent</legend>
+			<input id="color-blue" type="radio" name="color" value="blue" checked /><label for="color-blue" title="Blue">💧</label>
+			<input id="color-green" type="radio" name="color" value="green" /><label for="color-green" title="Green">🌳</label>
+			<input id="color-red" type="radio" name="color" value="red" /><label for="color-red" title="Red">❤️</label>
+		</fieldset>
+		<fieldset id="mode-select">
+			<legend>mode</legend>
+			<input id="mode-auto" type="radio" name="mode" value="auto" checked /><label for="mode-auto" title="Auto">🪄</label>
+			<input id="mode-light" type="radio" name="mode" value="light" /><label for="mode-light" title="Light">☀️</label>
+			<input id="mode-dark" type="radio" name="mode" value="dark" /><label for="mode-dark" title="Dark">🌕</label>
+			<input id="mode-black" type="radio" name="mode" value="black" /><label for="mode-black" title="Black (AMOLED)">🌑</label>
+		</fieldset>
+		<fieldset id="align-select">
+			<legend>Align</legend>
+			<input id="align-left" type="radio" name="align" value="left" checked /><label for="align-left" title="Left">⬅️</label>
+			<input id="align-justify" type="radio" name="align" value="justify" /><label for="align-justify" title="Justify">↔️</label>
+		</fieldset>
+		<fieldset id="font-select">
+			<legend>Font</legend>
+			<input id="font-default" type="radio" name="font" value="default" checked /><label for="font-default" style="font-family: system-ui;" title="System Font">Aa</label>
+			<input id="font-od" type="radio" name="font" value="od" /><label for="font-od" style="font-family: opendyslexic;" title="OpenDyslexic">Od</label>
+		</fieldset>
+		<noscript title="JavaScript is disabled. Preferences can not be saved to browser local storage.">
+			ℹ️ <em>Preferences can not be saved.</em>
+		</noscript>
+	</div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+	<header class="post-header">
+		<h1 class="post-title p-name" itemprop="name headline">How I Back Up Google Photos</h1>
+		<h2 class="post-title p-name">Using ZFS and Photoprism</h1><p class="post-meta">
+			<time class="dt-published" datetime="2024-06-28T00:00:00-04:00" itemprop="datePublished">Jun 28, 2024
+			</time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+				<span class="p-author h-card" itemprop="name">Sidneys1</span></span>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/tags.html#datahoarding" style="display: inline;"
+				class="tag">datahoarding</a>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/tags.html#self-hosting" style="display: inline;"
+				class="tag">self-hosting</a>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/tags.html#zfs" style="display: inline;"
+				class="tag">zfs</a>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/tags.html#photoprism" style="display: inline;"
+				class="tag">photoprism</a>&nbsp;•&nbsp;<a href="https://sidneys1.github.io/tags.html#truenas" style="display: inline;"
+				class="tag">truenas</a></p></header><!-- <div class="post-toc"> -->
+	<ul id="toc" class="toc__list">
+<li class="toc-entry toc-h2"><a href="#prerequisites-and-setup">Prerequisites and Setup</a></li>
+<li class="toc-entry toc-h2"><a href="#step-1---create-takeout-archives">Step 1 - Create Takeout Archives</a></li>
+<li class="toc-entry toc-h2"><a href="#step-2---downloading-takeout-archives">Step 2 - Downloading Takeout Archives</a></li>
+<li class="toc-entry toc-h2"><a href="#step-3---extracting-takeout-archives">Step 3 - Extracting Takeout Archives</a></li>
+<li class="toc-entry toc-h2"><a href="#step-4---deduplicating-media-files">Step 4 - Deduplicating Media Files</a></li>
+<li class="toc-entry toc-h2"><a href="#cleanup">Cleanup</a></li>
+</ul>
+	<!-- </div> -->
+
+	<div class="post-content e-content" itemprop="articleBody">
+		<p>Google Photos is wonderful. It backs up my photos and videos, tags them, and makes them available to share with my
+family.</p>
+
+<p>But I also don’t trust that Google will never accidentally “loose” my photos. Here is the process I use to back up my
+Google Photos data to a self-hosted instance of Photoprism.</p>
+
+<!--more-->
+<p>This guide covers the process I use to back up my Google Photos content, in its original quality and with sidecar
+metadata, to Photoprism.</p>
+
+<h2 id="prerequisites-and-setup">Prerequisites and Setup</h2>
+
+<p>My Photoprism instance runs on a TrueNAS Scale server as a kubernetes app. While yours doesn’t have to run in the exact
+setup, it’s worth describing. Photoprism has three primary storage folders, “Originals”, “Imports”, and a data path for
+sidecar files, multimedia caches, and the database file (if you’re using the built-in Sqlite storage, though I’d
+strongly caution you to set up an external MariaDB instance if you have a large photo library). Photoprism treats
+“Originals” as essentially a read-only store of media - anything you put in here will be imported by Photoprism as-is.
+Meanwhile any media put in “Imports” will be ingested by Photoprism and moved to the Originals folder; however you will
+have no control over the organization of these imported media. For our purposes, I <em>strongly</em> recommend putting your
+Google Photos media in “Originals” to preserve the folder structure Takeout outputs.</p>
+
+<p>In my TrueNAS setup the Originals and Import folders are mounted onto ZFS datasets on the host, which allows me to
+access and administer the media files while Photoprism isn’t running. Specifically, “Originals” is mounted to
+<code class="language-plaintext highlighter-rouge">/mnt/Bulk Storage/Photoprism/Originals</code>, which we’ll just call <code class="language-plaintext highlighter-rouge">$ORIGINALS</code> from here on. First and most importantly,
+we will be using ZFS extended attribute <code class="language-plaintext highlighter-rouge">i</code>mmutable to ensure that any files already in our “Originals” folder won’t
+be overwritten when we extract the Takeout GZip archives. To do this, we can run the following command:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Find all regular files in our Originals folder and mark them as +i (immutable).</span>
+find <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span> <span class="nt">-type</span> f <span class="nt">-print0</span> <span class="se">\</span>
+| <span class="nb">sudo </span>xargs <span class="nt">-0</span> <span class="nt">-n</span> 1 chattr +i
+</code></pre></div></div>
+
+<p>We’ll also be using a few tools not distributed with TrueNAS Scale (or more Linux distros, for that matter). Most can be
+installed via package managers, the rest can be built from source:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">pigz</code> - Parallel GZip implementation (<a href="http://www.zlib.net/pigz/">homepage</a>).</li>
+  <li><code class="language-plaintext highlighter-rouge">progress</code> - Coreutils’ progress viewer (not necessary - just nice; <a href="https://github.com/Xfennec/progress">homepage</a>).</li>
+  <li><code class="language-plaintext highlighter-rouge">jdupes</code> - Jody Bruchon’s enhanced <code class="language-plaintext highlighter-rouge">fdupes</code> clone (<a href="https://codeberg.org/jbruchon/jdupes">homepage</a>).</li>
+</ul>
+
+<h2 id="step-1---create-takeout-archives">Step 1 - Create Takeout Archives</h2>
+
+<ol>
+  <li>Go to <a href="https://takeout.google.com">Google Takeout</a>.</li>
+  <li>Click <button>Deselect all</button>.</li>
+  <li>Scroll down to “Google Photos” and select its checkbox.</li>
+  <li>Scroll to the bottom and click <button>Next Step</button>.</li>
+  <li>For “File type” select <code class="language-plaintext highlighter-rouge">.tgz</code>, and for “File size” select 50GB.</li>
+  <li>Click <button>Create Export</button>.</li>
+</ol>
+
+<h2 id="step-2---downloading-takeout-archives">Step 2 - Downloading Takeout Archives</h2>
+
+<div>
+
+  <p>Once your Google Takeout files are ready you will get an email (you can also check the Takeout site for completed
+archives). Depending on the size of our Google Photos library you may have multiple ~50GB files. I usually have around
+10-15. I prefer to download one file at a time (depending on free disk space). Clicking the file will start a browser
+download, but I like to pause this download, right-click it and “copy download URL”, and then enter that into a download
+tool like Aria2.</p>
+
+  <aside>
+
+    <p>The total size of your Takeout files may be much larger than your total Google Photos library. Takeout will organize
+your photos and videos by year and month, but any named albums you’ve created will also have a top-level folder
+containing yet another copy of any photos or videos in that album.</p>
+
+    <p>Because of this, we’ll be utilizing some ZFS tricks to minimize and deduplicate your disk usage.</p>
+
+  </aside>
+
+</div>
+
+<h2 id="step-3---extracting-takeout-archives">Step 3 - Extracting Takeout Archives</h2>
+
+<p>Once I have some Takeout archive files downloaded (you don’t have to download them all at once, or even in order!) we’ll
+start extracting them into our “Originals” folder. Your Photoprism instance shouldn’t index Originals unless you tell it
+to, but I usually shut Photoprism down while performing these steps just to be safe.</p>
+
+<details>
+  <summary>Here's the script I use.</summary>
+
+  <p>This will use <code class="language-plaintext highlighter-rouge">pigz</code> to extract the specified archive in parallel (for speed) and then extract the Google Photos files
+into our “Originals” folder:</p>
+
+  <div data-file-name="extract-to-originals.sh" class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env sh</span>
+
+<span class="c"># Usage:</span>
+<span class="c"># sudo ./extract-to-originals.sh takeout-archive.tgz</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">--user</span><span class="si">)</span><span class="s2">"</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Please run with sudo!"</span> 1&gt;&amp;2<span class="p">;</span>
+    <span class="nb">exit </span>1<span class="p">;</span>
+<span class="k">fi
+
+</span>pigz <span class="nt">--decompress</span> &lt;<span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="se">\</span>
+| <span class="nb">tar</span> <span class="nt">--extract</span> <span class="nt">--strip-components</span><span class="o">=</span>2 <span class="nt">--skip-old-files</span> <span class="nt">--directory</span><span class="o">=</span><span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span> <span class="se">\</span>
+&amp; progress <span class="nt">--wait</span> <span class="nt">-monitor</span> <span class="nt">--command</span> pigz<span class="p">;</span>
+
+<span class="nb">chown</span> <span class="nt">-R</span> photoprism:photoprism <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span><span class="p">;</span>
+</code></pre></div>  </div>
+
+  <p>Let’s break down what’s happening here:</p>
+
+  <ol>
+    <li><code class="language-plaintext highlighter-rouge">if [ "$(id -u)" -ne 0];</code> - checks if the script was run as <code class="language-plaintext highlighter-rouge">root</code> (or with <code class="language-plaintext highlighter-rouge">sudo</code>).</li>
+    <li><code class="language-plaintext highlighter-rouge">pigz --decompress &lt;"$1"</code> - decompress the GZip file specified in the first passed to the script.</li>
+    <li><code class="language-plaintext highlighter-rouge">tar --extract</code>… - extract files from the Tar archive that <code class="language-plaintext highlighter-rouge">pigz</code> decompressed. There’s a few extra options:
+      <ul>
+        <li>…<code class="language-plaintext highlighter-rouge">--strip-components=2</code>…: remove some unnecessary path components that Takeout adds.</li>
+        <li>…<code class="language-plaintext highlighter-rouge">--skip-old-files</code>…: skip files that already exist on disk.</li>
+        <li>…<code class="language-plaintext highlighter-rouge">--directory</code>: extract files into our <code class="language-plaintext highlighter-rouge">$ORIGINALS</code> folder.</li>
+      </ul>
+    </li>
+    <li><code class="language-plaintext highlighter-rouge">progress --wait --monitor --command pigz</code> - monitor the progress of the <code class="language-plaintext highlighter-rouge">pigz</code> command in decompressing the input
+file.</li>
+    <li><code class="language-plaintext highlighter-rouge">chown -R photoprism:photoprism "$ORIGINALS"</code> - Because <code class="language-plaintext highlighter-rouge">tar</code> attempts to preserve the ownership of the files it
+extracts, we need to correct this after extraction. Obviously update the <code class="language-plaintext highlighter-rouge">user:group</code> to suit your own needs.</li>
+  </ol>
+
+  <p>Because the files already in our “Originals” folder are marked <code class="language-plaintext highlighter-rouge">i</code>mmutable tar can’t overwrite them - and in fact we
+also provide tar with the <code class="language-plaintext highlighter-rouge">--skip-old-files</code> option to avoid a lot of error output about not being able to extract
+existing files. We do this so that the next time you want to back up your Google Photos, any files that existed between
+the last backup and the new one aren’t re-written and we can safely skip extracting them from the archive. This will
+save a <em>ton</em> of time.</p>
+
+</details>
+
+<h2 id="step-4---deduplicating-media-files">Step 4 - Deduplicating Media Files</h2>
+
+<p>Repeat step 3 for all of the Takeout archives - you can delete each one as you go once it’s been extracted. Once you’re
+done, we can inspect how many files we have that are new by counting the files that are not <code class="language-plaintext highlighter-rouge">i</code>mmutable.</p>
+
+<details>
+  <summary>Here's a little script to do just that.</summary>
+
+  <div data-file-name="count-new-originals.sh" class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env sh</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span><span class="s2">"</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Please run with sudo!"</span> 1&gt;&amp;2<span class="p">;</span>
+    <span class="nb">exit </span>1<span class="p">;</span>
+<span class="k">fi
+
+</span>find <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span> <span class="nt">-type</span> f <span class="nt">-print0</span> <span class="se">\</span>
+| xargs <span class="nt">--null</span> lsattr <span class="se">\</span>
+| <span class="nb">grep</span> <span class="nt">--</span> <span class="s2">"----------------------"</span> <span class="se">\</span>
+| <span class="nb">wc</span> <span class="nt">--lines</span><span class="p">;</span>
+</code></pre></div>  </div>
+
+  <p>Breaking it down:</p>
+
+  <ol>
+    <li><code class="language-plaintext highlighter-rouge">if [ "$(id -u)" -ne 0 ]</code> - again, checks that we’re running as <code class="language-plaintext highlighter-rouge">root</code> or with <code class="language-plaintext highlighter-rouge">sudo</code>.</li>
+    <li><code class="language-plaintext highlighter-rouge">find "$ORIGINALS" -type f -print0</code> - finds files in our originals folder. We use <code class="language-plaintext highlighter-rouge">-print0</code> to safely handle
+filenames with weird characters in them.</li>
+    <li><code class="language-plaintext highlighter-rouge">xargs --null lsattr</code> - for each file that <code class="language-plaintext highlighter-rouge">find</code> outputs we want to run <code class="language-plaintext highlighter-rouge">lsattr</code> - this will list any extended
+attributes on each file.</li>
+    <li><code class="language-plaintext highlighter-rouge">grep -- "----------------------"</code> - for each line (file) of output from <code class="language-plaintext highlighter-rouge">lsattr</code>, we’re only interested in lines
+(files) that have no extended attributes set (files that have <code class="language-plaintext highlighter-rouge">i</code>mmutable set would show as
+<code class="language-plaintext highlighter-rouge">----i-----------------</code>).</li>
+    <li><code class="language-plaintext highlighter-rouge">wc --lines</code> - count the number of lines (files).</li>
+  </ol>
+
+</details>
+
+<p>Neat! Now let’s deduplicate all of these files. As mentioned in the aside above, Takeout will include multiple copies
+of each piece of media, as each one can appear in multiple albums. To deduplicate this and save you a bunch of hard
+drive space we’ll use <code class="language-plaintext highlighter-rouge">jdupes</code>. This tool will search for files that are identical and (in our case) turn them into
+filesystem hardlinks - which means that the same data on disk can be pointed to by multiple file names.</p>
+
+<p>First we need to change all files back from immutable. This can be done quickly with <code class="language-plaintext highlighter-rouge">sudo chattr -R -i "$ORIGINALS"</code>.
+Then we run <code class="language-plaintext highlighter-rouge">jdupes</code>, which has a lot of options, but the ones we want are:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>jdupes <span class="nt">--link-hard</span> <span class="nt">--recurse</span> <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Aka:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--link-hard</code> - we want to hard-link all identical files together.</li>
+  <li><code class="language-plaintext highlighter-rouge">--recurse</code> - consider all files within subdirectories of <code class="language-plaintext highlighter-rouge">$ORIGINALS</code> recursively.</li>
+</ul>
+
+<p>When this is done we’ll have potentially saved a lot of disk space!</p>
+
+<details>
+  <summary>Want to find out how much?</summary>
+
+  <p>Here’s a short command that will tell you exactly how much space has been saved!</p>
+
+  <div data-file-name="deduplication-space-savings.sh" class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span> <span class="nt">-type</span> f <span class="nt">-links</span> +1 <span class="nt">-printf</span> <span class="s1">'%i %s\n'</span> <span class="se">\</span>
+| <span class="nb">awk</span> <span class="s1">'a[$1]++{sum+=$2}END{print sum}'</span> <span class="se">\</span>
+| <span class="nb">numfmt</span> <span class="nt">--to</span><span class="o">=</span>iec-i <span class="nt">--suffix</span><span class="o">=</span>B
+</code></pre></div>  </div>
+
+  <p>Here’s the gist of what’s happening:</p>
+  <ol>
+    <li><code class="language-plaintext highlighter-rouge">find "$ORIGINALS" -type f</code>… - find all <code class="language-plaintext highlighter-rouge">f</code>iles in <code class="language-plaintext highlighter-rouge">$ORIGINALS</code>;
+      <ul>
+        <li>…<code class="language-plaintext highlighter-rouge">-links +1</code>… - that have more than one hardlink;</li>
+        <li>…<code class="language-plaintext highlighter-rouge">-printf '%i %s\n'</code> - and output the file’s <code class="language-plaintext highlighter-rouge">inode</code> number and file size (in bytes).</li>
+      </ul>
+    </li>
+    <li><code class="language-plaintext highlighter-rouge">awk 'a[$1]++{sum+=$2}END{print sum}'</code> - this line is a bit heavy, but here’s what the <code class="language-plaintext highlighter-rouge">awk</code> script is doing:
+      <ul>
+        <li>
+          <p><code class="language-plaintext highlighter-rouge">a[$1]++</code></p>
+
+          <p>Increment the value stored in <code class="language-plaintext highlighter-rouge">a[$1]</code> (where <code class="language-plaintext highlighter-rouge">$1</code> is going to be the <code class="language-plaintext highlighter-rouge">inode</code> number from each line). The <code class="language-plaintext highlighter-rouge">inode</code> is
+the unique data on disk - multiple file paths hardlinked to the same data will have the same <code class="language-plaintext highlighter-rouge">inode</code> number.</p>
+        </li>
+        <li>
+          <p><code class="language-plaintext highlighter-rouge">{sum+=$2}</code></p>
+
+          <p>The <code class="language-plaintext highlighter-rouge">{sum+=$2}</code> part is a conditional clause - that means that if the value before it is “truthy” it will execute.
+The first time a unique <code class="language-plaintext highlighter-rouge">inode</code> is encountered <code class="language-plaintext highlighter-rouge">a[$1]++</code> will post-increment to 1, returning 0. This is falsy, so
+the conditional clause won’t run. Each time an inode is encountered after that, however, the value with be 1 or more,
+which is a truthy value and the conditional clause will run. All the clause actually does (when run) is increment
+the value <code class="language-plaintext highlighter-rouge">sum</code> (which starts at 0) by <code class="language-plaintext highlighter-rouge">$2</code> (the file size in bytes).</p>
+        </li>
+        <li>
+          <p><code class="language-plaintext highlighter-rouge">END{print sum}</code> - when the script ends, print the value in <code class="language-plaintext highlighter-rouge">sum</code>.</p>
+        </li>
+      </ul>
+    </li>
+    <li><code class="language-plaintext highlighter-rouge">numfmt --to=iec-i --suffix=B</code> - this converts the value of <code class="language-plaintext highlighter-rouge">sum</code> output by <code class="language-plaintext highlighter-rouge">awk</code> to an IEC size (e.g., <code class="language-plaintext highlighter-rouge">1024</code> would
+be converted to <code class="language-plaintext highlighter-rouge">1.0KiB</code>).</li>
+  </ol>
+
+  <p>So as an example, say our “Originals” folder only contains three files:</p>
+
+  <ul>
+    <li>🖼️ <code class="language-plaintext highlighter-rouge">a.jpg</code></li>
+    <li>🖼️ <code class="language-plaintext highlighter-rouge">b.jpeg</code></li>
+    <li>📄 <code class="language-plaintext highlighter-rouge">sidecar.json</code></li>
+  </ul>
+
+  <p>And <code class="language-plaintext highlighter-rouge">a.jpg</code> and <code class="language-plaintext highlighter-rouge">b.jpeg</code> are both hardlinks to the same 1MiB of data, and <code class="language-plaintext highlighter-rouge">sidecar.json</code> is a 1KiB standalone file. When
+we run our script, the <code class="language-plaintext highlighter-rouge">find</code> portion will output three lines:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>12345 1048576
+12345 1048576
+67890 1024
+</code></pre></div>  </div>
+
+  <p>When <code class="language-plaintext highlighter-rouge">awk</code> gets these lines, it will perform the following:</p>
+
+  <ul>
+    <li>Line 1: Post-increment <code class="language-plaintext highlighter-rouge">a[12345]</code> (from 0 to 1), returning 0. 0 is falsy, so <code class="language-plaintext highlighter-rouge">{sum+=1048576}</code> doesn’t run.</li>
+    <li>Line 2: Post-increment <code class="language-plaintext highlighter-rouge">a[12345]</code> (from 1 to 2), returning 1. 1 is truthy, so <code class="language-plaintext highlighter-rouge">{sum+=1048576}</code> runs - sum is now <code class="language-plaintext highlighter-rouge">1048576</code>.</li>
+    <li>Line 3: Post-increment <code class="language-plaintext highlighter-rouge">a[67890]</code> (from 0 to 1), returning 0. 0 is falsy, so <code class="language-plaintext highlighter-rouge">{sum+=1024}</code> doesn’t run.</li>
+    <li>End of input: <code class="language-plaintext highlighter-rouge">END{print sum}</code> runs, outputting <code class="language-plaintext highlighter-rouge">1048576</code>.</li>
+  </ul>
+
+  <p>Finally, <code class="language-plaintext highlighter-rouge">numfmt</code> converts <code class="language-plaintext highlighter-rouge">1048576</code> to <code class="language-plaintext highlighter-rouge">1.0MiB</code>, and we see our space savings is 1 megabyte! This is correct, as if
+<code class="language-plaintext highlighter-rouge">b.jpeg</code> wasn’t hardlinked to <code class="language-plaintext highlighter-rouge">a.jpg</code> it would take an additional 1 megabyte.</p>
+
+</details>
+
+<h2 id="cleanup">Cleanup</h2>
+
+<p>Finally, we can re-mark our files as <code class="language-plaintext highlighter-rouge">i</code>mmutable:</p>
+
+<div data-file-name="make-files-immutable.sh" class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span> <span class="nt">-type</span> f <span class="nt">-print0</span> <span class="se">\</span>
+| <span class="nb">sudo </span>xargs <span class="nt">-0</span> <span class="nt">-n</span> 1 chattr +i
+</code></pre></div></div>
+
+<p>Now we turn Photoprism back on, and tell it to re-index new files in the Originals folder. It will even intelligently
+use the sidecar JSON files that Takeout exports to enrich each media item with additional metadata.</p>
+
+	</div>
+
+	<hr>
+
+	<div class="donate">
+		Like what you read?
+		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
+			Consider buying me a coffee.
+		</a>
+		<br/>
+		<a title="Consider buying me a coffee." href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer" style="display: inline-block;">
+			<!-- <img height="50px" title="Buy me a Coffee" src="https://sidneys1.github.io/assets/coffee-cup-1.svg"/> -->
+			<svg class="svg-icon grey">
+				<use xlink:href="/assets/coffee-cup-1.svg#coffee"></use>
+			</svg>
+		</a>
+	</div><p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p><a class="u-url" href="https://sidneys1.github.io/Backing-Up-Google-Photos/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<data class="u-url" href="https://sidneys1.github.io/%20/"></data>
+
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<div class="footer-col">
+				<ul class="contact-list">
+					<li class="p-name">Contact</li><li>
+	<a rel="me" href="mailto:Sidneys1@proton.me" target="_blank" title="ProtonMail">
+		<svg class="svg-icon">
+			<use xlink:href="/assets/minima-social-icons.svg#protonmail"></use>
+		</svg>
+		<span>ProtonMail</span>
+	</a>
+</li>
+<li>
+	<a rel="me" href="mailto:admin@sSidneys1.com" target="_blank" title="Site Support">
+		<svg class="svg-icon">
+			<use xlink:href="/assets/minima-social-icons.svg#email"></use>
+		</svg>
+		<span>Site Support</span>
+	</a>
+</li>
+<li>
+	<a rel="me" href="https://matrix.to/#/@sidneys1:matrix.org" target="_blank" title="Matrix Chat">
+		<svg class="svg-icon">
+			<use xlink:href="/assets/minima-social-icons.svg#matrix"></use>
+		</svg>
+		<span>Matrix Chat</span>
+	</a>
+</li>
+<li>
+	<a rel="me" href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FQwoc8ketLODmigLCuVhCt8Eio_ruJFnj%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAtEpK9f8ocpGt_MYmDVj0FrCIorSk7PSIVI-BmxLHUHE%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion" target="_blank" title="SimpleX Chat">
+		<svg class="svg-icon">
+			<use xlink:href="/assets/minima-social-icons.svg#simplex"></use>
+		</svg>
+		<span>SimpleX Chat</span>
+	</a>
+</li>
+</ul>
+			</div>
+			<div class="footer-col site-desc">
+				<p>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</p>
+				<hr>
+			</div>
+			<div class="footer-col">
+				<ul class="access-list">
+					<li class="p-name">Alternative Access</li><li>
+	<a rel="me" href="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion" target="_blank" title="Tor">
+		<span>Tor</span>
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#tor"></use>
+		</svg>
+	</a>
+</li>
+<li>
+	<a rel="me" href="https://sidneys1-com.ipns.cf-ipfs.com/" target="_blank" title="IPFS (Cloudflare)">
+		<span>IPFS (Cloudflare)</span>
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#ipfs"></use>
+		</svg>
+	</a>
+</li>
+<li>
+	<a rel="me" href="https://sidneys1.github.io" target="_blank" title="GitHub Pages">
+		<span>GitHub Pages</span>
+		<svg class="svg-icon grey">
+			<use xlink:href="/assets/minima-social-icons.svg#github"></use>
+		</svg>
+	</a>
+</li>
+</ul>
+			</div>
+			<div class="footer-col">
+				<div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://github.com/Sidneys1" target="_blank" title="GitHub">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#github"></use>
+    </svg>
+  </a>
+</li>
+<li>
+  <a href="/feed.xml" target="_blank" title="Sidneys1.com RSS Feed">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+    </svg>
+  </a>
+</li>
+<li>
+  <a rel="me" href="https://www.youtube.com/channel/UCoCiN9Yd8ifG1PeVb6wY0jg" target="_blank" title="YouTube Channel">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#youtube"></use>
+    </svg>
+  </a>
+</li>
+<li>
+  <a rel="me" href="https://infosec.exchange/@Sidneys1" target="_blank" title="Mastodon (infosec.exchange)">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#mastodon"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+			</div>
+		</div>
+
+	</div>
+
+</footer>
+</body>
+
+</html>

@@ -1,4 +1,273 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-03-20T15:30:57-04:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>your-email@domain.com</email></author><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2024-02-01T00:00:00-05:00</published><updated>2024-02-01T00:00:00-05:00</updated><id>https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun pakrat -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-06-28T16:06:41-04:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>your-email@domain.com</email></author><entry><title type="html">How I Back Up Google Photos</title><link href="https://sidneys1.github.io/Backing-Up-Google-Photos/" rel="alternate" type="text/html" title="How I Back Up Google Photos" /><published>2024-06-28T00:00:00-04:00</published><updated>2024-06-28T00:00:00-04:00</updated><id>https://sidneys1.github.io/backing-up-google-photos</id><content type="html" xml:base="https://sidneys1.github.io/Backing-Up-Google-Photos/"><![CDATA[<p>Google Photos is wonderful. It backs up my photos and videos, tags them, and makes them available to share with my
+family.</p>
+
+<p>But I also don’t trust that Google will never accidentally “loose” my photos. Here is the process I use to back up my
+Google Photos data to a self-hosted instance of Photoprism.</p>
+
+<!--more-->
+<p>This guide covers the process I use to back up my Google Photos content, in its original quality and with sidecar
+metadata, to Photoprism.</p>
+
+<h2 id="prerequisites-and-setup">Prerequisites and Setup</h2>
+
+<p>My Photoprism instance runs on a TrueNAS Scale server as a kubernetes app. While yours doesn’t have to run in the exact
+setup, it’s worth describing. Photoprism has three primary storage folders, “Originals”, “Imports”, and a data path for
+sidecar files, multimedia caches, and the database file (if you’re using the built-in Sqlite storage, though I’d
+strongly caution you to set up an external MariaDB instance if you have a large photo library). Photoprism treats
+“Originals” as essentially a read-only store of media - anything you put in here will be imported by Photoprism as-is.
+Meanwhile any media put in “Imports” will be ingested by Photoprism and moved to the Originals folder; however you will
+have no control over the organization of these imported media. For our purposes, I <em>strongly</em> recommend putting your
+Google Photos media in “Originals” to preserve the folder structure Takeout outputs.</p>
+
+<p>In my TrueNAS setup the Originals and Import folders are mounted onto ZFS datasets on the host, which allows me to
+access and administer the media files while Photoprism isn’t running. Specifically, “Originals” is mounted to
+<code class="language-plaintext highlighter-rouge">/mnt/Bulk Storage/Photoprism/Originals</code>, which we’ll just call <code class="language-plaintext highlighter-rouge">$ORIGINALS</code> from here on. First and most importantly,
+we will be using ZFS extended attribute <code class="language-plaintext highlighter-rouge">i</code>mmutable to ensure that any files already in our “Originals” folder won’t
+be overwritten when we extract the Takeout GZip archives. To do this, we can run the following command:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Find all regular files in our Originals folder and mark them as +i (immutable).</span>
+find <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span> <span class="nt">-type</span> f <span class="nt">-print0</span> <span class="se">\</span>
+| <span class="nb">sudo </span>xargs <span class="nt">-0</span> <span class="nt">-n</span> 1 chattr +i
+</code></pre></div></div>
+
+<p>We’ll also be using a few tools not distributed with TrueNAS Scale (or more Linux distros, for that matter). Most can be
+installed via package managers, the rest can be built from source:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">pigz</code> - Parallel GZip implementation (<a href="http://www.zlib.net/pigz/">homepage</a>).</li>
+  <li><code class="language-plaintext highlighter-rouge">progress</code> - Coreutils’ progress viewer (not necessary - just nice; <a href="https://github.com/Xfennec/progress">homepage</a>).</li>
+  <li><code class="language-plaintext highlighter-rouge">jdupes</code> - Jody Bruchon’s enhanced <code class="language-plaintext highlighter-rouge">fdupes</code> clone (<a href="https://codeberg.org/jbruchon/jdupes">homepage</a>).</li>
+</ul>
+
+<h2 id="step-1---create-takeout-archives">Step 1 - Create Takeout Archives</h2>
+
+<ol>
+  <li>Go to <a href="https://takeout.google.com">Google Takeout</a>.</li>
+  <li>Click <button>Deselect all</button>.</li>
+  <li>Scroll down to “Google Photos” and select its checkbox.</li>
+  <li>Scroll to the bottom and click <button>Next Step</button>.</li>
+  <li>For “File type” select <code class="language-plaintext highlighter-rouge">.tgz</code>, and for “File size” select 50GB.</li>
+  <li>Click <button>Create Export</button>.</li>
+</ol>
+
+<h2 id="step-2---downloading-takeout-archives">Step 2 - Downloading Takeout Archives</h2>
+
+<div>
+
+  <p>Once your Google Takeout files are ready you will get an email (you can also check the Takeout site for completed
+archives). Depending on the size of our Google Photos library you may have multiple ~50GB files. I usually have around
+10-15. I prefer to download one file at a time (depending on free disk space). Clicking the file will start a browser
+download, but I like to pause this download, right-click it and “copy download URL”, and then enter that into a download
+tool like Aria2.</p>
+
+  <aside>
+
+    <p>The total size of your Takeout files may be much larger than your total Google Photos library. Takeout will organize
+your photos and videos by year and month, but any named albums you’ve created will also have a top-level folder
+containing yet another copy of any photos or videos in that album.</p>
+
+    <p>Because of this, we’ll be utilizing some ZFS tricks to minimize and deduplicate your disk usage.</p>
+
+  </aside>
+
+</div>
+
+<h2 id="step-3---extracting-takeout-archives">Step 3 - Extracting Takeout Archives</h2>
+
+<p>Once I have some Takeout archive files downloaded (you don’t have to download them all at once, or even in order!) we’ll
+start extracting them into our “Originals” folder. Your Photoprism instance shouldn’t index Originals unless you tell it
+to, but I usually shut Photoprism down while performing these steps just to be safe.</p>
+
+<details>
+  <summary>Here's the script I use.</summary>
+
+  <p>This will use <code class="language-plaintext highlighter-rouge">pigz</code> to extract the specified archive in parallel (for speed) and then extract the Google Photos files
+into our “Originals” folder:</p>
+
+  <div data-file-name="extract-to-originals.sh" class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env sh</span>
+
+<span class="c"># Usage:</span>
+<span class="c"># sudo ./extract-to-originals.sh takeout-archive.tgz</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">--user</span><span class="si">)</span><span class="s2">"</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Please run with sudo!"</span> 1&gt;&amp;2<span class="p">;</span>
+    <span class="nb">exit </span>1<span class="p">;</span>
+<span class="k">fi
+
+</span>pigz <span class="nt">--decompress</span> &lt;<span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="se">\</span>
+| <span class="nb">tar</span> <span class="nt">--extract</span> <span class="nt">--strip-components</span><span class="o">=</span>2 <span class="nt">--skip-old-files</span> <span class="nt">--directory</span><span class="o">=</span><span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span> <span class="se">\</span>
+&amp; progress <span class="nt">--wait</span> <span class="nt">-monitor</span> <span class="nt">--command</span> pigz<span class="p">;</span>
+
+<span class="nb">chown</span> <span class="nt">-R</span> photoprism:photoprism <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span><span class="p">;</span>
+</code></pre></div>  </div>
+
+  <p>Let’s break down what’s happening here:</p>
+
+  <ol>
+    <li><code class="language-plaintext highlighter-rouge">if [ "$(id -u)" -ne 0];</code> - checks if the script was run as <code class="language-plaintext highlighter-rouge">root</code> (or with <code class="language-plaintext highlighter-rouge">sudo</code>).</li>
+    <li><code class="language-plaintext highlighter-rouge">pigz --decompress &lt;"$1"</code> - decompress the GZip file specified in the first passed to the script.</li>
+    <li><code class="language-plaintext highlighter-rouge">tar --extract</code>… - extract files from the Tar archive that <code class="language-plaintext highlighter-rouge">pigz</code> decompressed. There’s a few extra options:
+      <ul>
+        <li>…<code class="language-plaintext highlighter-rouge">--strip-components=2</code>…: remove some unnecessary path components that Takeout adds.</li>
+        <li>…<code class="language-plaintext highlighter-rouge">--skip-old-files</code>…: skip files that already exist on disk.</li>
+        <li>…<code class="language-plaintext highlighter-rouge">--directory</code>: extract files into our <code class="language-plaintext highlighter-rouge">$ORIGINALS</code> folder.</li>
+      </ul>
+    </li>
+    <li><code class="language-plaintext highlighter-rouge">progress --wait --monitor --command pigz</code> - monitor the progress of the <code class="language-plaintext highlighter-rouge">pigz</code> command in decompressing the input
+file.</li>
+    <li><code class="language-plaintext highlighter-rouge">chown -R photoprism:photoprism "$ORIGINALS"</code> - Because <code class="language-plaintext highlighter-rouge">tar</code> attempts to preserve the ownership of the files it
+extracts, we need to correct this after extraction. Obviously update the <code class="language-plaintext highlighter-rouge">user:group</code> to suit your own needs.</li>
+  </ol>
+
+  <p>Because the files already in our “Originals” folder are marked <code class="language-plaintext highlighter-rouge">i</code>mmutable tar can’t overwrite them - and in fact we
+also provide tar with the <code class="language-plaintext highlighter-rouge">--skip-old-files</code> option to avoid a lot of error output about not being able to extract
+existing files. We do this so that the next time you want to back up your Google Photos, any files that existed between
+the last backup and the new one aren’t re-written and we can safely skip extracting them from the archive. This will
+save a <em>ton</em> of time.</p>
+
+</details>
+
+<h2 id="step-4---deduplicating-media-files">Step 4 - Deduplicating Media Files</h2>
+
+<p>Repeat step 3 for all of the Takeout archives - you can delete each one as you go once it’s been extracted. Once you’re
+done, we can inspect how many files we have that are new by counting the files that are not <code class="language-plaintext highlighter-rouge">i</code>mmutable.</p>
+
+<details>
+  <summary>Here's a little script to do just that.</summary>
+
+  <div data-file-name="count-new-originals.sh" class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env sh</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span><span class="s2">"</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Please run with sudo!"</span> 1&gt;&amp;2<span class="p">;</span>
+    <span class="nb">exit </span>1<span class="p">;</span>
+<span class="k">fi
+
+</span>find <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span> <span class="nt">-type</span> f <span class="nt">-print0</span> <span class="se">\</span>
+| xargs <span class="nt">--null</span> lsattr <span class="se">\</span>
+| <span class="nb">grep</span> <span class="nt">--</span> <span class="s2">"----------------------"</span> <span class="se">\</span>
+| <span class="nb">wc</span> <span class="nt">--lines</span><span class="p">;</span>
+</code></pre></div>  </div>
+
+  <p>Breaking it down:</p>
+
+  <ol>
+    <li><code class="language-plaintext highlighter-rouge">if [ "$(id -u)" -ne 0 ]</code> - again, checks that we’re running as <code class="language-plaintext highlighter-rouge">root</code> or with <code class="language-plaintext highlighter-rouge">sudo</code>.</li>
+    <li><code class="language-plaintext highlighter-rouge">find "$ORIGINALS" -type f -print0</code> - finds files in our originals folder. We use <code class="language-plaintext highlighter-rouge">-print0</code> to safely handle
+filenames with weird characters in them.</li>
+    <li><code class="language-plaintext highlighter-rouge">xargs --null lsattr</code> - for each file that <code class="language-plaintext highlighter-rouge">find</code> outputs we want to run <code class="language-plaintext highlighter-rouge">lsattr</code> - this will list any extended
+attributes on each file.</li>
+    <li><code class="language-plaintext highlighter-rouge">grep -- "----------------------"</code> - for each line (file) of output from <code class="language-plaintext highlighter-rouge">lsattr</code>, we’re only interested in lines
+(files) that have no extended attributes set (files that have <code class="language-plaintext highlighter-rouge">i</code>mmutable set would show as
+<code class="language-plaintext highlighter-rouge">----i-----------------</code>).</li>
+    <li><code class="language-plaintext highlighter-rouge">wc --lines</code> - count the number of lines (files).</li>
+  </ol>
+
+</details>
+
+<p>Neat! Now let’s deduplicate all of these files. As mentioned in the aside above, Takeout will include multiple copies
+of each piece of media, as each one can appear in multiple albums. To deduplicate this and save you a bunch of hard
+drive space we’ll use <code class="language-plaintext highlighter-rouge">jdupes</code>. This tool will search for files that are identical and (in our case) turn them into
+filesystem hardlinks - which means that the same data on disk can be pointed to by multiple file names.</p>
+
+<p>First we need to change all files back from immutable. This can be done quickly with <code class="language-plaintext highlighter-rouge">sudo chattr -R -i "$ORIGINALS"</code>.
+Then we run <code class="language-plaintext highlighter-rouge">jdupes</code>, which has a lot of options, but the ones we want are:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>jdupes <span class="nt">--link-hard</span> <span class="nt">--recurse</span> <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Aka:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--link-hard</code> - we want to hard-link all identical files together.</li>
+  <li><code class="language-plaintext highlighter-rouge">--recurse</code> - consider all files within subdirectories of <code class="language-plaintext highlighter-rouge">$ORIGINALS</code> recursively.</li>
+</ul>
+
+<p>When this is done we’ll have potentially saved a lot of disk space!</p>
+
+<details>
+  <summary>Want to find out how much?</summary>
+
+  <p>Here’s a short command that will tell you exactly how much space has been saved!</p>
+
+  <div data-file-name="deduplication-space-savings.sh" class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span> <span class="nt">-type</span> f <span class="nt">-links</span> +1 <span class="nt">-printf</span> <span class="s1">'%i %s\n'</span> <span class="se">\</span>
+| <span class="nb">awk</span> <span class="s1">'a[$1]++{sum+=$2}END{print sum}'</span> <span class="se">\</span>
+| <span class="nb">numfmt</span> <span class="nt">--to</span><span class="o">=</span>iec-i <span class="nt">--suffix</span><span class="o">=</span>B
+</code></pre></div>  </div>
+
+  <p>Here’s the gist of what’s happening:</p>
+  <ol>
+    <li><code class="language-plaintext highlighter-rouge">find "$ORIGINALS" -type f</code>… - find all <code class="language-plaintext highlighter-rouge">f</code>iles in <code class="language-plaintext highlighter-rouge">$ORIGINALS</code>;
+      <ul>
+        <li>…<code class="language-plaintext highlighter-rouge">-links +1</code>… - that have more than one hardlink;</li>
+        <li>…<code class="language-plaintext highlighter-rouge">-printf '%i %s\n'</code> - and output the file’s <code class="language-plaintext highlighter-rouge">inode</code> number and file size (in bytes).</li>
+      </ul>
+    </li>
+    <li><code class="language-plaintext highlighter-rouge">awk 'a[$1]++{sum+=$2}END{print sum}'</code> - this line is a bit heavy, but here’s what the <code class="language-plaintext highlighter-rouge">awk</code> script is doing:
+      <ul>
+        <li>
+          <p><code class="language-plaintext highlighter-rouge">a[$1]++</code></p>
+
+          <p>Increment the value stored in <code class="language-plaintext highlighter-rouge">a[$1]</code> (where <code class="language-plaintext highlighter-rouge">$1</code> is going to be the <code class="language-plaintext highlighter-rouge">inode</code> number from each line). The <code class="language-plaintext highlighter-rouge">inode</code> is
+the unique data on disk - multiple file paths hardlinked to the same data will have the same <code class="language-plaintext highlighter-rouge">inode</code> number.</p>
+        </li>
+        <li>
+          <p><code class="language-plaintext highlighter-rouge">{sum+=$2}</code></p>
+
+          <p>The <code class="language-plaintext highlighter-rouge">{sum+=$2}</code> part is a conditional clause - that means that if the value before it is “truthy” it will execute.
+The first time a unique <code class="language-plaintext highlighter-rouge">inode</code> is encountered <code class="language-plaintext highlighter-rouge">a[$1]++</code> will post-increment to 1, returning 0. This is falsy, so
+the conditional clause won’t run. Each time an inode is encountered after that, however, the value with be 1 or more,
+which is a truthy value and the conditional clause will run. All the clause actually does (when run) is increment
+the value <code class="language-plaintext highlighter-rouge">sum</code> (which starts at 0) by <code class="language-plaintext highlighter-rouge">$2</code> (the file size in bytes).</p>
+        </li>
+        <li>
+          <p><code class="language-plaintext highlighter-rouge">END{print sum}</code> - when the script ends, print the value in <code class="language-plaintext highlighter-rouge">sum</code>.</p>
+        </li>
+      </ul>
+    </li>
+    <li><code class="language-plaintext highlighter-rouge">numfmt --to=iec-i --suffix=B</code> - this converts the value of <code class="language-plaintext highlighter-rouge">sum</code> output by <code class="language-plaintext highlighter-rouge">awk</code> to an IEC size (e.g., <code class="language-plaintext highlighter-rouge">1024</code> would
+be converted to <code class="language-plaintext highlighter-rouge">1.0KiB</code>).</li>
+  </ol>
+
+  <p>So as an example, say our “Originals” folder only contains three files:</p>
+
+  <ul>
+    <li>🖼️ <code class="language-plaintext highlighter-rouge">a.jpg</code></li>
+    <li>🖼️ <code class="language-plaintext highlighter-rouge">b.jpeg</code></li>
+    <li>📄 <code class="language-plaintext highlighter-rouge">sidecar.json</code></li>
+  </ul>
+
+  <p>And <code class="language-plaintext highlighter-rouge">a.jpg</code> and <code class="language-plaintext highlighter-rouge">b.jpeg</code> are both hardlinks to the same 1MiB of data, and <code class="language-plaintext highlighter-rouge">sidecar.json</code> is a 1KiB standalone file. When
+we run our script, the <code class="language-plaintext highlighter-rouge">find</code> portion will output three lines:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>12345 1048576
+12345 1048576
+67890 1024
+</code></pre></div>  </div>
+
+  <p>When <code class="language-plaintext highlighter-rouge">awk</code> gets these lines, it will perform the following:</p>
+
+  <ul>
+    <li>Line 1: Post-increment <code class="language-plaintext highlighter-rouge">a[12345]</code> (from 0 to 1), returning 0. 0 is falsy, so <code class="language-plaintext highlighter-rouge">{sum+=1048576}</code> doesn’t run.</li>
+    <li>Line 2: Post-increment <code class="language-plaintext highlighter-rouge">a[12345]</code> (from 1 to 2), returning 1. 1 is truthy, so <code class="language-plaintext highlighter-rouge">{sum+=1048576}</code> runs - sum is now <code class="language-plaintext highlighter-rouge">1048576</code>.</li>
+    <li>Line 3: Post-increment <code class="language-plaintext highlighter-rouge">a[67890]</code> (from 0 to 1), returning 0. 0 is falsy, so <code class="language-plaintext highlighter-rouge">{sum+=1024}</code> doesn’t run.</li>
+    <li>End of input: <code class="language-plaintext highlighter-rouge">END{print sum}</code> runs, outputting <code class="language-plaintext highlighter-rouge">1048576</code>.</li>
+  </ul>
+
+  <p>Finally, <code class="language-plaintext highlighter-rouge">numfmt</code> converts <code class="language-plaintext highlighter-rouge">1048576</code> to <code class="language-plaintext highlighter-rouge">1.0MiB</code>, and we see our space savings is 1 megabyte! This is correct, as if
+<code class="language-plaintext highlighter-rouge">b.jpeg</code> wasn’t hardlinked to <code class="language-plaintext highlighter-rouge">a.jpg</code> it would take an additional 1 megabyte.</p>
+
+</details>
+
+<h2 id="cleanup">Cleanup</h2>
+
+<p>Finally, we can re-mark our files as <code class="language-plaintext highlighter-rouge">i</code>mmutable:</p>
+
+<div data-file-name="make-files-immutable.sh" class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find <span class="s2">"</span><span class="nv">$ORIGINALS</span><span class="s2">"</span> <span class="nt">-type</span> f <span class="nt">-print0</span> <span class="se">\</span>
+| <span class="nb">sudo </span>xargs <span class="nt">-0</span> <span class="nt">-n</span> 1 chattr +i
+</code></pre></div></div>
+
+<p>Now we turn Photoprism back on, and tell it to re-index new files in the Originals folder. It will even intelligently
+use the sidecar JSON files that Takeout exports to enrich each media item with additional metadata.</p>]]></content><author><name>Sidneys1</name></author><category term="other" /><category term="datahoarding" /><category term="self-hosting" /><category term="zfs" /><category term="photoprism" /><category term="truenas" /><summary type="html"><![CDATA[Google Photos is wonderful. It backs up my photos and videos, tags them, and makes them available to share with my family. But I also don’t trust that Google will never accidentally “loose” my photos. Here is the process I use to back up my Google Photos data to a self-hosted instance of Photoprism.]]></summary></entry><entry><title type="html">Reverse Engineering a Windows 95 Game</title><link href="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" rel="alternate" type="text/html" title="Reverse Engineering a Windows 95 Game" /><published>2024-02-01T00:00:00-05:00</published><updated>2024-02-01T00:00:00-05:00</updated><id>https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III</id><content type="html" xml:base="https://sidneys1.github.io/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html"><![CDATA[<!-- cSpell:words Schuster DirectX autorun pakrat -->
 <!-- cSpell:ignore PAKS AMOVIE DSETUP DSETUPE DSETUPJ MATHINV SSPUNINS Bmps Ihighsco RIFFÀ -->
 
 <p>I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played
@@ -742,12 +1011,12 @@ give it a go:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('129-editor-mode').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('175-editor-mode').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="129-editor-mode" onclick="document.getElementById('129-editor-mode').close()">
+  <dialog class="popover" id="175-editor-mode" onclick="document.getElementById('175-editor-mode').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2001,12 +2270,12 @@ our game class to match our needs.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('236-pixel-barf').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('161-pixel-barf').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="236-pixel-barf" onclick="document.getElementById('236-pixel-barf').close()">
+  <dialog class="popover" id="161-pixel-barf" onclick="document.getElementById('161-pixel-barf').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2074,12 +2343,12 @@ color pattern converging in the center of the canvas:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('171-coordinate-identity').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('249-coordinate-identity').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="171-coordinate-identity" onclick="document.getElementById('171-coordinate-identity').close()">
+  <dialog class="popover" id="249-coordinate-identity" onclick="document.getElementById('249-coordinate-identity').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2309,12 +2578,12 @@ explaining the geometry here: this is a well-documented process and can be resea
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('43-flat-sphere').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('183-flat-sphere').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="43-flat-sphere" onclick="document.getElementById('43-flat-sphere').close()">
+  <dialog class="popover" id="183-flat-sphere" onclick="document.getElementById('183-flat-sphere').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2397,12 +2666,12 @@ depths.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('88-perspective-rendering').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('206-perspective-rendering').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="88-perspective-rendering" onclick="document.getElementById('88-perspective-rendering').close()">
+  <dialog class="popover" id="206-perspective-rendering" onclick="document.getElementById('206-perspective-rendering').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2586,12 +2855,12 @@ into the distance.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('93-floor-and-fog').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('17-floor-and-fog').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="93-floor-and-fog" onclick="document.getElementById('93-floor-and-fog').close()">
+  <dialog class="popover" id="17-floor-and-fog" onclick="document.getElementById('17-floor-and-fog').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2757,12 +3026,12 @@ center <code class="language-plaintext highlighter-rouge">Sphere</code>.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('95-reflections').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('191-reflections').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="95-reflections" onclick="document.getElementById('95-reflections').close()">
+  <dialog class="popover" id="191-reflections" onclick="document.getElementById('191-reflections').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2976,12 +3245,12 @@ darkens our scene.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('172-diffuse-lighting').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('205-diffuse-lighting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="172-diffuse-lighting" onclick="document.getElementById('172-diffuse-lighting').close()">
+  <dialog class="popover" id="205-diffuse-lighting" onclick="document.getElementById('205-diffuse-lighting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3086,12 +3355,12 @@ Otherwise we calculate the diffuse lighting as before.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('244-shadow-casting').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('129-shadow-casting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="244-shadow-casting" onclick="document.getElementById('244-shadow-casting').close()">
+  <dialog class="popover" id="129-shadow-casting" onclick="document.getElementById('129-shadow-casting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3195,12 +3464,12 @@ in Release mode.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('77-multisampling').showModal()" />
+		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('87-multisampling').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="77-multisampling" onclick="document.getElementById('77-multisampling').close()">
+  <dialog class="popover" id="87-multisampling" onclick="document.getElementById('87-multisampling').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
