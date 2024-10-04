@@ -1027,8 +1027,11 @@ pre, code {
   --sidneys1-accent-subtle: var(--sidneys1-blue-accent-subtle);
   --sidneys1-accent-compliment-color: var(--sidneys1-blue-accent-compliment);
   --sidneys1-highlight-1: rgba(214, 92, 198, 0.5);
-  --sidneys1-highlight-2: rgba(131, 76, 203, 0.5);
+  --sidneys1-highlight-2: rgba(149, 107, 205, 0.5);
   --sidneys1-highlight-3: rgba(77, 177, 188, 0.5);
+  --sidneys1-highlight-4: rgba(77, 188, 96, 0.5);
+  --sidneys1-highlight-5: rgba(155, 188, 77, 0.5);
+  --sidneys1-highlight-6: rgba(188, 144, 77, 0.5);
 }
 
 @media (prefers-color-scheme: light) {
@@ -1054,6 +1057,9 @@ pre, code {
     --sidneys1-highlight-1: rgba(214, 92, 198, 0.5);
     --sidneys1-highlight-2: rgba(149, 107, 205, 0.5);
     --sidneys1-highlight-3: rgba(77, 177, 188, 0.5);
+    --sidneys1-highlight-4: rgba(77, 188, 96, 0.5);
+    --sidneys1-highlight-5: rgba(155, 188, 77, 0.5);
+    --sidneys1-highlight-6: rgba(188, 144, 77, 0.5);
   }
 }
 @media (prefers-color-scheme: dark) {
@@ -1079,6 +1085,9 @@ pre, code {
     --sidneys1-highlight-1: rgba(214, 92, 198, 0.5);
     --sidneys1-highlight-2: rgba(149, 107, 205, 0.5);
     --sidneys1-highlight-3: rgba(77, 177, 188, 0.5);
+    --sidneys1-highlight-4: rgba(77, 188, 96, 0.5);
+    --sidneys1-highlight-5: rgba(155, 188, 77, 0.5);
+    --sidneys1-highlight-6: rgba(188, 144, 77, 0.5);
   }
 }
 /*** User-selectable themes. ***/
@@ -2000,7 +2009,7 @@ summary {
   cursor: pointer;
 }
 
-:is(post-content, section#comments) a[target=_blank]::after {
+:is(.post-content, section#comments) a[target=_blank]:not(.no-arrow)::after {
   content: " ";
   background-color: currentColor;
   -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiMyQTdBRTIiIHZpZXdCb3g9IjAgMCA4IDgiPjxwYXRoIGQ9Ik0wIDB2OGg4VjZIN3YxSDFWMWgxVjBIMHptNCAwIDEuNSAxLjVMMyA0bDEgMSAyLjUtMi41TDggNFYwSDR6Ii8+PC9zdmc+");
@@ -2043,6 +2052,18 @@ audio {
   background-color: var(--sidneys1-highlight-3);
 }
 
+.highlight-4 {
+  background-color: var(--sidneys1-highlight-4);
+}
+
+.highlight-5 {
+  background-color: var(--sidneys1-highlight-5);
+}
+
+.highlight-6 {
+  background-color: var(--sidneys1-highlight-6);
+}
+
 .highlighter-rouge .highlight-1 {
   background-color: rgba(214, 92, 198, 0.5);
 }
@@ -2055,6 +2076,18 @@ audio {
   background-color: rgba(77, 177, 188, 0.5);
 }
 
+.highlighter-rouge .highlight-4 {
+  background-color: rgba(77, 188, 96, 0.5);
+}
+
+.highlighter-rouge .highlight-5 {
+  background-color: rgba(155, 188, 77, 0.5);
+}
+
+.highlighter-rouge .highlight-6 {
+  background-color: rgba(188, 144, 77, 0.5);
+}
+
 @media (prefers-color-scheme: dark) {
   .highlight .gd {
     background-color: rgb(83, 43, 43) !important;
@@ -2063,6 +2096,48 @@ audio {
     background-color: rgb(43, 83, 43) !important;
   }
 }
+div.amber-term {
+  background-color: #bdb7a5;
+  padding: 1em;
+  padding-bottom: 1.75em;
+  border-radius: 1em;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.3764705882) inset;
+  position: relative;
+}
+div.amber-term pre {
+  box-shadow: 0 0 0.25em rgb(239, 238, 234), 0 0 0.5em rgb(239, 238, 234);
+}
+div.amber-term pre code {
+  font-weight: bold;
+  color: #dfbe44 !important;
+  text-shadow: 0px 0px 5px rgba(223, 190, 68, 0.5019607843);
+}
+div.amber-term::after {
+  content: "WYSE 🟩";
+  color: rgb(8, 8, 28);
+  line-height: initial;
+  font-size: 0.75em;
+  background-color: #878782;
+  color: black;
+  position: absolute;
+  left: 1.25em;
+  bottom: 0.5em;
+  padding: 0 0.25em;
+  border-radius: 0.25em;
+  font-weight: bold;
+}
+
+code.amber-term {
+  background-color: #212121;
+  color: #dfbe44;
+  text-shadow: 0px 0px 5px rgba(223, 190, 68, 0.5019607843);
+  font-weight: bold;
+}
+
+table.compact-table th, table.compact-table td {
+  padding: 0 15px;
+}
+
 /*** Misc widgets. ***/
 /*** Base Minima theme. ***/
 /*** Additional colors. ***/

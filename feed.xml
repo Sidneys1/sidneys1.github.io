@@ -1,4 +1,1513 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-07-15T11:58:15-04:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>your-email@domain.com</email></author><entry><title type="html">How I Back Up Google Photos</title><link href="https://sidneys1.github.io/Backing-Up-Google-Photos/" rel="alternate" type="text/html" title="How I Back Up Google Photos" /><published>2024-06-28T00:00:00-04:00</published><updated>2024-06-28T00:00:00-04:00</updated><id>https://sidneys1.github.io/backing-up-google-photos</id><content type="html" xml:base="https://sidneys1.github.io/Backing-Up-Google-Photos/"><![CDATA[<p>Google Photos is wonderful. It backs up my photos and videos, tags them, and makes them available to share with my
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-10-04T15:31:58-04:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>your-email@domain.com</email></author><entry><title type="html">Booting Sun SPARC Servers</title><link href="https://sidneys1.github.io/retrocomputing/2024/10/04/booting-sun-sparc-servers.html" rel="alternate" type="text/html" title="Booting Sun SPARC Servers" /><published>2024-10-04T00:00:00-04:00</published><updated>2024-10-04T00:00:00-04:00</updated><id>https://sidneys1.github.io/retrocomputing/2024/10/04/booting-sun-sparc-servers</id><content type="html" xml:base="https://sidneys1.github.io/retrocomputing/2024/10/04/booting-sun-sparc-servers.html"><![CDATA[<p>In early 2022 <a href="/retrocomputing/2022/06/03/retro-roundup.html">I got several Sun SPARC servers</a> for free off of a FreeCycle ad: I was recently
+<a href="https://news.ycombinator.com/item?id=41722918" target="_blank">called out</a> for not providing any sort of update on those devices… so here we go!</p>
+
+<!--more-->
+
+<h2 id="the-devices">The Devices</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: right">Released</th>
+      <th style="text-align: right">Original MSRP</th>
+      <th style="text-align: left">Inflation-adjusted (2024)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">SPARCstation 20</td>
+      <td style="text-align: right">Mar. 1994</td>
+      <td style="text-align: right">$12,195</td>
+      <td style="text-align: left">$26,080</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Ultra 1 Creator</td>
+      <td style="text-align: right">Nov. 1995</td>
+      <td style="text-align: right">$25,995</td>
+      <td style="text-align: left">$53,276</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Axil Ultima 1</td>
+      <td style="text-align: right">Sep. 1996</td>
+      <td style="text-align: right">$9,995</td>
+      <td style="text-align: left">$19,939</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="nvram-woes">NVRAM Woes</h2>
+
+<div class="popunder" style="float:right; margin-left:1em;">
+	
+		<img class="pop" style="" src="https://sidneys1.github.io/images/sparc-journey/invalid-nvram.jpg" alt="Invalid NVRAM boot messages" title="Invalid NVRAM boot messages" onclick="document.getElementById('144-invalid-nvram-boot-messages').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+<dialog class="popover" id="144-invalid-nvram-boot-messages" onclick="document.getElementById('144-invalid-nvram-boot-messages').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="/images/sparc-journey/invalid-nvram.jpg" alt="Invalid NVRAM boot messages" title="Invalid NVRAM boot messages" loading="lazy" />
+</dialog>
+
+<p>Sun SPARC machines store some of their BIOS configuration in a chip called an
+<dfn><abbr title="non-volatile RAM">NVRAM</abbr></dfn>, a special type of writeable random access memory that does not
+clear its contents when the machine powers off. This is usually a small RAM chip with its own internal battery that
+recharges when the machine is running. Unfortunately this means that when the devices is powered off for extremely long
+periods the NVRAM loses its values. Even more unfortunately, over time the NVRAM battery degrades to the point where it
+can no longer be recharged, and every power cycle results in a compete configuration wipe.</p>
+
+<p>Such is the case with my SPARC machines; upon powering on we’re greeted with a sad message.
+<code class="language-plaintext amber-term highlighter-rouge">Incorrect configuration checksum; Ethernet address ff:ff:ff:ff:ff:ff, Host ID: ffffffff. The IDPROM contents are invalid</code>
+means that our NVRAM has been cleared (the term IDPROM is a historical artifact – older Sun architectures used a
+<dfn><abbr title="Programmable ROM">PROM</abbr></dfn> chip instead of an NVRAM chip). Thankfully, there’s a process in
+place to restore it manually by entering NVRAM values by hand. Here’s the general process:</p>
+
+<ol>
+  <li>Boot your Sun SPARC machine. When you see the <code class="language-plaintext amber-term highlighter-rouge">The IDPROM contents are invalid</code> message, press <kbd><kbd>STOP</kbd>+<kbd>A</kbd></kbd> (<kbd>STOP</kbd> is a special key on Sun keyboards). This should drop you to the <code class="language-plaintext amber-term highlighter-rouge">ok</code> prompt, which is the OpenBoot debugging prompt.
+<!-- TODO: take photo of STOP key. --></li>
+  <li>
+    <p>Now we’re going to poke values into our NVRAM using the <code class="language-plaintext highlighter-rouge">mkp</code> command. This command has a format <code class="language-plaintext highlighter-rouge">&lt;value&gt; &lt;location&gt; mkp</code>. Here’s the layout of NVRAM, or at least the parts we care about:</p>
+
+    <table class="compact-table">
+      <thead>
+        <tr>
+          <th style="text-align: right">Location(s)</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: right">0</td>
+          <td>Always <code class="language-plaintext highlighter-rouge">1</code> (format/version number).</td>
+        </tr>
+        <tr>
+          <td style="text-align: right">1</td>
+          <td>First byte of HostID (machine type<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>).</td>
+        </tr>
+        <tr>
+          <td style="text-align: right">2–7</td>
+          <td>6-byte ethernet address (first three bytes should be <code class="language-plaintext highlighter-rouge">80:00:20</code>).</td>
+        </tr>
+        <tr>
+          <td style="text-align: right">8–b</td>
+          <td>Date of manufacture (can be zeros).</td>
+        </tr>
+        <tr>
+          <td style="text-align: right">c–e</td>
+          <td>Remainder of HostID.</td>
+        </tr>
+        <tr>
+          <td style="text-align: right">f</td>
+          <td>IDPROM checksum - bitwise exclusive-or of locations 0–e.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>So let’s start poking values into NVRAM:</p>
+
+    <div style="display:grid;grid-template-columns: 1fr auto;gap:1em;">
+<div style="grid-column:1;"><div class="language-plaintext amber-term highlighter-rouge" style="line-height: 1.0;"><pre class="highlight"><code>ok set-defaults
+ok <span class="highlight-1">1</span> 0 mkp
+ok <span class="highlight-2">80</span> 1 mkp
+ok <span class="highlight-3">8</span> 2 mkp
+ok <span class="highlight-3">0</span> 3 mkp
+ok <span class="highlight-3">20</span> 4 mkp
+ok <span class="highlight-3">c0</span> 54 mkp
+ok <span class="highlight-3">ff</span> 6 mkp
+ok <span class="highlight-3">ee</span> 7 mkp
+ok <span class="highlight-4">0</span> 8 mkp
+ok <span class="highlight-4">0</span> 9 mkp
+ok <span class="highlight-4">0</span> a mkp
+ok <span class="highlight-4">0</span> b mkp
+ok <span class="highlight-5">c0</span> c mkp
+ok <span class="highlight-5">ff</span> d mkp
+ok <span class="highlight-5">ee</span> e mkp
+ok <span class="highlight-6">0 f 0 do i idprom@ xor loop f</span> mkp</code></pre></div></div>
+<div style="grid-column:2;">
+
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: right">Locations</th>
+              <th style="text-align: left">Values</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: right">0–7</td>
+              <td style="text-align: left"><code><span class="highlight-1">01</span><span class="highlight-2">80</span><span class="highlight-3">080020c0ffee</span></code></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">8–f</td>
+              <td style="text-align: left"><code><span class="highlight-4">00000000</span><span class="highlight-5">c0ffee</span><span class="highlight-6">??</span></code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- {: .compact-table} -->
+
+      </div></div>
+
+    <p>That last line is a small function that will generate the checksum that goes in location <code class="language-plaintext highlighter-rouge">f</code>.</p>
+  </li>
+  <li>
+    <p>Enter <code class="language-plaintext amber-term highlighter-rouge">banner</code> at the <code class="language-plaintext amber-term highlighter-rouge">ok</code> prompt. This will print out the system banner, and allow us to
+validate that the values we’ve entered are correct. If all is well, you should see something like this:</p>
+
+    <div style="grid-column:1;"><div class="language-plaintext amber-term highlighter-rouge"><pre class="highlight"><code>ok banner
+Sun Ultra 1 UPA/SBus (UltraSPARC 167MHz), Keyboard Present
+OpenBoot 3.7, 384 MB memory installed, Serial #12648430.
+Ethernet address <span class="highlight-3">8:0:20:c0:ff:ee</span>, Host ID: <span class="highlight-2">80</span><span class="highlight-5">c0ffee</span>.</code></pre></div></div>
+
+    <p>If, instead, you see a message like <code class="language-plaintext amber-term highlighter-rouge">The IDPROM contents are invalid</code> after the banner, then either the
+checksum is wrong (check that you typed it correctly!) or the first byte of the HostID is incorrect – this byte
+specifies the machine type, and must match the machine you’re trying to boot<sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. Don’t forget to re-generate the
+checksum after updating any of these values!</p>
+  </li>
+  <li>Finally enter <code class="language-plaintext amber-term highlighter-rouge">reset</code> at the <code class="language-plaintext amber-term highlighter-rouge">ok</code> prompt, which will restart the boot process. Because we
+haven’t lost power, however, the NVRAM will retain the values we’ve set. Wait for the machine to boot. This can take
+quite a while, especially if there is a lot of RAM in the machine. Pro tip, plugging an ethernet cable between the
+Sun server and another machine can help here – otherwise the Sun server can spend a lot of time complaining about
+<code class="language-plaintext amber-term highlighter-rouge">SUNW,hme0: Link Down - cable problem?</code>. I plugged the Sun Ultra 1 into a powered on Raspberry Pi 3b
+and it stopped complaining.</li>
+  <li>Eventually you’ll be brought to a Unix login, assuming the machine is running Solaris. If you know the password,
+great; if not, things get tricky<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>. <!-- TODO: talk about clearing root password by booting debian -->
+Once logged in, you can set the date and time (for as long as the machine is
+powered on, anyways) at the <code class="language-plaintext amber-term highlighter-rouge">root#</code> prompt with <code class="language-plaintext amber-term highlighter-rouge">date 1004102024</code> (in format
+<code class="language-plaintext highlighter-rouge">mmddHHMMYY</code>).</li>
+</ol>
+
+<h2 id="results">Results</h2>
+
+<h3 id="sun-ultra-1-creator">Sun Ultra 1 Creator</h3>
+
+<p>The Sun Ultra 1 was the first machine I tried to boot, and so far the only one to successfully fully boot.</p>
+
+<div class="carousel__holder " style="" data-height="600px">
+    <div id="carousel0" class="carousel">
+        
+          <input class="carousel__activator" type="radio" name="carousel0" id="0a" checked="checked" />
+        
+          <input class="carousel__activator" type="radio" name="carousel0" id="0b" />
+        
+          <input class="carousel__activator" type="radio" name="carousel0" id="0c" />
+        
+          <input class="carousel__activator" type="radio" name="carousel0" id="0d" />
+        
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="0d">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0b">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="0a">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0c">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="0b">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0d">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="0c">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="0a">&gt;</label>
+          </div>
+        
+        <div class="carousel__track">
+          <ul>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/ultra-case.jpg" src="https://sidneys1.github.io/images/sparc-journey/ultra-case.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/ultra-badge.jpg" src="https://sidneys1.github.io/images/sparc-journey/ultra-badge.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/ultra-case-open.jpg" src="https://sidneys1.github.io/images/sparc-journey/ultra-case-open.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/ultra-1-shell.jpg" src="https://sidneys1.github.io/images/sparc-journey/ultra-1-shell.jpg" style="" /></li>
+            
+          </ul>
+        </div>
+        <div class="carousel__indicators">
+            
+              <label class="carousel__indicator" for="0a"></label>
+            
+              <label class="carousel__indicator" for="0b"></label>
+            
+              <label class="carousel__indicator" for="0c"></label>
+            
+              <label class="carousel__indicator" for="0d"></label>
+            
+        </div>
+    </div>
+</div>
+
+<style>
+.carousel__holder {
+	width: 100%;
+	position: relative;
+	padding-bottom: 600px;
+	margin: 1rem 0 1rem;
+}
+
+@media screen and (max-width: 1800px) {
+	.carousel__holder {
+		padding-bottom: calc(min(40vh, 600px));
+	}
+}
+
+@media screen and (min-width: 1800px) {
+	.carousel__holder:is(.rfloat, .lfloat) {
+		padding-bottom: calc(min(40%, 600px));
+	}
+}
+
+.carousel {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  position: absolute;
+  padding: 0;
+}
+.carousel__controls,
+.carousel__activator {
+  display: none;
+}
+
+.carousel__activator:nth-of-type(1):checked ~ .carousel__track {
+  -webkit-transform: translateX(-000%);
+          transform: translateX(-000%);
+}
+.carousel__activator:nth-of-type(1):checked ~ .carousel__slide:nth-of-type(1) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(1):checked ~ .carousel__controls:nth-of-type(1) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(1):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(1) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(2):checked ~ .carousel__track {
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+.carousel__activator:nth-of-type(2):checked ~ .carousel__slide:nth-of-type(2) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(2):checked ~ .carousel__controls:nth-of-type(2) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(2):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(2) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(3):checked ~ .carousel__track {
+  -webkit-transform: translateX(-200%);
+          transform: translateX(-200%);
+}
+.carousel__activator:nth-of-type(3):checked ~ .carousel__slide:nth-of-type(3) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(3):checked ~ .carousel__controls:nth-of-type(3) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(3):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(3) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(4):checked ~ .carousel__track {
+  -webkit-transform: translateX(-300%);
+          transform: translateX(-300%);
+}
+.carousel__activator:nth-of-type(4):checked ~ .carousel__slide:nth-of-type(4) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(4):checked ~ .carousel__controls:nth-of-type(4) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(4):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(4) {
+  opacity: 1;
+}
+
+
+.carousel__control {
+  height: 100%;
+  vertical-align: middle;
+  /* width: 30px; */
+  margin-top: -15px;
+  top: calc(50% - 0.5em);
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  /* border-width: 5px 5px 0 0;
+  border-style: solid;
+  border-color: #fafafa; */
+  font-size: 48pt;
+  color: #fafafa;
+  font-weight: 900;
+  text-shadow: 0 0 10px  black;
+  opacity: 0.35;
+  /* opacity: 1; */
+  outline: 0;
+  z-index: 3;
+  transition: opacity 250ms linear;
+  /* box-shadow: 0 0 10px black; */
+}
+.carousel__control:hover {
+  opacity: 1;
+  transition: opacity 250ms linear;
+}
+.carousel__control--backward {
+  left: 20px;
+  /* -webkit-transform: rotate(-135deg);
+          transform: rotate(-135deg); */
+}
+.carousel__control--forward {
+  right: 20px;
+  /* -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); */
+}
+.carousel__indicators {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+.carousel__indicator {
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  display: inline-block;
+  z-index: 2;
+  cursor: pointer;
+  opacity: 0.35;
+  margin: 0 2.5px 0 2.5px;
+  box-shadow: 0 0 10px black;
+  transition: opacity 250ms linear;
+}
+.carousel__indicator:hover {
+  opacity: 0.75;
+  transition: opacity 250ms linear;
+}
+.carousel__track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+  transition: -webkit-transform 0.5s ease 0s;
+  transition: transform 0.5s ease 0s;
+  transition: transform 0.5s ease 0s, -webkit-transform 0.5s ease 0s;
+}
+.carousel__track .carousel__slide {
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+.carousel__track .carousel__slide:nth-of-type(1) {
+  -webkit-transform: translateX(000%);
+          transform: translateX(000%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(2) {
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(3) {
+  -webkit-transform: translateX(200%);
+          transform: translateX(200%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(4) {
+  -webkit-transform: translateX(300%);
+          transform: translateX(300%);
+}
+
+
+.carousel--scale .carousel__slide {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+.carousel__slide {
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  overflow: hidden;
+
+  /* background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; */
+}
+.carousel__slide img {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+	box-shadow: unset;
+}
+.carousel__slide img:hover {
+	box-shadow: unset;
+}
+
+.carousel__slide .overlay {height: 100%;}
+.carousel--thumb .carousel__indicator {
+  height: 30px;
+  width: 30px;
+}
+.carousel__indicator {
+  background-color: #fafafa;
+}
+
+.carousel__slide:nth-of-type(1),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(1) {
+}
+
+.carousel__slide:nth-of-type(2),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(2) {
+}
+
+.carousel__slide:nth-of-type(3),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(3) {
+}
+
+.carousel__slide:nth-of-type(4),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(4) {
+}
+
+</style>
+
+<h3 style="clear:both;" id="sun-sparcstation-20">Sun SPARCstation 20</h3>
+
+<div class="popunder" style="float:left;margin-right:1em;">
+	
+		<img class="pop" style="max-width:400px;" src="https://sidneys1.github.io/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" onclick="document.getElementById('115-sparcstation-20-simm-errors').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+<dialog class="popover" id="115-sparcstation-20-simm-errors" onclick="document.getElementById('115-sparcstation-20-simm-errors').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" loading="lazy" />
+</dialog>
+
+<p>After some stumbles learning about the machine-type byte in the host ID<sup id="fnref:1:2" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, this machine was able to get past the NVRAM
+check, but failed during memory diagnostics. This output repeated for some 10 minutes before I turned the machine off.
+For J0301, it looks like the fourth bit of the lowest byte (<code class="language-plaintext highlighter-rouge">0b00010000</code>) is faulty, always set to <code class="language-plaintext highlighter-rouge">0b1</code>. For example,
+the pattern <code class="language-plaintext highlighter-rouge">0b10100101</code> (<code class="language-plaintext highlighter-rouge">0xa5</code>) becomes <code class="language-plaintext highlighter-rouge">0b10110101</code> (<code class="language-plaintext highlighter-rouge">0xb5</code>). For J0302, something stranger seems to be happening, as
+<code class="language-plaintext highlighter-rouge">0b10100101</code> (<code class="language-plaintext highlighter-rouge">0xa5</code>) becomes <code class="language-plaintext highlighter-rouge">0x01001010</code> (<code class="language-plaintext highlighter-rouge">0x4a</code>) and <code class="language-plaintext highlighter-rouge">0b11111111</code> (<code class="language-plaintext highlighter-rouge">0xff</code>) becomes <code class="language-plaintext highlighter-rouge">0b11101111</code> (<code class="language-plaintext highlighter-rouge">0xef</code>).</p>
+
+<table class="compact-table" style="width:unset;clear:none;">
+  <thead>
+    <tr>
+      <th style="text-align: right">U-number<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup></th>
+      <th style="text-align: center">Physical Addresses</th>
+      <th style="text-align: right">Expected Value</th>
+      <th style="text-align: left">Observed Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">J0301</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0x0c4012a8</code>–<code class="language-plaintext highlighter-rouge">0x0c4fb2a8</code></td>
+      <td style="text-align: right"><code class="language-plaintext highlighter-rouge">0xa5a5a5a5</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">0xa5a5a5b5</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right">J0301</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0x0c4012a8</code>–<code class="language-plaintext highlighter-rouge">0x0c4fb2a8</code></td>
+      <td style="text-align: right"><code class="language-plaintext highlighter-rouge">0x00</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">0x10</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right">J0302</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0x188ff2b8</code>–<code class="language-plaintext highlighter-rouge">0x18a011a9</code></td>
+      <td style="text-align: right"><code class="language-plaintext highlighter-rouge">0xa5a5a5a5</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">0xa5a5a54a</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right">J0302</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0x188ff2b8</code>–<code class="language-plaintext highlighter-rouge">0x18a011a9</code></td>
+      <td style="text-align: right"><code class="language-plaintext highlighter-rouge">0xffffffff</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">0xffffffef</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="clear:left;">One fun detail I noticed poking around this machine: there’s a little bear with a top hat silkscreened onto the
+motherboard:</p>
+
+<p><img src="/images/sparc-journey/sparcstation-mobo-zoom.jpg" alt="asdf" /></p>
+
+<div class="carousel__holder " style="" data-height="600px">
+    <div id="carousel1" class="carousel">
+        
+          <input class="carousel__activator" type="radio" name="carousel1" id="1a" checked="checked" />
+        
+          <input class="carousel__activator" type="radio" name="carousel1" id="1b" />
+        
+          <input class="carousel__activator" type="radio" name="carousel1" id="1c" />
+        
+          <input class="carousel__activator" type="radio" name="carousel1" id="1d" />
+        
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="1d">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="1b">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="1a">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="1c">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="1b">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="1d">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="1c">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="1a">&gt;</label>
+          </div>
+        
+        <div class="carousel__track">
+          <ul>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/sparcstation-case.jpg" src="https://sidneys1.github.io/images/sparc-journey/sparcstation-case.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/sparcstation-mobo.jpg" src="https://sidneys1.github.io/images/sparc-journey/sparcstation-mobo.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/sparcstation-cpu.jpg" src="https://sidneys1.github.io/images/sparc-journey/sparcstation-cpu.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/sparcstation-ram.jpg" src="https://sidneys1.github.io/images/sparc-journey/sparcstation-ram.jpg" style="" /></li>
+            
+          </ul>
+        </div>
+        <div class="carousel__indicators">
+            
+              <label class="carousel__indicator" for="1a"></label>
+            
+              <label class="carousel__indicator" for="1b"></label>
+            
+              <label class="carousel__indicator" for="1c"></label>
+            
+              <label class="carousel__indicator" for="1d"></label>
+            
+        </div>
+    </div>
+</div>
+
+<style>
+.carousel__holder {
+	width: 100%;
+	position: relative;
+	padding-bottom: 600px;
+	margin: 1rem 0 1rem;
+}
+
+@media screen and (max-width: 1800px) {
+	.carousel__holder {
+		padding-bottom: calc(min(40vh, 600px));
+	}
+}
+
+@media screen and (min-width: 1800px) {
+	.carousel__holder:is(.rfloat, .lfloat) {
+		padding-bottom: calc(min(40%, 600px));
+	}
+}
+
+.carousel {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  position: absolute;
+  padding: 0;
+}
+.carousel__controls,
+.carousel__activator {
+  display: none;
+}
+
+.carousel__activator:nth-of-type(1):checked ~ .carousel__track {
+  -webkit-transform: translateX(-000%);
+          transform: translateX(-000%);
+}
+.carousel__activator:nth-of-type(1):checked ~ .carousel__slide:nth-of-type(1) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(1):checked ~ .carousel__controls:nth-of-type(1) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(1):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(1) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(2):checked ~ .carousel__track {
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+.carousel__activator:nth-of-type(2):checked ~ .carousel__slide:nth-of-type(2) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(2):checked ~ .carousel__controls:nth-of-type(2) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(2):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(2) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(3):checked ~ .carousel__track {
+  -webkit-transform: translateX(-200%);
+          transform: translateX(-200%);
+}
+.carousel__activator:nth-of-type(3):checked ~ .carousel__slide:nth-of-type(3) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(3):checked ~ .carousel__controls:nth-of-type(3) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(3):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(3) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(4):checked ~ .carousel__track {
+  -webkit-transform: translateX(-300%);
+          transform: translateX(-300%);
+}
+.carousel__activator:nth-of-type(4):checked ~ .carousel__slide:nth-of-type(4) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(4):checked ~ .carousel__controls:nth-of-type(4) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(4):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(4) {
+  opacity: 1;
+}
+
+
+.carousel__control {
+  height: 100%;
+  vertical-align: middle;
+  /* width: 30px; */
+  margin-top: -15px;
+  top: calc(50% - 0.5em);
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  /* border-width: 5px 5px 0 0;
+  border-style: solid;
+  border-color: #fafafa; */
+  font-size: 48pt;
+  color: #fafafa;
+  font-weight: 900;
+  text-shadow: 0 0 10px  black;
+  opacity: 0.35;
+  /* opacity: 1; */
+  outline: 0;
+  z-index: 3;
+  transition: opacity 250ms linear;
+  /* box-shadow: 0 0 10px black; */
+}
+.carousel__control:hover {
+  opacity: 1;
+  transition: opacity 250ms linear;
+}
+.carousel__control--backward {
+  left: 20px;
+  /* -webkit-transform: rotate(-135deg);
+          transform: rotate(-135deg); */
+}
+.carousel__control--forward {
+  right: 20px;
+  /* -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); */
+}
+.carousel__indicators {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+.carousel__indicator {
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  display: inline-block;
+  z-index: 2;
+  cursor: pointer;
+  opacity: 0.35;
+  margin: 0 2.5px 0 2.5px;
+  box-shadow: 0 0 10px black;
+  transition: opacity 250ms linear;
+}
+.carousel__indicator:hover {
+  opacity: 0.75;
+  transition: opacity 250ms linear;
+}
+.carousel__track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+  transition: -webkit-transform 0.5s ease 0s;
+  transition: transform 0.5s ease 0s;
+  transition: transform 0.5s ease 0s, -webkit-transform 0.5s ease 0s;
+}
+.carousel__track .carousel__slide {
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+.carousel__track .carousel__slide:nth-of-type(1) {
+  -webkit-transform: translateX(000%);
+          transform: translateX(000%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(2) {
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(3) {
+  -webkit-transform: translateX(200%);
+          transform: translateX(200%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(4) {
+  -webkit-transform: translateX(300%);
+          transform: translateX(300%);
+}
+
+
+.carousel--scale .carousel__slide {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+.carousel__slide {
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  overflow: hidden;
+
+  /* background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; */
+}
+.carousel__slide img {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+	box-shadow: unset;
+}
+.carousel__slide img:hover {
+	box-shadow: unset;
+}
+
+.carousel__slide .overlay {height: 100%;}
+.carousel--thumb .carousel__indicator {
+  height: 30px;
+  width: 30px;
+}
+.carousel__indicator {
+  background-color: #fafafa;
+}
+
+.carousel__slide:nth-of-type(1),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(1) {
+}
+
+.carousel__slide:nth-of-type(2),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(2) {
+}
+
+.carousel__slide:nth-of-type(3),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(3) {
+}
+
+.carousel__slide:nth-of-type(4),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(4) {
+}
+
+</style>
+
+<h3 style="clear:both;" id="axil-ultima-1">Axil Ultima 1</h3>
+
+<p>Perhaps the saddest story here, and a testament to the quality and reliability of original Sun hardware, this Sun clone
+initially had some struggles booting, and wouldn’t recognize keyboard input. After a couple power cycles, however, it
+stopped booting altogether.</p>
+
+<div class="carousel__holder " style="" data-height="600px">
+    <div id="carousel2" class="carousel">
+        
+          <input class="carousel__activator" type="radio" name="carousel2" id="2a" checked="checked" />
+        
+          <input class="carousel__activator" type="radio" name="carousel2" id="2b" />
+        
+          <input class="carousel__activator" type="radio" name="carousel2" id="2c" />
+        
+          <input class="carousel__activator" type="radio" name="carousel2" id="2d" />
+        
+          <input class="carousel__activator" type="radio" name="carousel2" id="2e" />
+        
+          <input class="carousel__activator" type="radio" name="carousel2" id="2f" />
+        
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="2f">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="2b">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="2a">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="2c">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="2b">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="2d">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="2c">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="2e">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="2d">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="2f">&gt;</label>
+          </div>
+        
+          
+          
+          
+          
+          <div class="carousel__controls">
+              <label class="carousel__control carousel__control--backward" for="2e">&lt;</label>
+              <label class="carousel__control carousel__control--forward" for="2a">&gt;</label>
+          </div>
+        
+        <div class="carousel__track">
+          <ul>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/axil-case.jpg" src="https://sidneys1.github.io/images/sparc-journey/axil-case.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/axil-case-open.jpg" src="https://sidneys1.github.io/images/sparc-journey/axil-case-open.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/axil-poweron-failure-1.jpg" src="https://sidneys1.github.io/images/sparc-journey/axil-poweron-failure-1.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/axil-poweron-failure-2.jpg" src="https://sidneys1.github.io/images/sparc-journey/axil-poweron-failure-2.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/axil-poweron-failure-3.jpg" src="https://sidneys1.github.io/images/sparc-journey/axil-poweron-failure-3.jpg" style="" /></li>
+            
+            <li class="carousel__slide"><img alt="/images/sparc-journey/axil-poweron-failure-4.jpg" src="https://sidneys1.github.io/images/sparc-journey/axil-poweron-failure-4.jpg" style="" /></li>
+            
+          </ul>
+        </div>
+        <div class="carousel__indicators">
+            
+              <label class="carousel__indicator" for="2a"></label>
+            
+              <label class="carousel__indicator" for="2b"></label>
+            
+              <label class="carousel__indicator" for="2c"></label>
+            
+              <label class="carousel__indicator" for="2d"></label>
+            
+              <label class="carousel__indicator" for="2e"></label>
+            
+              <label class="carousel__indicator" for="2f"></label>
+            
+        </div>
+    </div>
+</div>
+
+<style>
+.carousel__holder {
+	width: 100%;
+	position: relative;
+	padding-bottom: 600px;
+	margin: 1rem 0 1rem;
+}
+
+@media screen and (max-width: 1800px) {
+	.carousel__holder {
+		padding-bottom: calc(min(40vh, 600px));
+	}
+}
+
+@media screen and (min-width: 1800px) {
+	.carousel__holder:is(.rfloat, .lfloat) {
+		padding-bottom: calc(min(40%, 600px));
+	}
+}
+
+.carousel {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  position: absolute;
+  padding: 0;
+}
+.carousel__controls,
+.carousel__activator {
+  display: none;
+}
+
+.carousel__activator:nth-of-type(1):checked ~ .carousel__track {
+  -webkit-transform: translateX(-000%);
+          transform: translateX(-000%);
+}
+.carousel__activator:nth-of-type(1):checked ~ .carousel__slide:nth-of-type(1) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(1):checked ~ .carousel__controls:nth-of-type(1) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(1):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(1) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(2):checked ~ .carousel__track {
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+.carousel__activator:nth-of-type(2):checked ~ .carousel__slide:nth-of-type(2) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(2):checked ~ .carousel__controls:nth-of-type(2) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(2):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(2) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(3):checked ~ .carousel__track {
+  -webkit-transform: translateX(-200%);
+          transform: translateX(-200%);
+}
+.carousel__activator:nth-of-type(3):checked ~ .carousel__slide:nth-of-type(3) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(3):checked ~ .carousel__controls:nth-of-type(3) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(3):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(3) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(4):checked ~ .carousel__track {
+  -webkit-transform: translateX(-300%);
+          transform: translateX(-300%);
+}
+.carousel__activator:nth-of-type(4):checked ~ .carousel__slide:nth-of-type(4) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(4):checked ~ .carousel__controls:nth-of-type(4) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(4):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(4) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(5):checked ~ .carousel__track {
+  -webkit-transform: translateX(-400%);
+          transform: translateX(-400%);
+}
+.carousel__activator:nth-of-type(5):checked ~ .carousel__slide:nth-of-type(5) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(5):checked ~ .carousel__controls:nth-of-type(5) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(5):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(5) {
+  opacity: 1;
+}
+
+.carousel__activator:nth-of-type(6):checked ~ .carousel__track {
+  -webkit-transform: translateX(-500%);
+          transform: translateX(-500%);
+}
+.carousel__activator:nth-of-type(6):checked ~ .carousel__slide:nth-of-type(6) {
+  transition: opacity 0.5s, -webkit-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.carousel__activator:nth-of-type(6):checked ~ .carousel__controls:nth-of-type(6) {
+  display: block;
+  opacity: 1;
+}
+.carousel__activator:nth-of-type(6):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(6) {
+  opacity: 1;
+}
+
+
+.carousel__control {
+  height: 100%;
+  vertical-align: middle;
+  /* width: 30px; */
+  margin-top: -15px;
+  top: calc(50% - 0.5em);
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  /* border-width: 5px 5px 0 0;
+  border-style: solid;
+  border-color: #fafafa; */
+  font-size: 48pt;
+  color: #fafafa;
+  font-weight: 900;
+  text-shadow: 0 0 10px  black;
+  opacity: 0.35;
+  /* opacity: 1; */
+  outline: 0;
+  z-index: 3;
+  transition: opacity 250ms linear;
+  /* box-shadow: 0 0 10px black; */
+}
+.carousel__control:hover {
+  opacity: 1;
+  transition: opacity 250ms linear;
+}
+.carousel__control--backward {
+  left: 20px;
+  /* -webkit-transform: rotate(-135deg);
+          transform: rotate(-135deg); */
+}
+.carousel__control--forward {
+  right: 20px;
+  /* -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); */
+}
+.carousel__indicators {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+.carousel__indicator {
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  display: inline-block;
+  z-index: 2;
+  cursor: pointer;
+  opacity: 0.35;
+  margin: 0 2.5px 0 2.5px;
+  box-shadow: 0 0 10px black;
+  transition: opacity 250ms linear;
+}
+.carousel__indicator:hover {
+  opacity: 0.75;
+  transition: opacity 250ms linear;
+}
+.carousel__track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+  transition: -webkit-transform 0.5s ease 0s;
+  transition: transform 0.5s ease 0s;
+  transition: transform 0.5s ease 0s, -webkit-transform 0.5s ease 0s;
+}
+.carousel__track .carousel__slide {
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+.carousel__track .carousel__slide:nth-of-type(1) {
+  -webkit-transform: translateX(000%);
+          transform: translateX(000%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(2) {
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(3) {
+  -webkit-transform: translateX(200%);
+          transform: translateX(200%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(4) {
+  -webkit-transform: translateX(300%);
+          transform: translateX(300%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(5) {
+  -webkit-transform: translateX(400%);
+          transform: translateX(400%);
+}
+
+.carousel__track .carousel__slide:nth-of-type(6) {
+  -webkit-transform: translateX(500%);
+          transform: translateX(500%);
+}
+
+
+.carousel--scale .carousel__slide {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+.carousel__slide {
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  overflow: hidden;
+
+  /* background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; */
+}
+.carousel__slide img {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+	box-shadow: unset;
+}
+.carousel__slide img:hover {
+	box-shadow: unset;
+}
+
+.carousel__slide .overlay {height: 100%;}
+.carousel--thumb .carousel__indicator {
+  height: 30px;
+  width: 30px;
+}
+.carousel__indicator {
+  background-color: #fafafa;
+}
+
+.carousel__slide:nth-of-type(1),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(1) {
+}
+
+.carousel__slide:nth-of-type(2),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(2) {
+}
+
+.carousel__slide:nth-of-type(3),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(3) {
+}
+
+.carousel__slide:nth-of-type(4),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(4) {
+}
+
+.carousel__slide:nth-of-type(5),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(5) {
+}
+
+.carousel__slide:nth-of-type(6),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(6) {
+}
+
+</style>
+
+<h2 id="notes">Notes</h2>
+
+<p>I did start writing a section about my efforts last year to boot NetBSD on this machine. I honestly can’t remember if I
+had much luck in the end, and I was having difficulty repeating these steps and running out of time to work on this
+project. So I’ve decided to leave this section as-is here at the end; the steps <em>should</em> be technically accurate, but as
+I said I haven’t had time to verify them and/or finish writing the section. You can check out
+<ruby style="ruby-position: under; ruby-align: center;"><a href="https://www.netbsd.org/docs/network/netboot/intro.sun.html" target="_blank">this page from NetBSD</a>
+<rt>Archived at: <a href="https://web.archive.org/web/2/https://www.netbsd.org/docs/network/netboot/intro.sun.html" target="_blank" class="no-arrow">Wayback Machine</a>.</rt></ruby> with more instructions if
+you’re really interested.</p>
+
+<h3 id="et-tu-root-e">Et tu, root-e?</h3>
+
+<p>Now that we’ve managed to convince our Sun server to begin booting, there’s a few others problems. First, Solaris
+doesn’t support DHCP, and cannot get a IP address; second, it also doesn’t have a configuration for its own hostname.
+Let’s look at configuring those. Instead of DHCP, Solaris uses <defn><abbr title="Reverse Address Resolution Protocol">RARP</abbr></defn>,
+an older protocol (1984; DHCP was first defined in 1993).</p>
+
+<p>Now, <defn><abbr title="Address Resolution Protocol">ARP</abbr></defn> is a link-layer protocol that allows
+internet-layer addresses (IPs) to be resolved to link-layer addresses (MACs). <em>Reverse</em> ARP is used to resolve a MAC to
+an IP. So, I hooked up a Raspberry Pi 3b with an ethernet cable directly to the Sun server. At boot time, Solaris will
+send out a broadcast request with its MAC address (configured via NVRAM) and then will listen for a response to
+auto-configure its IP. We can install the <code class="language-plaintext highlighter-rouge">rarpd</code> package on our Pi, and configure it to know the IP address associated
+with our Sun’s MAC.</p>
+
+<p>Checking <code class="language-plaintext highlighter-rouge">man rarpd</code> we can note a few important details: first, an association between MAC addresses and hostnames is
+configured in <code class="language-plaintext highlighter-rouge">/etc/ethers</code>. Second, an association between hostnames and IPs is read from <code class="language-plaintext highlighter-rouge">/etc/hosts</code> (this file
+already exist on all Linux systems). Third, there’s a section about “bootable images”:</p>
+
+<blockquote>
+  <p>By  default  rarpd  also checks if a bootable image, of a name starting with the IP address in hexadecimal upper-case
+letters, is present in the TFTP boot directory before it decides whether to respond to the RARP request.  The
+comparison involves exactly the first eight characters, and ignores any additional character.  A file name shorter
+than eight characters in length is unsuccessful.  Typically, 192.168.0.122 would correspond to  an  image  named like
+C0A8007A.SUN.</p>
+</blockquote>
+
+<p>Ok, that’s a lot to chew on, but the gist is that we can do the following:</p>
+
+<div style="display: grid; grid-column-template: 1fr 1fr; gap: 1em;">
+<div style="grid-column:1;">
+    <div data-file-name="/etc/ethers" class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">b8</span>:<span class="m">27</span>:<span class="n">eb</span>:<span class="n">fc</span>:<span class="m">10</span>:<span class="m">0</span><span class="n">c</span> <span class="n">pi</span>            <span class="c"># Our Pi
+</span><span class="m">08</span>:<span class="m">00</span>:<span class="m">20</span>:<span class="n">c0</span>:<span class="n">ff</span>:<span class="n">ee</span> <span class="n">SUN</span>.<span class="n">TEST</span>.<span class="n">COM</span>  <span class="c"># Our Sun
+</span></code></pre></div>    </div>
+  </div>
+<div style="grid-column:2;">
+    <div data-file-name="/etc/hosts" class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>    <span class="n">pi</span>            <span class="c"># Our Pi
+</span><span class="m">192</span>.<span class="m">168</span>.<span class="m">6</span>.<span class="m">37</span> <span class="n">SUN</span>.<span class="n">TEST</span>.<span class="n">COM</span>  <span class="c"># Our Sun
+</span></code></pre></div>    </div>
+  </div>
+</div>
+
+<p>And as for the bootable images, for now we’ll run <code class="language-plaintext highlighter-rouge">rarp</code> without that restriction using the <code class="language-plaintext highlighter-rouge">-e</code> parameter. We’ll also
+use <code class="language-plaintext highlighter-rouge">-d</code> so that the daemon stays connected to the TTY and we can continue to see log messages. Make sure the system
+service isn’t running with <code class="language-plaintext highlighter-rouge">sudo systemctl stop rarpd</code>. Now we can run <code class="language-plaintext highlighter-rouge">sudo rarpd -e -d</code>. Now let’s boot again and see
+if we get an IP address.</p>
+
+<!-- The Axil started to boot, but then on subsequent power cycles deteriorated to the point of no longer printing any output. -->
+
+<!--
+Notes:
+- https://forum.vcfed.org/index.php?threads/how-to-workaround-when-your-sun-ultra-5-10-nvram-no-longer-works.52997/
+  on how to reprogram the nvram
+- https://www.sun3arc.org/FAQ/sun-nvram-hostid.faq.phtml
+  lots of facts, specifically the requisite first bytes of the hostid.
+- http://sunsite.uakom.sk/sunworldonline/swol-11-1995/swol-11-fusion.intro.html
+- https://www.edn.com/axil-launches-the-axil-ultima-1-and-axil-ultima-2-workstations-and-servers/
+
+ -->
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>A complete table can be found at the <ruby style="ruby-position: under; ruby-align: center;">
+  <a href="https://www.sun3arc.org/FAQ/sun-nvram-hostid.faq.phtml" target="_blank">SUN NVRAM/hostid FAQ</a>
+  <rt>Archived at: <a href="https://web.archive.org/web/2/https://www.sun3arc.org/FAQ/sun-nvram-hostid.faq.phtml" target="_blank" class="no-arrow">Wayback Machine</a>.</rt>
+  </ruby>, but for my purposes <code class="language-plaintext highlighter-rouge">80</code> is the correct value for a Sun Ultra 1, and <code class="language-plaintext highlighter-rouge">72</code> is the correct value for a
+  SPARCstation 20. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:1:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:1:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>I ended up buying an Adaptec ASC-29160 Ultra 3 SCSI controller PCI card to throw in another old computer. This
+  card can be found pretty easily on eBay, and only cost me $14 USD with shipping. It has 68- and 50-pin SCSI
+  headers, but the disks in my Sun servers are 80-pin, so I also had to purchase an 80-to-68 pin adaptor
+  ($22 USD shipped from eBay). Using this and a CloneZilla disk I was able to clone entire disk images for posterity
+  and inspection. I believe this is also how I got the root password cleared, but I was also messing around with
+  net-booting at the time and I honestly can’t remember which method ended up working. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>This is the SIM slot identifier. On a SPARCstation 20, J0301 is “bank 3”, physical addresses
+  0x0c000000–0x0fffffff, and J0302 is “bank 6”, physical addresses 0x18000000–0x1bffffff.
+  See <a href="https://archive.org/details/manualzilla-id-6034531/page/n57/mode/2up?q=%22SIMM+errors%22">SPARCstation 20 Service Manual, p.35: §SIMM Errors on Archive.org</a>.
+  <img src="/images/sparc-journey/sp20-simm-layout.jpg" alt="SPARCstation 20 SIMM Layout" style="max-width:500px;" /> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name>Sidneys1</name><email>your-email@domain.com</email></author><category term="retrocomputing" /><category term="retrocomputing" /><category term="sun-sparc" /><summary type="html"><![CDATA[In early 2022 I got several Sun SPARC servers for free off of a FreeCycle ad: I was recently called out for not providing any sort of update on those devices… so here we go!]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://sidneys1.github.io/images/sparc-journey/hero.jpg" /><media:content medium="image" url="https://sidneys1.github.io/images/sparc-journey/hero.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">How I Back Up Google Photos</title><link href="https://sidneys1.github.io/Backing-Up-Google-Photos/" rel="alternate" type="text/html" title="How I Back Up Google Photos" /><published>2024-06-28T00:00:00-04:00</published><updated>2024-06-28T00:00:00-04:00</updated><id>https://sidneys1.github.io/backing-up-google-photos</id><content type="html" xml:base="https://sidneys1.github.io/Backing-Up-Google-Photos/"><![CDATA[<p>Google Photos is wonderful. It backs up my photos and videos, tags them, and makes them available to share with my
 family.</p>
 
 <p>But I also don’t trust that Google will never accidentally “loose” my photos. Here is the process I use to back up my
@@ -1011,12 +2520,12 @@ give it a go:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('227-editor-mode').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('117-editor-mode').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="227-editor-mode" onclick="document.getElementById('227-editor-mode').close()">
+  <dialog class="popover" id="117-editor-mode" onclick="document.getElementById('117-editor-mode').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2270,12 +3779,12 @@ our game class to match our needs.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('90-pixel-barf').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('99-pixel-barf').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="90-pixel-barf" onclick="document.getElementById('90-pixel-barf').close()">
+  <dialog class="popover" id="99-pixel-barf" onclick="document.getElementById('99-pixel-barf').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2343,12 +3852,12 @@ color pattern converging in the center of the canvas:</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('36-coordinate-identity').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('66-coordinate-identity').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="36-coordinate-identity" onclick="document.getElementById('36-coordinate-identity').close()">
+  <dialog class="popover" id="66-coordinate-identity" onclick="document.getElementById('66-coordinate-identity').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2578,7 +4087,7 @@ explaining the geometry here: this is a well-documented process and can be resea
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('188-flat-sphere').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('188-flat-sphere').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
@@ -2666,12 +4175,12 @@ depths.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('244-perspective-rendering').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('115-perspective-rendering').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="244-perspective-rendering" onclick="document.getElementById('244-perspective-rendering').close()">
+  <dialog class="popover" id="115-perspective-rendering" onclick="document.getElementById('115-perspective-rendering').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2855,12 +4364,12 @@ into the distance.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('96-floor-and-fog').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('250-floor-and-fog').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="96-floor-and-fog" onclick="document.getElementById('96-floor-and-fog').close()">
+  <dialog class="popover" id="250-floor-and-fog" onclick="document.getElementById('250-floor-and-fog').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3026,12 +4535,12 @@ center <code class="language-plaintext highlighter-rouge">Sphere</code>.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('203-reflections').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('153-reflections').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="203-reflections" onclick="document.getElementById('203-reflections').close()">
+  <dialog class="popover" id="153-reflections" onclick="document.getElementById('153-reflections').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3245,12 +4754,12 @@ darkens our scene.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('240-diffuse-lighting').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('166-diffuse-lighting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="240-diffuse-lighting" onclick="document.getElementById('240-diffuse-lighting').close()">
+  <dialog class="popover" id="166-diffuse-lighting" onclick="document.getElementById('166-diffuse-lighting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3355,12 +4864,12 @@ Otherwise we calculate the diffuse lighting as before.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('167-shadow-casting').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('8-shadow-casting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="167-shadow-casting" onclick="document.getElementById('167-shadow-casting').close()">
+  <dialog class="popover" id="8-shadow-casting" onclick="document.getElementById('8-shadow-casting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3464,12 +4973,12 @@ in Release mode.</p>
 
   <div class="popunder">
 	
-		<img class="pop" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('74-multisampling').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('151-multisampling').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="74-multisampling" onclick="document.getElementById('74-multisampling').close()">
+  <dialog class="popover" id="151-multisampling" onclick="document.getElementById('151-multisampling').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
