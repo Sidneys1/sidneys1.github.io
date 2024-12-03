@@ -1771,6 +1771,9 @@ kbd.menu kbd:not(:last-child)::after {
 .post-content img[align=left] {
   margin-right: 1em;
 }
+.post-content img.no-shadow {
+  box-shadow: none !important;
+}
 
 :is(div.highlighter-rouge, div.code-split-root):not(.code-split)[class^=language-]::before {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
