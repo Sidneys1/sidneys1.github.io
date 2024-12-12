@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-12-03T13:42:59-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>your-email@domain.com</email></author><entry><title type="html">HTML5 Canvas Tips</title><link href="https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips.html" rel="alternate" type="text/html" title="HTML5 Canvas Tips" /><published>2024-12-02T00:00:00-05:00</published><updated>2024-12-02T00:00:00-05:00</updated><id>https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips</id><content type="html" xml:base="https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips.html"><![CDATA[<p>The <code class="language-plaintext highlighter-rouge">&lt;canvas&gt;</code> element may be the best thing to happen to HTML since <code class="language-plaintext highlighter-rouge">&lt;marquee&gt;</code>. I’ve been
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2024-12-12T10:03:03-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>your-email@domain.com</email></author><entry><title type="html">HTML5 Canvas Tips</title><link href="https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips.html" rel="alternate" type="text/html" title="HTML5 Canvas Tips" /><published>2024-12-02T00:00:00-05:00</published><updated>2024-12-02T00:00:00-05:00</updated><id>https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips</id><content type="html" xml:base="https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips.html"><![CDATA[<p>The <code class="language-plaintext highlighter-rouge">&lt;canvas&gt;</code> element may be the best thing to happen to HTML since <code class="language-plaintext highlighter-rouge">&lt;marquee&gt;</code>. I’ve been
 <a href="https://github.com/Sidneys1/Merlin" target="_blank">using</a> it <a href="https://github.com/Sidneys1/Raina" target="_blank">a lot</a> for <a href="https://infosec.exchange/@Sidneys1/113562091539216937" target="_blank">various projects</a>
 recently and thought it’d be nice to collect some of the tips and tricks I’ve learned into once place.</p>
 
@@ -440,12 +440,12 @@ simple function:</p>
 
 <div class="popunder" style="float:right; margin-left:1em;">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/sparc-journey/invalid-nvram.jpg" alt="Invalid NVRAM boot messages" title="Invalid NVRAM boot messages" onclick="document.getElementById('170-invalid-nvram-boot-messages').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/sparc-journey/invalid-nvram.jpg" alt="Invalid NVRAM boot messages" title="Invalid NVRAM boot messages" onclick="document.getElementById('29-invalid-nvram-boot-messages').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="170-invalid-nvram-boot-messages" onclick="document.getElementById('170-invalid-nvram-boot-messages').close()">
+<dialog class="popover" id="29-invalid-nvram-boot-messages" onclick="document.getElementById('29-invalid-nvram-boot-messages').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -945,12 +945,12 @@ powered on, anyways) at the <code class="language-plaintext amber-term highlight
 
 <div class="popunder" style="float:left;margin-right:1em;">
 	
-		<img class="pop" style="max-width:400px;" src="https://sidneys1.github.io/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" onclick="document.getElementById('8-sparcstation-20-simm-errors').showModal()" />
+		<img class="pop" style="max-width:400px;" src="https://sidneys1.github.io/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" onclick="document.getElementById('131-sparcstation-20-simm-errors').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="8-sparcstation-20-simm-errors" onclick="document.getElementById('8-sparcstation-20-simm-errors').close()">
+<dialog class="popover" id="131-sparcstation-20-simm-errors" onclick="document.getElementById('131-sparcstation-20-simm-errors').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2920,12 +2920,12 @@ give it a go:</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('51-editor-mode').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('139-editor-mode').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="51-editor-mode" onclick="document.getElementById('51-editor-mode').close()">
+  <dialog class="popover" id="139-editor-mode" onclick="document.getElementById('139-editor-mode').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
