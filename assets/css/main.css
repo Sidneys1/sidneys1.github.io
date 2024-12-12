@@ -1651,6 +1651,69 @@ section#comments span.social-handle {
   font-size: x-small;
 }
 
+section#webmention #webmention-stats {
+  grid-column: 2;
+  grid-row: 3;
+  display: inline-flex;
+  gap: 0.5em;
+  flex-wrap: wrap;
+  font-size: 0.8em;
+}
+section#webmention #webmention-stats:empty {
+  display: none;
+}
+section#webmention #webmention-comment-credit {
+  font-style: inherit;
+  font-size: x-small;
+}
+section#webmention ol.webmentions__list {
+  list-style-type: none;
+  margin: 0 0 0 5%;
+  padding: 0;
+  display: inline-block;
+}
+section#webmention > ol.webmentions__list {
+  margin: 0 auto;
+}
+section#webmention article.webmention {
+  margin-bottom: 1em;
+  gap: 0.25em;
+  display: grid;
+  grid-template-areas: "header header date" ".      comment comment";
+  grid-template-columns: 3.5em auto 1fr;
+  grid-template-rows: 2em auto;
+}
+section#webmention article.webmention .webmention__author {
+  display: grid;
+  grid-area: header;
+  grid-template-columns: subgrid;
+}
+section#webmention article.webmention .webmention__author > a {
+  display: grid;
+  grid-column: 1/3;
+  grid-template-columns: subgrid;
+}
+section#webmention article.webmention .webmention__author > a > img.webmention__author__photo {
+  grid-column: 1;
+  float: left;
+}
+section#webmention article.webmention .webmention__author > a > b.p-name {
+  grid-column: 2;
+}
+section#webmention article.webmention .webmention__content {
+  grid-area: comment;
+}
+section#webmention article.webmention .webmention__meta {
+  grid-area: date;
+}
+
+img.webmention__author__photo {
+  width: 3em;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2666666667);
+}
+
 /*** Markdown customization rules. ***/
 /*** Base Minima theme. ***/
 /*** Additional colors. ***/
@@ -2009,7 +2072,7 @@ summary {
   cursor: pointer;
 }
 
-:is(.post-content, section#comments) a[target=_blank]:not(.no-arrow)::after {
+:is(.post-content, section#comments, section#webmention) a[target=_blank]:not(.no-arrow)::after {
   content: " ";
   background-color: currentColor;
   -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiMyQTdBRTIiIHZpZXdCb3g9IjAgMCA4IDgiPjxwYXRoIGQ9Ik0wIDB2OGg4VjZIN3YxSDFWMWgxVjBIMHptNCAwIDEuNSAxLjVMMyA0bDEgMSAyLjUtMi41TDggNFYwSDR6Ii8+PC9zdmc+");
