@@ -1000,6 +1000,10 @@ pre, code {
   font-family: var(--minima-code-font-family);
 }
 
+.page-content {
+  position: relative;
+}
+
 @media screen and (max-width: 2000px) {
   .page-content {
     padding-top: 0 !important;
@@ -1192,6 +1196,7 @@ pre, code {
 }
 
 /*** Home customization rules. ***/
+/*** Base Minima theme. ***/
 ul.post-list > li::after {
   content: "";
   display: block;
@@ -1225,6 +1230,65 @@ ul.post-list h4 {
   float: left;
 }
 
+#links-parent {
+  position: absolute;
+  top: 0px;
+  right: 30px;
+  width: calc((100vw - 1260px) / 2);
+}
+#links-parent #links {
+  margin-right: auto;
+  max-width: fit-content;
+  padding: 0.5em 1em;
+  border: 1px solid var(--minima-border-color-01);
+  border-top: none;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+}
+#links-parent #links > h1 {
+  margin-bottom: 5px;
+}
+#links-parent #links > h1 .svg-icon {
+  font-size: 0.5em;
+  vertical-align: baseline;
+}
+#links-parent #links > ul {
+  list-style: none;
+  margin: 0;
+}
+#links-parent #links > ul > li > a {
+  font-weight: bold;
+}
+#links-parent #links > ul > li > p > .date {
+  font-variant: small-caps;
+  font-size: 14px;
+  color: var(--minima-brand-color);
+}
+#links-parent #links > ul > li:last-child > p {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 2000px) {
+  #links-parent {
+    position: static;
+    max-width: 30%;
+    width: unset;
+    float: right;
+    margin-right: -15px;
+  }
+  #links-parent #links {
+    padding: 0.5em 1em;
+    border: 1px solid var(--minima-border-color-01);
+    border-right: none;
+    border-top-left-radius: 1em;
+    border-bottom-right-radius: 0;
+  }
+}
+@media screen and (max-width: 800px) {
+  #links-parent {
+    display: none;
+  }
+}
 /*** Header customization rules. ***/
 /*** Base Minima theme. ***/
 /*** Additional colors. ***/
@@ -2072,7 +2136,7 @@ summary {
   cursor: pointer;
 }
 
-:is(.post-content, section#comments, section#webmention) a[target=_blank]:not(.no-arrow)::after {
+:is(.post-content, section#comments, section#webmention, #links-list) a[target=_blank]:not(.no-arrow)::after {
   content: " ";
   background-color: currentColor;
   -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiMyQTdBRTIiIHZpZXdCb3g9IjAgMCA4IDgiPjxwYXRoIGQ9Ik0wIDB2OGg4VjZIN3YxSDFWMWgxVjBIMHptNCAwIDEuNSAxLjVMMyA0bDEgMSAyLjUtMi41TDggNFYwSDR6Ii8+PC9zdmc+");
