@@ -32,7 +32,10 @@
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sidneys1"},"dateModified":"2022-03-23T13:04:39-04:00","datePublished":"2022-03-23T13:04:39-04:00","description":"Since I started programming I’ve had a dream in the back of my mind: raytracers are super cool, and I’d like to build one myself. But with that dream accompanied another thought: raytracers are nearly a pure expression of math, a discipline I am poorly qualified for. However this winter I discovered a new programming community, OneLoneCoder, and its leader, javidx9. Watching the videos produced by javidx9 inspired me to take a leap of faith in myself and start this raytracing project. The result has been amazing to see unfold as I developed first a working prototype in C#, then in C++, and finally as I produced what hopefully is an easy to follow “tutorial” style Git repository. So, lets dive in!","headline":"Raytracing!","image":"https://sidneys1.github.io/images/2022-03-23-raytracing/hero.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://sidneys1.github.io/programming/2022/03/23/raytracing.html"},"url":"https://sidneys1.github.io/programming/2022/03/23/raytracing.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="https://sidneys1.github.io/assets/css/main.css">
-	<link rel="stylesheet" href="https://sidneys1.github.io/hitcount.py.cgi?path=%2Fprogramming%2F2022%2F03%2F23%2Fraytracing.html" fetchpriority="low" /><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><link rel="dns-prefetch" href="https://webmention.io"><link rel="preconnect" href="https://webmention.io"><link rel="preconnect" href="ws://webmention.io:8080"><script defer src="https://sidneys1.github.io/assets/mastodon_comments.js" onload="initComments()"></script><!-- KaTeX -->
+	<link rel="stylesheet" href="https://sidneys1.github.io/hitcount.py.cgi?path=%2Fprogramming%2F2022%2F03%2F23%2Fraytracing.html" fetchpriority="low" /><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed.xml" title="Sidneys1.com on GitHub Pages" /><link type="application/atom+xml" rel="alternate" href="https://sidneys1.github.io/feed/links.xml" title="Sidneys1.com - Links">
+
+	<link rel="dns-prefetch" href="https://webmention.io"><link rel="preconnect" href="https://webmention.io"><link rel="preconnect" href="ws://webmention.io:8080"><link rel="pingback" href="https://webmention.io/sidneys1.com/xmlrpc"><link rel="webmention" href="https://webmention.io/sidneys1.com/webmention">
+	<link rel="webmention" href="https://webmention.io/sidneys1.com/webmention" /><script defer src="https://sidneys1.github.io/assets/mastodon_comments.js" onload="initComments()"></script><!-- KaTeX -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
 		integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 
@@ -94,13 +97,7 @@
 <body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="https://sidneys1.github.io/">Sidneys1.com on GitHub Pages</a>
-
-	<span class="coffee"><a title="Buy me a Coffee" href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
-    <svg class="svg-icon">
-			<use xlink:href="/assets/coffee-cup-1.svg#coffee"></use>
-    </svg>
-
-	</a></span><nav class="site-nav">
+	<div></div><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -110,7 +107,7 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="https://sidneys1.github.io/tags.html">Tags</a><a class="page-link" href="https://sidneys1.github.io/categories.html">Categories</a><a class="page-link" href="https://sidneys1.github.io/series.html">Series</a></div>
+        <div class="trigger"><a class="page-link" href="https://sidneys1.github.io/tags.html">Tags</a><a class="page-link" href="https://sidneys1.github.io/categories.html">Categories</a><a class="page-link" href="https://sidneys1.github.io/series.html">Series</a><a class="page-link" href="https://sidneys1.github.io/links/">Links</a></div>
       </nav></div>
 
 </header>
@@ -236,12 +233,12 @@ our game class to match our needs.</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('134-pixel-barf').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-01-Add%20PGE%20header%20and%20create%20a%20game%20from%20template.png" alt="Pixel Barf" title="Pixel Barf" onclick="document.getElementById('238-pixel-barf').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="134-pixel-barf" onclick="document.getElementById('134-pixel-barf').close()">
+  <dialog class="popover" id="238-pixel-barf" onclick="document.getElementById('238-pixel-barf').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -309,12 +306,12 @@ color pattern converging in the center of the canvas:</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('242-coordinate-identity').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-03-Add%20constants%20and%20a%20way%20to%20Sample%20single%20pixels.PNG" alt="Coordinate Identity" title="Coordinate Identity" onclick="document.getElementById('47-coordinate-identity').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="242-coordinate-identity" onclick="document.getElementById('242-coordinate-identity').close()">
+  <dialog class="popover" id="47-coordinate-identity" onclick="document.getElementById('47-coordinate-identity').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -544,12 +541,12 @@ explaining the geometry here: this is a well-documented process and can be resea
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('156-flat-sphere').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-07-Implement%20ray-Sphere%20intersection.png" alt="Flat Sphere" title="Flat Sphere" onclick="document.getElementById('181-flat-sphere').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="156-flat-sphere" onclick="document.getElementById('156-flat-sphere').close()">
+  <dialog class="popover" id="181-flat-sphere" onclick="document.getElementById('181-flat-sphere').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -632,12 +629,12 @@ depths.</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('230-perspective-rendering').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-08-Add%20perspective%20rendering%20and%20depth%20sorting.png" alt="Perspective Rendering" title="Perspective Rendering" onclick="document.getElementById('140-perspective-rendering').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="230-perspective-rendering" onclick="document.getElementById('230-perspective-rendering').close()">
+  <dialog class="popover" id="140-perspective-rendering" onclick="document.getElementById('140-perspective-rendering').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -821,12 +818,12 @@ into the distance.</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('115-floor-and-fog').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-09-Add%20a%20Plane%20Shape,%20and%20apply%20Fog.png" alt="Floor and Fog" title="Floor and Fog" onclick="document.getElementById('253-floor-and-fog').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="115-floor-and-fog" onclick="document.getElementById('115-floor-and-fog').close()">
+  <dialog class="popover" id="253-floor-and-fog" onclick="document.getElementById('253-floor-and-fog').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -992,12 +989,12 @@ center <code class="language-plaintext highlighter-rouge">Sphere</code>.</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('84-reflections').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-10-Add%20reflections.png" alt="Reflections" title="Reflections" onclick="document.getElementById('67-reflections').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="84-reflections" onclick="document.getElementById('84-reflections').close()">
+  <dialog class="popover" id="67-reflections" onclick="document.getElementById('67-reflections').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -1211,12 +1208,12 @@ darkens our scene.</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('33-diffuse-lighting').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-12-Add%20diffuse%20lighting.png" alt="Diffuse Lighting" title="Diffuse Lighting" onclick="document.getElementById('91-diffuse-lighting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="33-diffuse-lighting" onclick="document.getElementById('33-diffuse-lighting').close()">
+  <dialog class="popover" id="91-diffuse-lighting" onclick="document.getElementById('91-diffuse-lighting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -1321,12 +1318,12 @@ Otherwise we calculate the diffuse lighting as before.</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('7-shadow-casting').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-13-Add%20shadow%20casting.png" alt="Shadow Casting" title="Shadow Casting" onclick="document.getElementById('175-shadow-casting').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="7-shadow-casting" onclick="document.getElementById('7-shadow-casting').close()">
+  <dialog class="popover" id="175-shadow-casting" onclick="document.getElementById('175-shadow-casting').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -1430,12 +1427,12 @@ in Release mode.</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('90-multisampling').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/2022-03-23-raytracing/thumbs/th-14-Add%20multisampling.png" alt="Multisampling" title="Multisampling" onclick="document.getElementById('89-multisampling').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="90-multisampling" onclick="document.getElementById('90-multisampling').close()">
+  <dialog class="popover" id="89-multisampling" onclick="document.getElementById('89-multisampling').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -1483,21 +1480,7 @@ in Release mode.</p>
 				
 			</ul>
 		</details>
-	<hr>
-
-	<div class="donate">
-		Like what you read?
-		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
-			Consider buying me a coffee.
-		</a>
-		<br/>
-		<a title="Consider buying me a coffee." href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer" style="display: inline-block;">
-			<!-- <img height="50px" title="Buy me a Coffee" src="https://sidneys1.github.io/assets/coffee-cup-1.svg"/> -->
-			<svg class="svg-icon grey">
-				<use xlink:href="/assets/coffee-cup-1.svg#coffee"></use>
-			</svg>
-		</a>
-	</div><p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p><a class="u-url" href="https://sidneys1.github.io/programming/2022/03/23/raytracing.html" hidden></a>
+	<hr><p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p><a class="u-url" href="https://sidneys1.github.io/programming/2022/03/23/raytracing.html" hidden></a>
 </article>
 <script src="/js/JekyllWebmentionIO.js" async></script>
 <template style="display:none" id="webmention-bookmarks"><div class="webmentions webmentions--bookmarks">
@@ -1715,7 +1698,7 @@ in Release mode.</p>
 	</a>
 </li>
 <li>
-	<a rel="me" href="mailto:admin@sSidneys1.com" target="_blank" title="Site Support">
+	<a rel="me" href="mailto:admin@Sidneys1.com" target="_blank" title="Site Support">
 		<svg class="svg-icon">
 			<use xlink:href="/assets/minima-social-icons.svg#email"></use>
 		</svg>
@@ -1781,6 +1764,13 @@ in Release mode.</p>
 </li>
 <li>
   <a href="/feed.xml" target="_blank" title="Sidneys1.com RSS Feed">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+    </svg>
+  </a>
+</li>
+<li>
+  <a href="/feed/links.xml" target="_blank" title="Sidneys1.com Links RSS Feed">
     <svg class="svg-icon grey">
       <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
     </svg>

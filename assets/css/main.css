@@ -1248,10 +1248,6 @@ ul.post-list h4 {
 #links-parent #links > h1 {
   margin-bottom: 5px;
 }
-#links-parent #links > h1 .svg-icon {
-  font-size: 0.5em;
-  vertical-align: baseline;
-}
 #links-parent #links > ul {
   list-style: none;
   margin: 0;
@@ -1269,6 +1265,20 @@ ul.post-list h4 {
 }
 
 @media screen and (max-width: 2000px) {
+  #links-parent {
+    position: static;
+    max-width: 30%;
+    width: unset;
+    float: right;
+    margin-right: -15px;
+  }
+  #links-parent #links {
+    padding: 0.5em 1em;
+    border: 1px solid var(--minima-border-color-01);
+    border-radius: 1em;
+  }
+}
+@media screen and (max-width: 1200px) {
   #links-parent {
     position: static;
     max-width: 30%;
@@ -1308,23 +1318,6 @@ ul.post-list h4 {
     grid-template-columns: minmax(max-content, 1fr) auto 1fr;
     column-gap: 1em;
   }
-}
-.site-header .wrapper .coffee {
-  flex-grow: 1;
-  text-align: center;
-}
-.site-header .wrapper .coffee svg {
-  width: 32px;
-  height: 32px;
-  opacity: 50%;
-  transition: opacity 250ms linear;
-  color: var(--minima-text-color);
-  margin: 0 0 4px 8px;
-  vertical-align: middle;
-}
-.site-header .wrapper .coffee svg:hover {
-  opacity: 100%;
-  transition: opacity 250ms linear;
 }
 .site-header .wrapper .site-nav {
   justify-self: right;
@@ -1459,22 +1452,6 @@ ul.post-list h4 {
   margin-right: auto;
 }
 
-.donate {
-  text-align: center;
-}
-.donate svg {
-  width: 70px;
-  height: 50px;
-  opacity: 75%;
-  transition: 250ms linear;
-  color: var(--minima-text-color);
-}
-.donate svg:hover {
-  opacity: 100%;
-  transition: 250ms linear;
-  cursor: pointer;
-}
-
 .toc__list:before {
   content: "Table Of Contents";
   font-weight: bold;
@@ -1603,6 +1580,12 @@ div.multipart.center {
 
 #erratum li {
   font-style: italic;
+}
+
+section > h1 {
+  font-size: 32px;
+  font-weight: 100;
+  line-height: 1.15;
 }
 
 section#comments ol.comments {
