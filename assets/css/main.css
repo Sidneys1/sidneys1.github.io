@@ -1013,16 +1013,22 @@ pre, code {
 /*** Base Minima theme. ***/
 :root {
   --sidneys1-red-accent: darkred;
-  --sidneys1-red-accent-subtle: #8b8080;
+  --sidneys1-red-accent-subtle: #720000;
   --sidneys1-red-accent-compliment: darkcyan;
+  --sidneys1-red-accent-compliment-2: #008b00;
+  --sidneys1-red-accent-compliment-3: darkblue;
   --sidneys1-red-accent-visited: #3f0000;
   --sidneys1-green-accent: darkgreen;
-  --sidneys1-green-accent-subtle: #737373;
+  --sidneys1-green-accent-subtle: #004b00;
   --sidneys1-green-accent-compliment: #640064;
+  --sidneys1-green-accent-compliment-2: #000064;
+  --sidneys1-green-accent-compliment-3: #640000;
   --sidneys1-green-accent-visited: #001800;
   --sidneys1-blue-accent: #2a7ae2;
-  --sidneys1-blue-accent-subtle: #aac2e2;
+  --sidneys1-blue-accent-subtle: #2a6fc9;
   --sidneys1-blue-accent-compliment: #e2922a;
+  --sidneys1-blue-accent-compliment-2: #e22a7a;
+  --sidneys1-blue-accent-compliment-3: #7ae22a;
   --sidneys1-blue-accent-visited: #1756a9;
   --sidneys1-sticky-note: #ffc;
   --sidneys1-sticky-note-title: rgb(234, 234, 169);
@@ -1041,16 +1047,22 @@ pre, code {
 @media (prefers-color-scheme: light) {
   :root:has(input:checked[name=mode][value=dark], input:checked[name=mode][value=black]) {
     --sidneys1-red-accent: #BF3D7C;
-    --sidneys1-red-accent-subtle: #403d3e;
+    --sidneys1-red-accent-subtle: #4b1831;
     --sidneys1-red-accent-compliment: #3dbf80;
+    --sidneys1-red-accent-compliment-2: #7cbf3d;
+    --sidneys1-red-accent-compliment-3: #3d7cbf;
     --sidneys1-red-accent-visited: #c74f89;
     --sidneys1-green-accent: #7b914d;
-    --sidneys1-green-accent-subtle: #3e3e3e;
+    --sidneys1-green-accent-subtle: #262d18;
     --sidneys1-green-accent-compliment: #634d91;
+    --sidneys1-green-accent-compliment-2: #4d7b91;
+    --sidneys1-green-accent-compliment-3: #914d7b;
     --sidneys1-green-accent-visited: #89a256;
     --sidneys1-blue-accent: #5c8bc9;
-    --sidneys1-blue-accent-subtle: #565656;
+    --sidneys1-blue-accent-subtle: #234169;
     --sidneys1-blue-accent-compliment: #c99a5c;
+    --sidneys1-blue-accent-compliment-2: #c95c8b;
+    --sidneys1-blue-accent-compliment-3: #8bc95c;
     --sidneys1-blue-accent-visited: #6f99cf;
     --sidneys1-sticky-note: rgb(79, 79, 50);
     --sidneys1-sticky-note-title: rgb(104, 104, 77);
@@ -1069,16 +1081,22 @@ pre, code {
 @media (prefers-color-scheme: dark) {
   :root:not(:has(input:checked[name=mode][value=light])) {
     --sidneys1-red-accent: #BF3D7C;
-    --sidneys1-red-accent-subtle: #403d3e;
+    --sidneys1-red-accent-subtle: #4b1831;
     --sidneys1-red-accent-compliment: #3dbf80;
+    --sidneys1-red-accent-compliment-2: #7cbf3d;
+    --sidneys1-red-accent-compliment-3: #3d7cbf;
     --sidneys1-red-accent-visited: #c74f89;
     --sidneys1-green-accent: #7b914d;
-    --sidneys1-green-accent-subtle: #3e3e3e;
+    --sidneys1-green-accent-subtle: #262d18;
     --sidneys1-green-accent-compliment: #634d91;
+    --sidneys1-green-accent-compliment-2: #4d7b91;
+    --sidneys1-green-accent-compliment-3: #914d7b;
     --sidneys1-green-accent-visited: #89a256;
     --sidneys1-blue-accent: #5c8bc9;
-    --sidneys1-blue-accent-subtle: #565656;
+    --sidneys1-blue-accent-subtle: #234169;
     --sidneys1-blue-accent-compliment: #c99a5c;
+    --sidneys1-blue-accent-compliment-2: #c95c8b;
+    --sidneys1-blue-accent-compliment-3: #8bc95c;
     --sidneys1-blue-accent-visited: #6f99cf;
     --sidneys1-sticky-note: rgb(79, 79, 50);
     --sidneys1-sticky-note-title: rgb(104, 104, 77);
@@ -1108,25 +1126,37 @@ pre, code {
 :root:has(input:checked[name=color][value=red]) {
   --minima-link-base-color: var(--sidneys1-red-accent);
   --minima-link-visited-color: var(--sidneys1-red-accent-visited);
+  --minima-link-compliment-color: var(--sidneys1-red-accent-compliment);
   --sidneys1-accent-color: var(--sidneys1-red-accent);
   --sidneys1-accent-subtle: var(--sidneys1-red-accent-subtle);
   --sidneys1-accent-compliment-color: var(--sidneys1-red-accent-compliment);
+  --sidneys1-accent-compliment-color-2: var(--sidneys1-red-accent-compliment-2);
+  --sidneys1-accent-compliment-color-3: var(--sidneys1-red-accent-compliment-3);
+  --sidneys1-link-compliment-color: var(--sidneys1-red-accent-compliment);
 }
 
 :root:has(input:checked[name=color][value=green]) {
   --minima-link-base-color: var(--sidneys1-green-accent);
   --minima-link-visited-color: var(--sidneys1-green-accent-visited);
+  --minima-link-compliment-color: var(--sidneys1-green-accent-compliment);
   --sidneys1-accent-color: var(--sidneys1-green-accent);
   --sidneys1-accent-subtle: var(--sidneys1-green-accent-subtle);
   --sidneys1-accent-compliment-color: var(--sidneys1-green-accent-compliment);
+  --sidneys1-accent-compliment-color-2: var(--sidneys1-green-accent-compliment-2);
+  --sidneys1-accent-compliment-color-3: var(--sidneys1-green-accent-compliment-3);
+  --sidneys1-link-compliment-color: var(--sidneys1-green-accent-compliment);
 }
 
 :root:has(input:checked[name=color][value=blue]) {
   --minima-link-base-color: var(--sidneys1-blue-accent);
   --minima-link-visited-color: var(--sidneys1-blue-accent-visited);
+  --minima-link-compliment-color: var(--sidneys1-blue-accent-compliment);
   --sidneys1-accent-color: var(--sidneys1-blue-accent);
   --sidneys1-accent-subtle: var(--sidneys1-blue-accent-subtle);
   --sidneys1-accent-compliment-color: var(--sidneys1-blue-accent-compliment);
+  --sidneys1-accent-compliment-color-2: var(--sidneys1-blue-accent-compliment-2);
+  --sidneys1-accent-compliment-color-3: var(--sidneys1-blue-accent-compliment-3);
+  --sidneys1-link-compliment-color: var(--sidneys1-blue-accent-compliment);
 }
 
 :root:has(input:checked[name=font][value=od]) {
@@ -1466,12 +1496,8 @@ ul.post-list h4 {
   margin: 0 0 30px 0;
 }
 
-.toc__sublist li {
-  padding-left: 1.25rem;
-}
-
 #toc a {
-  color: var(--sidneys1-link-compliment-color);
+  color: var(--sidneys1-accent-compliment-color);
   text-decoration: underline;
 }
 
@@ -1759,6 +1785,220 @@ img.webmention__author__photo {
   aspect-ratio: 1/1;
   border-radius: 50%;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2666666667);
+}
+
+/*** Review layout rules. ***/
+/*** Base Minima theme. ***/
+/*** Additional colors. ***/
+.review-list {
+  margin-left: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto auto auto 1fr;
+  gap: 0.25em;
+}
+.review-list > li {
+  grid-column: 1/5;
+  display: grid;
+  grid-template-columns: subgrid;
+  margin-bottom: 30px;
+}
+.review-list > li > h3 {
+  grid-column: 1/5;
+  margin-bottom: 0.25em;
+  line-height: 1.25;
+  font-size: 1.5rem;
+}
+.review-list > li > h3 a {
+  margin-bottom: 1ex;
+  margin-right: 1ex;
+}
+.review-list > li::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.review-list > li h4 {
+  font-weight: bolder;
+  margin-bottom: 0;
+  line-height: 1.25;
+}
+.review-list > li .review-excerpt > img {
+  max-height: 150px;
+  object-fit: cover;
+  margin-right: 1em;
+  width: 250px;
+  float: left;
+}
+.review-list > li .review-title {
+  margin-bottom: 0;
+}
+.review-list > li .review-description {
+  font-style: italic;
+  font-size: initial;
+}
+.review-list > li .review-meta {
+  font-size: 14px;
+  color: var(--minima-brand-color);
+}
+.review-list ul {
+  clear: both;
+}
+
+.review-details {
+  grid-column: 4;
+  margin-left: 0.25em;
+}
+
+.review-subjectbox {
+  display: grid;
+  grid-column: 1/4;
+  grid-template-columns: subgrid;
+  padding-right: 0.5em;
+  gap: 0 0.25em;
+}
+.review-subjectbox img.review-subject-cover {
+  gap: none;
+  grid-column: 1;
+  grid-row: 1/10;
+  height: 9em;
+  margin-right: 0.25em;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  transition: 250ms linear;
+}
+.review-subjectbox img.review-subject-cover:hover {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  transition: 250ms linear;
+}
+.review-subjectbox .label {
+  grid-column: 2;
+  font-weight: 600;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  text-align: right;
+  font-size: smaller;
+}
+.review-subjectbox cite, .review-subjectbox .rating {
+  grid-column: 2/4;
+  text-align: center;
+  font-size: x-large;
+}
+.review-subjectbox .rating > span {
+  font-size: small;
+}
+.review-subjectbox .value {
+  grid-column: 3;
+  font-size: smaller;
+}
+
+header.post-header > .review-description {
+  font-size: 20px;
+  line-height: 1;
+  font-style: italic;
+  margin-bottom: 0;
+}
+
+#at-a-glance-host {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  clear: both;
+  margin: 15px 0;
+  position: relative;
+  background-color: var(--minima-background-color);
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+#at-a-glance-host.floating {
+  display: flex;
+  justify-content: center;
+}
+@media screen and (max-width: 800px) {
+  #at-a-glance-host {
+    display: flex;
+    flex-direction: column;
+  }
+  #at-a-glance-host .review-subjectbox {
+    align-self: center;
+  }
+  #at-a-glance-host #at-a-glance {
+    border-left: none !important;
+    border-top: 2px solid var(--minima-brand-color-light);
+  }
+}
+@media screen and (min-width: 800px) {
+  #at-a-glance-host.floating {
+    float: right;
+    margin-left: 1em;
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: center;
+  }
+}
+#at-a-glance-host::before {
+  content: "At a Glance";
+  font-weight: 600;
+  font-variant: small-caps;
+  font-size: x-large;
+  position: absolute;
+  top: -22px;
+  left: 0.5em;
+  background-color: var(--minima-background-color);
+  padding: 0 0.25em;
+}
+#at-a-glance-host #at-a-glance {
+  padding-top: 20px;
+  grid-column: 2;
+  padding-left: 0.5em;
+  border-left: 2px solid var(--minima-brand-color-light);
+}
+#at-a-glance-host #at-a-glance > h3 {
+  font-size: large;
+  font-weight: 600;
+  margin: 0;
+  font-variant: small-caps;
+}
+#at-a-glance-host .review-subjectbox {
+  font-size: 20px;
+  display: grid;
+  grid-column: 1;
+  gap: 0 0.25em;
+  grid-template-columns: auto auto 1fr;
+  padding: 30px 0.5em 1em 1em;
+  max-width: max-content;
+}
+#at-a-glance-host .review-subjectbox img.review-subject-cover {
+  gap: none;
+  grid-column: 1;
+  grid-row: 1/10;
+  height: 10em;
+  margin-right: 0.25em;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  transition: 250ms linear;
+}
+#at-a-glance-host .review-subjectbox img.review-subject-cover:hover {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  transition: 250ms linear;
+}
+#at-a-glance-host .review-subjectbox .label {
+  grid-column: 2;
+  font-weight: 600;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  text-align: right;
+  font-size: smaller;
+}
+#at-a-glance-host .review-subjectbox cite, #at-a-glance-host .review-subjectbox .rating {
+  grid-column: 2/4;
+  text-align: center;
+  font-size: xx-large;
+}
+#at-a-glance-host .review-subjectbox .rating > span {
+  font-size: initial;
+}
+#at-a-glance-host .review-subjectbox .value {
+  grid-column: 3;
+  font-size: smaller;
 }
 
 /*** Markdown customization rules. ***/
@@ -2056,13 +2296,16 @@ dl {
 dl dt:first-child {
   margin-top: 0;
 }
+dl:last-child {
+  margin-bottom: 0;
+}
 
 dt + dt {
   margin-top: 0;
 }
 
 dd + dt {
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 dt {
@@ -2248,6 +2491,30 @@ table.compact-table th, table.compact-table td {
   padding: 0 15px;
 }
 
+.hidden-header:target {
+  transition: height 500ms ease-in-out, margin 500ms ease-in-out, opacity 500ms ease-in-out 500ms;
+}
+
+.hidden-header:not(:target) {
+  opacity: 0 !important;
+  height: 0px !important;
+  margin: 0 0 0 0 !important;
+  transition: height 500ms ease-in-out 500ms, margin 500ms ease-in-out 500ms, opacity 500ms ease-in-out;
+}
+
+hr.short-rule {
+  width: 33.3333333333%;
+  margin: 1em auto;
+}
+
+.critique {
+  text-decoration: underline wavy color-mix(in srgb, var(--sidneys1-red-accent) 75%, transparent);
+}
+
+.praise {
+  text-decoration: underline wavy color-mix(in srgb, var(--sidneys1-green-accent) 75%, transparent);
+}
+
 /*** Misc widgets. ***/
 /*** Base Minima theme. ***/
 /*** Additional colors. ***/
@@ -2302,16 +2569,11 @@ dialog.popover::backdrop {
   backdrop-filter: blur(5px);
 }
 
-.anchor {
-  padding-left: 1em;
-}
 .anchor:target {
   font-weight: bolder;
 }
 .anchor:target::before {
   content: "⚓";
-  position: absolute;
-  margin-left: -1.5em;
 }
 
 div.card {
@@ -2482,6 +2744,11 @@ p.c-compare:hover {
 .pill.multipart {
   background-color: var(--sidneys1-accent-compliment-color);
   border-color: var(--sidneys1-accent-compliment-color);
+}
+
+.pill.review {
+  background-color: var(--sidneys1-accent-compliment-color-2);
+  border-color: var(--sidneys1-accent-compliment-color-2);
 }
 
 .todo {

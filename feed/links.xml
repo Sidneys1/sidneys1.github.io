@@ -4,7 +4,7 @@
     <generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator>
     <link href="https://sidneys1.github.io/feed/links.xml" rel="self" type="application/atom+xml" />
     <link href="https://sidneys1.github.io/links/" rel="alternate" type="text/html" />
-    <updated>2025-01-07T14:12:20-05:00</updated>
+    <updated>2025-01-08T12:14:26-05:00</updated>
     <id>https://sidneys1.github.io/feed/links.xml</id>
     <title type="html">Sidneys1.com | Links</title>
     <subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle>
@@ -17,7 +17,7 @@
         <link href="https://justine.lol/cosmopolitan/" rel="alternate" type="text/html" title="Cosmopolitan `libc` &amp;amp; Actually Portable Executables" />
         <published>2025-01-07T00:00:00-05:00</published>
         <updated>2025-01-07T00:00:00-05:00</updated>
-        <id>https://sidneys1.github.io/links/cosmopolitan</id>
+        <id>https://sidneys1.github.io/links/archive/cosmopolitan</id>
         <content type="html" xml:base="https://sidneys1.com/links/2024-12-19-webmention.html"><![CDATA[<p>A independent C and C++ compiler that builds small binaries that run natively on Linux, Mac, Windows, FreeBSD,
 OpenBSD, NetBSD, and bare metal on AMD64 and ARM64.</p>]]></content>
         <summary type="html"><![CDATA[A independent C and C++ compiler that builds small binaries that run natively on Linux, Mac, Windows, FreeBSD, OpenBSD, NetBSD, and bare metal on AMD64 and ARM64.]]></summary>
@@ -26,7 +26,7 @@ OpenBSD, NetBSD, and bare metal on AMD64 and ARM64.</p>]]></content>
         <link href="https://www.w3.org/TR/webmention/" rel="alternate" type="text/html" title="Webmention (W3C Recommendation)" />
         <published>2024-12-19T00:00:00-05:00</published>
         <updated>2024-12-19T00:00:00-05:00</updated>
-        <id>https://sidneys1.github.io/links/webmention</id>
+        <id>https://sidneys1.github.io/links/archive/webmention</id>
         <content type="html" xml:base="https://sidneys1.com/links/2024-12-19-webmention.html"><![CDATA[<p>A simple, standard way to send or receive notifications when content is referenced across the internet.</p>]]></content>
         <summary type="html"><![CDATA[A simple, standard way to send or receive notifications when content is referenced across the internet.]]></summary>
     </entry>

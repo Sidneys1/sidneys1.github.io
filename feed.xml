@@ -1,4 +1,150 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="https://sidneys1.github.io/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2025-01-07T14:12:20-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>admin@sidneys1.com</email></author><entry><title type="html">HTML5 Canvas Tips</title><link href="https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips.html" rel="alternate" type="text/html" title="HTML5 Canvas Tips" /><published>2024-12-02T00:00:00-05:00</published><updated>2024-12-02T00:00:00-05:00</updated><id>https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips</id><content type="html" xml:base="https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips.html"><![CDATA[<p>The <code class="language-plaintext highlighter-rouge">&lt;canvas&gt;</code> element may be the best thing to happen to HTML since <code class="language-plaintext highlighter-rouge">&lt;marquee&gt;</code>. I’ve been
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="https://sidneys1.github.io/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2025-01-08T12:14:26-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>admin@sidneys1.com</email></author><entry><title type="html">I Had To Slay the Princess</title><link href="https://sidneys1.github.io/reviews/2025/01/08/slay-the-princess.html" rel="alternate" type="text/html" title="I Had To Slay the Princess" /><published>2025-01-08T00:00:00-05:00</published><updated>2025-01-08T00:00:00-05:00</updated><id>https://sidneys1.github.io/reviews/2025/01/08/slay-the-princess</id><content type="html" xml:base="https://sidneys1.github.io/reviews/2025/01/08/slay-the-princess.html"><![CDATA[<p><cite>Slay the Princess</cite> is a breathtaking visual novel that explores obedience, rebellion, heartbreak, love, and
+everything in between. Emotional voice acting, unreliable narrators, and multiple player “personalities” set this game
+apart.</p>
+
+<!--more-->
+
+<h2 id="editorial">Editorial</h2>
+
+<p><em class="slight">This section explores the first twenty minutes or so of the game, highlighting various <span class="praise">praises</span>
+and <span class="critique">critiques</span> I noted therein. If you wish, you can skip ahead to the
+<a href="#critical-analysis">§Critical Analysis</a>.</em></p>
+
+<blockquote>
+  <p>You’re on a path in the woods. And at the end of that path is a cabin. And in the basement of that cabin is a
+princess. <strong>You’re here to slay her.</strong> If you don’t, <strong>it will be the end of the world</strong>.
+<cite>The Narrator</cite></p>
+</blockquote>
+
+<p>Chilling words form the bare-bones opening scene of
+<a href="https://www.slaytheprincess.com/" target="_blank"><cite>Slay the Princess</cite></a>. You’re given the opportunity to
+ask a few clarifying questions, but <em>The Narrator</em> provides little insight. This lack of clarity makes the grim mission
+somehow clearer: we have one job to do. If we’re to take <em>The Narrator</em> at his word, the stakes are high, and we must
+grit our teeth and continue on. Narrators are to be trusted… aren’t they? They are oracles of omniscient fact, what he
+says must be true.</p>
+
+<blockquote>
+  <p>We’re not going to go through with this, right? She’s a princess. We’re supposed to save princesses, not slay them.
+<cite>Voice of the Hero</cite></p>
+</blockquote>
+
+<p>A second voice, suggestively named <em>Voice of the Hero</em>, picks up a dialog with <em>The Narrator</em>. Is this who <em>we</em> are? The
+game does not make it clear, though there’s clearly no one else present. I chose to believe that this voice is
+essentially a voice of our subconscious; <span class="praise" title="Praise">a way for the game to put words in the
+player’s mouth without stepping on toes</span>. Soon more voices than just the <em>Voice of the Hero</em> will chime in, but
+I’m getting ahead of myself.</p>
+
+<p>If we are <em>The Hero</em>, we make a good point… <big>Heroes don’t slay princesses, they save them.</big></p>
+
+<blockquote>
+  <p>A word of warning before you continue. She will lie, she will cheat, and she will do everything in her power to stop
+you from slaying her. Don’t believe a word she says.
+<cite>The Narrator</cite></p>
+</blockquote>
+
+<p>At this point I’m getting a bit nervous – who’s to say that <em>The Princess</em> really is evil? Or perhaps she’s not <em>evil</em>,
+but truly innocent, a pawn in someone else’s scheme to end the world, a victim in some vile plot to control me, the
+player… the Hero? We are faced with only two sources of information from which to try and separate fact from fiction:
+<em>The Narrator</em>, whose motives are unknown; and the as of yet unmet <em>Princess</em>, who may not have any more context than we
+do. The only real choice is to continue on and try to make the choice for ourselves.</p>
+
+<p>Continuing into the cabin we’re presented with another choice: there is a dagger on the table, ahead of the stairs
+leading to <em>The Princess</em>. Taking the dagger feels like a step in the direction of <em>The Narrator</em>’s goals – but leaving
+it may prove unwise as well. Hovering the mouse cursor over the dagger, I notice something I hadn’t before: <span class="praise" title="Praise">the cursor is a dark, clawed hand, almost reminiscent of a bird’s claw. What sort of hero
+are we? Are we in fact some monster, typecast into a role as a murderer of princesses? Here again the game pushes subtle
+burden onto us</span>. Or am I falling into a trap built of my own prejudices, that a non-human in a fantasy story must
+be evil?</p>
+
+<p>Entering the basement reveals a dark wooden staircase, as <em>The Narrator</em> proceeds to wax long about the conditions of
+this environment, claiming that <q>slaying her is probably doing her a favor</q>; <em>The Narrator</em> is ever so subtly
+baiting me towards the path of slaying <em>The Princess</em>. My continuing instinct is to resist this coercion.</p>
+
+<blockquote>
+  <p>Who’s there?
+<cite>The Princess</cite></p>
+</blockquote>
+
+<p>Her voice is confident, yet guarded. <span class="praise" title="Praise">The voice acting is tremendously well done, and
+I highly recommend listening through some quality headphones to pick up the subtlest of emotions measured carefully into
+each and every line</span>. As we continue down the stairs we see her for the first time. A smallish woman, slight of
+frame and with long, straight hear, wearing a simple yet refined dress and a tiara. She’s shackled by one wrist to the
+wall as she sits on the floor beneath a barred window. The <em>Voice of the Hero</em> chimes in to describe her as “coldly
+beautiful”. As she continues to speak, her voice is confident and unafraid.</p>
+
+<blockquote>
+  <p>And there you are. Are you here to kill me or something?
+<cite>The Princess</cite></p>
+</blockquote>
+
+<p>I’d lie if I said I wasn’t taken aback by this. She’s <em>expecting us</em>, and she’s <em>not afraid</em>. Not even nervous; in fact
+she seems almost… nonchalant? This scenario is perhaps even more complex than I had anticipated. And then she <em>baits
+you into coming closer…</em></p>
+
+<hr class="short-rule" />
+
+<p style="text-align:center;" class="slight"><em>Caution: spoilers ahead.</em></p>
+
+<hr class="short-rule" />
+
+<p><cite>Slay the Princess</cite> is a tremendously beautiful game. Regardless of how the first chapter ends, the game
+continues. If we die, we reappear at the beginning, though with a new chapter title. <em>The Narrator</em> seems to not know –
+or at least, not acknowledge – that the game has reset. The game does save you some time by removing or disabling
+narrative choices that you’ve made before, which was appreciated. As we continue to the princess a second time, new
+voices appear in congress with <em>The Narrator</em> and the <em>Voice of the Hero</em>; they seem to represent further aspects of our
+subconscious, amplified and expressed through the choices we made in the previous chapter. As for <em>The Princess</em>, we can
+see that she’s <em>changed</em> as well – how so depends on your choices in the first chapter, but she’s become a <em>more</em>
+intense version of herself towards whatever emotion you evoked from her before, and it’s even altered her physical
+appearance and that of the cabin and dungeon.</p>
+
+<p>In fact, as we continue it becomes apparent that the goal of the game is to “collect” as many different aspects of her
+personality together as we can, often greatly at our own expense. <span class="praise" title="Praise"><em>The Princess</em> is
+a complex and nuanced character, and evoking these different emotions from her was a beautiful exploration of the human
+psyche</span>. You continue this pattern for some time, and while I won’t fully spoil the ending of the game in this
+editorial, I will say that the ending<strong>s</strong> – for there are more than one – are very complex and nuanced, and I still
+don’t fully understand everything that this game was trying to say.</p>
+
+<p style="text-align:center;"><big>But I do know that it was beautiful.</big></p>
+
+<h2 id="critical-analysis">Critical Analysis</h2>
+
+<p><em style="text-align:center;" class="slight">Caution: major spoilers ahead.</em></p>
+
+<h3 id="plot">Plot</h3>
+
+<p>The plot of <cite>Slay the Princess</cite> seems simple enough at first: you are given a task and expected to complete
+it. But as the game continues it becomes apparent that things are not as simple as they seem. As each series of chapters
+draws to a close, some aspect of <em>The Princess</em>’s personality is amplified, distilled almost, and then snatched away by
+a multitude of hands emerging from the ether. The player is then dropped into an endless void in which we find <em>The
+Shifting Mound</em>, an almost gaia like entity that seems to be the amalgamation of all the versions of <em>The Princess</em>.
+It’s lost and naive, but it does know that it needs to find more versions of <em>The Princess</em>, and that we can find them
+for it.</p>
+
+<p>So we continue this pattern for a while, and slowly we come to understand that we are in some way like <em>The Shifting
+Mound</em>, timeless and detached from these realities, a yin to her yang, almost. Where we came from or how we got into
+this situation is still unclear, but as there isn’t much else to do we continue collecting princesses. Eventually we
+find that <em>The Narrator</em> is responsible for our existence, having summoned us into being in order to cleanse death from
+the world. We were a mighty god-like being, it seems, and <em>The Narrator</em> split us into two parts: <em>The Shifting Mound</em>
+(<em>The Princess</em>), and <em>The Long Quiet</em> (us, the player). The choice of a princess and a hero was chosen by our
+subconscious and wasn’t anticipated by <em>The Narrator</em>, but we had to be <em>something</em>. <em>The Narrator</em>’s goal was
+ultimately for us to destroy (slay) <em>The Shifting Mound</em> (the princess) and thus cut out the part of the deity we once
+were that is responsible for death’s existence in the world we preside over.</p>
+
+<p>There are many many different incarnations of <em>The Princess</em> that we can collect, and several endings to the game, all
+of which seem worthwhile to find. In fact, the game unlocks a “gallery” after the first playthrough showing you which
+branching narrative paths you’ve taken, and which you’ve yet to discover through subsequent playthroughs. In the end, it
+seems <em>The Narrator</em> was more or less forthcoming at the beginning: his intention was for us to Slay the Princess, and
+if we failed, the world would end.</p>
+
+<h3 id="gameplay">Gameplay</h3>
+
+<p><cite>Slay the Princess</cite> features simple gameplay comprised of artwork of the current scene with a subtle parallax
+effect, subtitles, and, when relevant, narrative choices for the player to take. The entire setup is extremely simple
+yet effective for deep storytelling such as this.</p>
+
+<h3 id="graphics--art">Graphics &amp; Art</h3>
+
+<p>The artwork of <cite>Slay the Princess</cite> may be comprised of simple pen drawings, but the care put in to facial
+expressions and environmental detail is stunning; truly the result of passionate effort on the part of the artists.</p>]]></content><author><name>Sidneys1</name></author><category term="reviews" /><category term="video-games" /><summary type="html"><![CDATA[Slay the Princess is a breathtaking visual novel that explores obedience, rebellion, heartbreak, love, and everything in between. Emotional voice acting, unreliable narrators, and multiple player “personalities” set this game apart.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://sidneys1.github.io/images/slay-the-princess/hero.jpg" /><media:content medium="image" url="https://sidneys1.github.io/images/slay-the-princess/hero.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">HTML5 Canvas Tips</title><link href="https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips.html" rel="alternate" type="text/html" title="HTML5 Canvas Tips" /><published>2024-12-02T00:00:00-05:00</published><updated>2024-12-02T00:00:00-05:00</updated><id>https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips</id><content type="html" xml:base="https://sidneys1.github.io/programming/tips/2024/12/02/html5-canvas-tips.html"><![CDATA[<p>The <code class="language-plaintext highlighter-rouge">&lt;canvas&gt;</code> element may be the best thing to happen to HTML since <code class="language-plaintext highlighter-rouge">&lt;marquee&gt;</code>. I’ve been
 <a href="https://github.com/Sidneys1/Merlin" target="_blank">using</a> it <a href="https://github.com/Sidneys1/Raina" target="_blank">a lot</a> for <a href="https://infosec.exchange/@Sidneys1/113562091539216937" target="_blank">various projects</a>
 recently and thought it’d be nice to collect some of the tips and tricks I’ve learned into once place.</p>
 
@@ -440,12 +586,12 @@ simple function:</p>
 
 <div class="popunder" style="float:right; margin-left:1em;">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/sparc-journey/invalid-nvram.jpg" alt="Invalid NVRAM boot messages" title="Invalid NVRAM boot messages" onclick="document.getElementById('114-invalid-nvram-boot-messages').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/sparc-journey/invalid-nvram.jpg" alt="Invalid NVRAM boot messages" title="Invalid NVRAM boot messages" onclick="document.getElementById('205-invalid-nvram-boot-messages').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="114-invalid-nvram-boot-messages" onclick="document.getElementById('114-invalid-nvram-boot-messages').close()">
+<dialog class="popover" id="205-invalid-nvram-boot-messages" onclick="document.getElementById('205-invalid-nvram-boot-messages').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -945,12 +1091,12 @@ powered on, anyways) at the <code class="language-plaintext amber-term highlight
 
 <div class="popunder" style="float:left;margin-right:1em;">
 	
-		<img class="pop" style="max-width:400px;" src="https://sidneys1.github.io/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" onclick="document.getElementById('131-sparcstation-20-simm-errors').showModal()" />
+		<img class="pop" style="max-width:400px;" src="https://sidneys1.github.io/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" onclick="document.getElementById('206-sparcstation-20-simm-errors').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="131-sparcstation-20-simm-errors" onclick="document.getElementById('131-sparcstation-20-simm-errors').close()">
+<dialog class="popover" id="206-sparcstation-20-simm-errors" onclick="document.getElementById('206-sparcstation-20-simm-errors').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -1890,7 +2036,7 @@ Notes:
   <a href="https://www.sun3arc.org/FAQ/sun-nvram-hostid.faq.phtml" target="_blank">SUN NVRAM/hostid FAQ</a>
   <rt>Archived at: <a href="https://web.archive.org/web/2/https://www.sun3arc.org/FAQ/sun-nvram-hostid.faq.phtml" target="_blank" class="no-arrow">Wayback Machine</a>.</rt>
   </ruby>, but for my purposes <code class="language-plaintext highlighter-rouge">80</code> is the correct value for a Sun Ultra 1, and <code class="language-plaintext highlighter-rouge">72</code> is the correct value for a
-  SPARCstation 20. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:1:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:1:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+  SPARCstation 20. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">🔙</a> <a href="#fnref:1:1" class="reversefootnote" role="doc-backlink">🔙<sup>2</sup></a> <a href="#fnref:1:2" class="reversefootnote" role="doc-backlink">🔙<sup>3</sup></a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
       <p>I ended up buying an Adaptec ASC-29160 Ultra 3 SCSI controller PCI card to throw in another old computer. This
@@ -1898,13 +2044,13 @@ Notes:
   headers, but the disks in my Sun servers are 80-pin, so I also had to purchase an 80-to-68 pin adaptor
   ($22 USD shipped from eBay). Using this and a CloneZilla disk I was able to clone entire disk images for posterity
   and inspection. I believe this is also how I got the root password cleared, but I was also messing around with
-  net-booting at the time and I honestly can’t remember which method ended up working. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+  net-booting at the time and I honestly can’t remember which method ended up working. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">🔙</a></p>
     </li>
     <li id="fn:3" role="doc-endnote">
       <p>This is the SIM slot identifier. On a SPARCstation 20, J0301 is “bank 3”, physical addresses
   0x0c000000–0x0fffffff, and J0302 is “bank 6”, physical addresses 0x18000000–0x1bffffff.
   See <a href="https://archive.org/details/manualzilla-id-6034531/page/n57/mode/2up?q=%22SIMM+errors%22">SPARCstation 20 Service Manual, p.35: §SIMM Errors on Archive.org</a>.
-  <img src="/images/sparc-journey/sp20-simm-layout.jpg" alt="SPARCstation 20 SIMM Layout" style="max-width:500px;" /> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+  <img src="/images/sparc-journey/sp20-simm-layout.jpg" alt="SPARCstation 20 SIMM Layout" style="max-width:500px;" /> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">🔙</a></p>
     </li>
   </ol>
 </div>]]></content><author><name>Sidneys1</name><email>admin@sidneys1.com</email></author><category term="retrocomputing" /><category term="retrocomputing" /><category term="sun-sparc" /><summary type="html"><![CDATA[In early 2022 I got several Sun SPARC servers for free off of a FreeCycle ad: I was recently called out for not providing any sort of update on those devices… so here we go!]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://sidneys1.github.io/images/sparc-journey/hero.jpg" /><media:content medium="image" url="https://sidneys1.github.io/images/sparc-journey/hero.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">How I Back Up Google Photos</title><link href="https://sidneys1.github.io/Backing-Up-Google-Photos/" rel="alternate" type="text/html" title="How I Back Up Google Photos" /><published>2024-06-28T00:00:00-04:00</published><updated>2024-06-28T00:00:00-04:00</updated><id>https://sidneys1.github.io/backing-up-google-photos</id><content type="html" xml:base="https://sidneys1.github.io/Backing-Up-Google-Photos/"><![CDATA[<p>Google Photos is wonderful. It backs up my photos and videos, tags them, and makes them available to share with my
@@ -2920,12 +3066,12 @@ give it a go:</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('173-editor-mode').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('131-editor-mode').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="173-editor-mode" onclick="document.getElementById('173-editor-mode').close()">
+  <dialog class="popover" id="131-editor-mode" onclick="document.getElementById('131-editor-mode').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -2948,10 +3094,10 @@ newer OS starting with Windows XP and moving forward.</li>
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:osr2" role="doc-endnote">
-      <p>The <a href="https://en.wikipedia.org/wiki/Windows_95#Editions">3rd release of Windows 95</a>, “OEM Release 2”, added support for FAT32 drives. <a href="#fnref:osr2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>The <a href="https://en.wikipedia.org/wiki/Windows_95#Editions">3rd release of Windows 95</a>, “OEM Release 2”, added support for FAT32 drives. <a href="#fnref:osr2" class="reversefootnote" role="doc-backlink">🔙</a></p>
     </li>
     <li id="fn:amalt" role="doc-endnote">
-      <p>Alternative source in disk 4 of <a href="https://archive.org/details/storm-1">Storm #1 - Internet Archive</a>. <a href="#fnref:amalt" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Alternative source in disk 4 of <a href="https://archive.org/details/storm-1">Storm #1 - Internet Archive</a>. <a href="#fnref:amalt" class="reversefootnote" role="doc-backlink">🔙</a></p>
     </li>
   </ol>
 </div>]]></content><author><name>Sidneys1</name></author><category term="reverse-engineering" /><category term="programming" /><category term="reverse-engineering" /><category term="ghidra" /><summary type="html"><![CDATA[I recently rediscovered an obscure 1997 Simon &amp; Schuster / Marshall Media edutainment game for Windows 95 that I played as a kid: Math Invaders. In this part, we’ll investigate whether we can enter an “editor mode”, hinted at within the strings contained within the program. There’s even a ✨surprise ending✨ that I didn’t see coming!]]></summary></entry><entry><title type="html">Colloquial Skeuomorphisms</title><link href="https://sidneys1.github.io/Skeuomorphisms/" rel="alternate" type="text/html" title="Colloquial Skeuomorphisms" /><published>2023-08-18T00:00:00-04:00</published><updated>2023-08-18T00:00:00-04:00</updated><id>https://sidneys1.github.io/colloquial-skeuomorphisms</id><content type="html" xml:base="https://sidneys1.github.io/Skeuomorphisms/"><![CDATA[<!-- cSpell:words skeuomorph -->
@@ -4023,118 +4169,4 @@ connect with SSH. Provide your password and watch as your site is made available
 <h2 id="up-next">Up Next</h2>
 
 <p>In future posts in this series, we’ll look at making some quality of life improvements to the default Jekyll layout and
-theme, as well as hosting our site on IPFS!</p>]]></content><author><name>Sidneys1</name></author><category term="programming" /><category term="programming" /><category term="meta" /><summary type="html"><![CDATA[Sidneys1.com is built statically using Jekyll, and then published on the world wide web, GitHub Pages, Tor, and IPFS. How is this all accomplished, and how can you host your own website this way? Let’s walk through it step by step. We’ll be looking into (over the course of several posts): Building a website with Jekyll Hosting on NearlyFreeSpeech.net Customizing the site layout and adding useful features Hosting on GitHub Pages Hosting on IPFS Hosting on Tor]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://sidneys1.github.io/images/how-I-built-this-website/hero.png" /><media:content medium="image" url="https://sidneys1.github.io/images/how-I-built-this-website/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Retro Roundup 2022</title><link href="https://sidneys1.github.io/retrocomputing/2022/06/03/retro-roundup.html" rel="alternate" type="text/html" title="Retro Roundup 2022" /><published>2022-06-03T15:26:00-04:00</published><updated>2022-06-03T15:26:00-04:00</updated><id>https://sidneys1.github.io/retrocomputing/2022/06/03/retro-roundup</id><content type="html" xml:base="https://sidneys1.github.io/retrocomputing/2022/06/03/retro-roundup.html"><![CDATA[<p>Here’s a quick roundup of the retrocomputing projects I worked on and devices I’ve acquired! Since this is the first
-year I started collecting retro computers, it will also contain a few items that I’ve had for over a year as well.</p>
-
-<!--more-->
-
-<h2 id="commodore-64">Commodore 64</h2>
-
-<p>That’s right! The O.G. home computer, and still the best-selling single model of computer to date. My particular model
-is a brown breadbin.</p>
-
-<h3 id="commodore-1541-disk-drive">Commodore 1541 Disk Drive</h3>
-
-<p>Included with my C64 was a Commodore 1541 5.25” floppy disk drive. Not too much to say here.</p>
-
-<h3 id="games-and-software">Games and Software</h3>
-
-<p>I also received a few 5.25” disks with the C64, however I can’t locate them at this moment. I’ll have to see if I can
-find them and then update this post.</p>
-
-<h3 id="line-doubler">Line Doubler</h3>
-
-<p>My initial attempts at connecting the C64 up to a modern television were not great - eventually I ordered a cheap line
-doubler that accepted breakout RGB input and produced HDMI. I’m honestly unimpressed with this particular model (Amanka
-AVI to HDMI) and instead ended up buying a S-Video cable for the C64 and using a CRT television instead - the difference
-in picture quality is astounding.</p>
-
-<h3 id="iec2microsd">IEC2MicroSD</h3>
-
-<p>Another convenience purchase, this device allows me to use an SD card as if it were a floppy drive.</p>
-
-<h2 id="commodore-vic-20">Commodore VIC-20</h2>
-
-<p>A more recent purchase, I also acquired a Commodore VIC-20 (revision A or B board). You can see
-<a href="https://cbmvic.net/registry/569">my entry on the VIC-20 registry</a>. This VIC currently powers on, but does not output a
-video signal. I’m in the processes of figuring out what the problem is. It’s in pretty rough shape, with a few damaged
-parts on the case and missing the metallic Commodore VIC-20 badge (of which I’ve ordered a replacement).</p>
-
-<p>This computer came in the original box, amazingly, and included the power adapter (actually soldered on to the
-mainboard), several manuals, and the “Invaders” cartridge.</p>
-
-<h2 id="sun-sparcstation-haul">Sun SPARCstation Haul</h2>
-
-<p>Wow - what can I say here? A few months ago I had a reply to a <a href="https://www.freecycle.org/">FreeCycle</a> listing that I’d
-posted in search of any early-90’s to late-00’s computers (this search also turned up the Dell CRT described below).
-The person who messaged me had been a small businessowner in the early to mid 90’s, and was looking to get rid of some
-of their server room equipment that they’d been holding on to in a storage unit. I hastily agreed and a few months later
-I went to pick up quite the haul:</p>
-
-<ul>
-  <li>A WYSE CRT Serial Terminal</li>
-  <li>A Nokia 447W CRT Monitor</li>
-  <li>A Sun Microsystems PS/2 keyboard</li>
-  <li>A Compaq Netelligent 100Base-T Class 1 Repeater</li>
-  <li>A Dell PowerEdge 650 (this is from 2003, so much later in the company’s lifetime than the majority of this equipment)</li>
-  <li>An unlabeled beige PC tower (still need to look inside this one!)</li>
-  <li>A Dell PowerEdge 1300 (also circa late 90’s early 00’s)</li>
-  <li>An unknown rack-mount box with a “CTC” badge, locking front panel, and perhaps a LCD display (also need to crack this
-one open!)</li>
-  <li>An Axil Ultima 1 (a third-party Sun SPARCstation Clone, see <a href="https://fcw.com/1996/06/axil-targets-sun-with-sparc-compatible-graphics-computer/238823/">this article</a>)</li>
-  <li>A <a href="https://en.wikipedia.org/wiki/SPARCstation_20">Sun SPARCstation 20</a></li>
-  <li>A <a href="https://en.wikipedia.org/wiki/Ultra_1">Sun ULTRA 1 Creator</a></li>
-</ul>
-
-<h2 id="compaq-deskpro-retro-battlestation">Compaq DeskPro Retro Battlestation</h2>
-
-<p>Another longer-term effort of mine has been to recreate my childhood computer - a Compaq DeskPro that sat on the desk
-under my loft bed through most of my formative years. Of course, since we have the benefit of choice, I’m also
-“upgrading” it into the ideal late-90’s gaming computer!</p>
-
-<p>The exact model I have is a later model DeskPro EN that is quite a bit smaller in overall form factor to my childhood
-PC, however it does have the same general aesthetics that I was looking for. Unfortunately, so far I’ve been unable to
-locate the matching Compaq keyboard and 800x600 CRT that I had as a kid as well… Though I did find a period-correct
-Compaq PS/2 mouse!</p>
-
-<h3 id="geforce-fx5200">GeForce FX5200</h3>
-
-<p>I acquired a GeForce fx5200 PCI GPU for this computer - I originally had purchased a AGP 5200 by accident, so I suppose
-I’ll end up using that in some other computer down the line!</p>
-
-<p>This card works quite well (once the appropriate DirectX 9 drivers are installed) in all of the games I’ve tested so
-far.</p>
-
-<h3 id="microsoft-naturals-keyboard">Microsoft Naturals Keyboard</h3>
-
-<p>A flea market find - a $5 Microsoft Naturals keyboard - a funky little beige PS/2 keyboard with an early PS/2→USB
-adapter. In lieu of the Compaq keyboard I really want, this works in a pinch.</p>
-
-<h3 id="windows-98-second-edition-third-edition">Windows 98 Second Edition <em>(Third Edition?)</em></h3>
-
-<p>Finally, this computer runs Windows 98 SE with many components of the unofficial “third edition” service pack installed
-to add some much-needed quality-of-life features, including USB mass storage device support.</p>
-
-<h3 id="dell-monitor">Dell Monitor</h3>
-
-<p>Not much to say here, another FreeCycle find - while it does support a nice 1024x768 resolution, it has a mid-00’s black
-plastic aesthetic that I am not overly fond of.</p>
-
-<h2 id="compaq-presario-700">Compaq Presario 700</h2>
-
-<p>An EBay purchase, this is a early-00’s laptop designed for use with Windows XP. Being from GoodWill it came without an
-internal hard drive, which I’ve since replaced. Interestingly, it includes an expansion slot, a 3.5” floppy drive, <em>and</em>
-a DVD-ROM and CD R-RW drive.</p>
-
-<h2 id="compaq-presario-1245">Compaq Presario 1245</h2>
-
-<p>Another EBay purchase, this time a slightly older aesthetic laptop with a CD-ROM only drive and a floppy drive.</p>
-
-<h2 id="dell-inspiron-1420">Dell Inspiron 1420</h2>
-
-<p>This is my childhood laptop! Which now probably counts as “retro”. Not much to say here, there are a few missing keys
-because I once decided to try the DVORAK layout (which I got quite good at as I remember), but as it turns out Dell
-in its infinite wisdom made the indexing keys (F and J) use a reversed butterfly hinge from the rest of the keys,
-meaning those didn’t <em>quite</em> fit in the alternate layout an I had to physically cut them to make them fit. Eventually
-this physical damage led to them no attaching to the hinge as securely as they should have, and with time a few keys
-became lost entirely.</p>]]></content><author><name>Sidneys1</name></author><category term="retrocomputing" /><category term="retrocomputing" /><category term="collecting" /><summary type="html"><![CDATA[Here’s a quick roundup of the retrocomputing projects I worked on and devices I’ve acquired! Since this is the first year I started collecting retro computers, it will also contain a few items that I’ve had for over a year as well.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://sidneys1.github.io/images/2022-06-03-retro-roundup/hero.png" /><media:content medium="image" url="https://sidneys1.github.io/images/2022-06-03-retro-roundup/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+theme, as well as hosting our site on IPFS!</p>]]></content><author><name>Sidneys1</name></author><category term="programming" /><category term="programming" /><category term="meta" /><summary type="html"><![CDATA[Sidneys1.com is built statically using Jekyll, and then published on the world wide web, GitHub Pages, Tor, and IPFS. How is this all accomplished, and how can you host your own website this way? Let’s walk through it step by step. We’ll be looking into (over the course of several posts): Building a website with Jekyll Hosting on NearlyFreeSpeech.net Customizing the site layout and adding useful features Hosting on GitHub Pages Hosting on IPFS Hosting on Tor]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://sidneys1.github.io/images/how-I-built-this-website/hero.png" /><media:content medium="image" url="https://sidneys1.github.io/images/how-I-built-this-website/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
