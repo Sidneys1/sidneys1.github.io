@@ -10,10 +10,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="onion-location"
 		content="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/reverse-engineering/2024/02/01/reverse-engineering-a-win95-game-III.html" />
+	<meta name="fediverse:creator" content="@Sidneys1@infosec.exchange">
 	<link rel="icon" type="image/png" sizes="16x16"
 		href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" /><!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Reverse Engineering a Windows 95 Game | Sidneys1.com on GitHub Pages</title>
-<meta name="generator" content="Jekyll v4.3.3" />
+<meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Reverse Engineering a Windows 95 Game" />
 <meta name="author" content="Sidneys1" />
 <meta property="og:locale" content="en_US" />
@@ -758,8 +759,8 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
   <p>Of course, the pièces de résistance of having access to the source code: editor mode! Let’s see what it takes to get it
 working. First, we’ll need to get the source code building. Thanks to the lovely project <a href="https://dosbox-x.com/">DOSBox-X</a>, emulating
 older Windows operating systems is as simple as following <a href="https://dosbox-x.com/wiki/Guide%3AInstalling-Windows-95">a guide</a>. I also sourced the following disk images:
-<a href="https://archive.org/details/win-95-osr-2">Windows 95 OSR2</a><sup id="fnref:osr2" role="doc-noteref"><a href="#fn:osr2" class="footnote" rel="footnote">1</a></sup>, <a href="https://winworldpc.com/product/visual-c/4x">Visual C++ 4.2</a>, the <a href="https://archive.org/details/gamesdk">DirectX 1.0 SDK</a>, and the
-<a href="https://archive.org/details/the-net-cd">ActiveMovie SDK</a><sup id="fnref:amalt" role="doc-noteref"><a href="#fn:amalt" class="footnote" rel="footnote">2</a></sup> (this disk contains many other interesting installers as well). If you’re planning on
+<a href="https://archive.org/details/win-95-osr-2">Windows 95 OSR2</a><sup id="fnref:osr2"><a href="#fn:osr2" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>, <a href="https://winworldpc.com/product/visual-c/4x">Visual C++ 4.2</a>, the <a href="https://archive.org/details/gamesdk">DirectX 1.0 SDK</a>, and the
+<a href="https://archive.org/details/the-net-cd">ActiveMovie SDK</a><sup id="fnref:amalt"><a href="#fn:amalt" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> (this disk contains many other interesting installers as well). If you’re planning on
 building up such a virtual machine yourself, you’ll have to find your own product keys, sorry.</p>
 
   <p>Breezing through the guide leaves us with a fully functional Windows 95 install, with Visual C++ 4.2 (which includes the
@@ -947,12 +948,12 @@ give it a go:</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('131-editor-mode').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('153-editor-mode').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="131-editor-mode" onclick="document.getElementById('131-editor-mode').close()">
+  <dialog class="popover" id="153-editor-mode" onclick="document.getElementById('153-editor-mode').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -974,10 +975,10 @@ newer OS starting with Windows XP and moving forward.</li>
 </ul>
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:osr2" role="doc-endnote">
+    <li id="fn:osr2">
       <p>The <a href="https://en.wikipedia.org/wiki/Windows_95#Editions">3rd release of Windows 95</a>, “OEM Release 2”, added support for FAT32 drives. <a href="#fnref:osr2" class="reversefootnote" role="doc-backlink">🔙</a></p>
     </li>
-    <li id="fn:amalt" role="doc-endnote">
+    <li id="fn:amalt">
       <p>Alternative source in disk 4 of <a href="https://archive.org/details/storm-1">Storm #1 - Internet Archive</a>. <a href="#fnref:amalt" class="reversefootnote" role="doc-backlink">🔙</a></p>
     </li>
   </ol>

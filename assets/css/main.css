@@ -4,21 +4,21 @@
 :root {
   --minima-brand-color: #828282;
   --minima-brand-color-light: #e8e8e8;
-  --minima-brand-color-dark: #424242;
-  --minima-site-title-color: #424242;
+  --minima-brand-color-dark: rgb(66.25, 66.25, 66.25);
+  --minima-site-title-color: rgb(66.25, 66.25, 66.25);
   --minima-text-color: #111111;
   --minima-background-color: #fdfdfd;
   --minima-code-background-color: #eeeeff;
   --minima-link-base-color: #2a7ae2;
-  --minima-link-visited-color: #1756a9;
+  --minima-link-visited-color: rgb(22.9483471074, 86.2541322314, 168.5516528926);
   --minima-link-hover-color: #111111;
   --minima-border-color-01: #e8e8e8;
-  --minima-border-color-02: #dbdbdb;
-  --minima-border-color-03: #424242;
-  --minima-table-text-color: #3f3f3f;
-  --minima-table-zebra-color: #f7f7f7;
-  --minima-table-header-bg-color: #f0f0f0;
-  --minima-table-header-border: #e0e0e0;
+  --minima-border-color-02: rgb(219.25, 219.25, 219.25);
+  --minima-border-color-03: rgb(66.25, 66.25, 66.25);
+  --minima-table-text-color: rgb(62.9, 62.9, 62.9);
+  --minima-table-zebra-color: rgb(247.3, 247.3, 247.3);
+  --minima-table-header-bg-color: rgb(239.65, 239.65, 239.65);
+  --minima-table-header-border: rgb(224.35, 224.35, 224.35);
   --minima-table-border-color: #e8e8e8;
 }
 
@@ -218,23 +218,23 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --minima-brand-color: #999999;
-    --minima-brand-color-light: #a6a6a6;
-    --minima-brand-color-dark: #404040;
-    --minima-site-title-color: #a6a6a6;
+    --minima-brand-color-light: rgb(165.75, 165.75, 165.75);
+    --minima-brand-color-dark: rgb(63.75, 63.75, 63.75);
+    --minima-site-title-color: rgb(165.75, 165.75, 165.75);
     --minima-text-color: #bbbbbb;
     --minima-background-color: #181818;
     --minima-code-background-color: #212121;
     --minima-link-base-color: #79b8ff;
     --minima-link-visited-color: #79b8ff;
     --minima-link-hover-color: #bbbbbb;
-    --minima-border-color-01: #404040;
-    --minima-border-color-02: #a6a6a6;
+    --minima-border-color-01: rgb(63.75, 63.75, 63.75);
+    --minima-border-color-02: rgb(165.75, 165.75, 165.75);
     --minima-border-color-03: #999999;
     --minima-table-text-color: #bbbbbb;
-    --minima-table-zebra-color: #222222;
-    --minima-table-header-bg-color: #323232;
-    --minima-table-header-border: #4e4e4e;
-    --minima-table-border-color: #404040;
+    --minima-table-zebra-color: rgb(34.2, 34.2, 34.2);
+    --minima-table-header-bg-color: rgb(49.5, 49.5, 49.5);
+    --minima-table-header-border: rgb(77.55, 77.55, 77.55);
+    --minima-table-border-color: rgb(63.75, 63.75, 63.75);
   }
   .highlight .c {
     color: #545454;
@@ -1013,23 +1013,23 @@ pre, code {
 /*** Base Minima theme. ***/
 :root {
   --sidneys1-red-accent: darkred;
-  --sidneys1-red-accent-subtle: #720000;
+  --sidneys1-red-accent-subtle: rgb(113.5, 0, 0);
   --sidneys1-red-accent-compliment: darkcyan;
   --sidneys1-red-accent-compliment-2: #008b00;
   --sidneys1-red-accent-compliment-3: darkblue;
-  --sidneys1-red-accent-visited: #3f0000;
+  --sidneys1-red-accent-visited: rgb(62.5, 0, 0);
   --sidneys1-green-accent: darkgreen;
-  --sidneys1-green-accent-subtle: #004b00;
+  --sidneys1-green-accent-subtle: rgb(0, 74.5, 0);
   --sidneys1-green-accent-compliment: #640064;
   --sidneys1-green-accent-compliment-2: #000064;
   --sidneys1-green-accent-compliment-3: #640000;
-  --sidneys1-green-accent-visited: #001800;
+  --sidneys1-green-accent-visited: rgb(0, 23.5, 0);
   --sidneys1-blue-accent: #2a7ae2;
-  --sidneys1-blue-accent-subtle: #2a6fc9;
+  --sidneys1-blue-accent-subtle: rgb(42, 110.9130434783, 200.5);
   --sidneys1-blue-accent-compliment: #e2922a;
   --sidneys1-blue-accent-compliment-2: #e22a7a;
   --sidneys1-blue-accent-compliment-3: #7ae22a;
-  --sidneys1-blue-accent-visited: #1756a9;
+  --sidneys1-blue-accent-visited: rgb(22.9483471074, 86.2541322314, 168.5516528926);
   --sidneys1-sticky-note: #ffc;
   --sidneys1-sticky-note-title: rgb(234, 234, 169);
   --sidneys1-link-compliment-color: #9D174D;
@@ -1047,23 +1047,23 @@ pre, code {
 @media (prefers-color-scheme: light) {
   :root:has(input:checked[name=mode][value=dark], input:checked[name=mode][value=black]) {
     --sidneys1-red-accent: #BF3D7C;
-    --sidneys1-red-accent-subtle: #4b1831;
+    --sidneys1-red-accent-subtle: rgb(75.0357142857, 23.9642857143, 48.7142857143);
     --sidneys1-red-accent-compliment: #3dbf80;
     --sidneys1-red-accent-compliment-2: #7cbf3d;
     --sidneys1-red-accent-compliment-3: #3d7cbf;
-    --sidneys1-red-accent-visited: #c74f89;
+    --sidneys1-red-accent-visited: rgb(198.7202380952, 78.7797619048, 136.9047619048);
     --sidneys1-green-accent: #7b914d;
-    --sidneys1-green-accent-subtle: #262d18;
+    --sidneys1-green-accent-subtle: rgb(38.2297297297, 45.0675675676, 23.9324324324);
     --sidneys1-green-accent-compliment: #634d91;
     --sidneys1-green-accent-compliment-2: #4d7b91;
     --sidneys1-green-accent-compliment-3: #914d7b;
-    --sidneys1-green-accent-visited: #89a256;
+    --sidneys1-green-accent-visited: rgb(137.1283783784, 161.6554054054, 85.8445945946);
     --sidneys1-blue-accent: #5c8bc9;
-    --sidneys1-blue-accent-subtle: #234169;
+    --sidneys1-blue-accent-subtle: rgb(34.8387096774, 65.1612903226, 105.1612903226);
     --sidneys1-blue-accent-compliment: #c99a5c;
     --sidneys1-blue-accent-compliment-2: #c95c8b;
     --sidneys1-blue-accent-compliment-3: #8bc95c;
-    --sidneys1-blue-accent-visited: #6f99cf;
+    --sidneys1-blue-accent-visited: rgb(111.1543778802, 152.6313364055, 207.3456221198);
     --sidneys1-sticky-note: rgb(79, 79, 50);
     --sidneys1-sticky-note-title: rgb(104, 104, 77);
     --sidneys1-link-compliment-color: #9E3B63;
@@ -1081,23 +1081,23 @@ pre, code {
 @media (prefers-color-scheme: dark) {
   :root:not(:has(input:checked[name=mode][value=light])) {
     --sidneys1-red-accent: #BF3D7C;
-    --sidneys1-red-accent-subtle: #4b1831;
+    --sidneys1-red-accent-subtle: rgb(75.0357142857, 23.9642857143, 48.7142857143);
     --sidneys1-red-accent-compliment: #3dbf80;
     --sidneys1-red-accent-compliment-2: #7cbf3d;
     --sidneys1-red-accent-compliment-3: #3d7cbf;
-    --sidneys1-red-accent-visited: #c74f89;
+    --sidneys1-red-accent-visited: rgb(198.7202380952, 78.7797619048, 136.9047619048);
     --sidneys1-green-accent: #7b914d;
-    --sidneys1-green-accent-subtle: #262d18;
+    --sidneys1-green-accent-subtle: rgb(38.2297297297, 45.0675675676, 23.9324324324);
     --sidneys1-green-accent-compliment: #634d91;
     --sidneys1-green-accent-compliment-2: #4d7b91;
     --sidneys1-green-accent-compliment-3: #914d7b;
-    --sidneys1-green-accent-visited: #89a256;
+    --sidneys1-green-accent-visited: rgb(137.1283783784, 161.6554054054, 85.8445945946);
     --sidneys1-blue-accent: #5c8bc9;
-    --sidneys1-blue-accent-subtle: #234169;
+    --sidneys1-blue-accent-subtle: rgb(34.8387096774, 65.1612903226, 105.1612903226);
     --sidneys1-blue-accent-compliment: #c99a5c;
     --sidneys1-blue-accent-compliment-2: #c95c8b;
     --sidneys1-blue-accent-compliment-3: #8bc95c;
-    --sidneys1-blue-accent-visited: #6f99cf;
+    --sidneys1-blue-accent-visited: rgb(111.1543778802, 152.6313364055, 207.3456221198);
     --sidneys1-sticky-note: rgb(79, 79, 50);
     --sidneys1-sticky-note-title: rgb(104, 104, 77);
     --sidneys1-link-compliment-color: #9E3B63;
@@ -1172,35 +1172,35 @@ pre, code {
   color-scheme: only light;
   --minima-brand-color: #828282;
   --minima-brand-color-light: #e8e8e8;
-  --minima-brand-color-dark: #424242;
-  --minima-site-title-color: #424242;
+  --minima-brand-color-dark: rgb(66.25, 66.25, 66.25);
+  --minima-site-title-color: rgb(66.25, 66.25, 66.25);
   --minima-text-color: #111111;
   --minima-background-color: #fdfdfd;
   --minima-code-background-color: #eeeeff;
   --minima-border-color-01: #e8e8e8;
-  --minima-border-color-02: #dbdbdb;
-  --minima-border-color-03: #424242;
-  --minima-table-text-color: #3f3f3f;
-  --minima-table-zebra-color: #f7f7f7;
-  --minima-table-header-bg-color: #f0f0f0;
-  --minima-table-header-border: #e0e0e0;
+  --minima-border-color-02: rgb(219.25, 219.25, 219.25);
+  --minima-border-color-03: rgb(66.25, 66.25, 66.25);
+  --minima-table-text-color: rgb(62.9, 62.9, 62.9);
+  --minima-table-zebra-color: rgb(247.3, 247.3, 247.3);
+  --minima-table-header-bg-color: rgb(239.65, 239.65, 239.65);
+  --minima-table-header-border: rgb(224.35, 224.35, 224.35);
   --minima-table-border-color: #e8e8e8;
 }
 
 :root:has(input:checked[name=mode][value=dark]) {
   color-scheme: only dark;
   --minima-brand-color: #999999;
-  --minima-brand-color-light: #a6a6a6;
-  --minima-brand-color-dark: #404040;
-  --minima-site-title-color: #a6a6a6;
-  --minima-border-color-01: #404040;
-  --minima-border-color-02: #a6a6a6;
+  --minima-brand-color-light: rgb(165.75, 165.75, 165.75);
+  --minima-brand-color-dark: rgb(63.75, 63.75, 63.75);
+  --minima-site-title-color: rgb(165.75, 165.75, 165.75);
+  --minima-border-color-01: rgb(63.75, 63.75, 63.75);
+  --minima-border-color-02: rgb(165.75, 165.75, 165.75);
   --minima-border-color-03: #999999;
   --minima-table-text-color: #bbbbbb;
-  --minima-table-zebra-color: #222222;
-  --minima-table-header-bg-color: #323232;
-  --minima-table-header-border: #4e4e4e;
-  --minima-table-border-color: #404040;
+  --minima-table-zebra-color: rgb(34.2, 34.2, 34.2);
+  --minima-table-header-bg-color: rgb(49.5, 49.5, 49.5);
+  --minima-table-header-border: rgb(77.55, 77.55, 77.55);
+  --minima-table-border-color: rgb(63.75, 63.75, 63.75);
   --minima-code-background-color: #212121;
   --minima-text-color: #bbbbbb;
   --minima-background-color: #181818;
@@ -1209,17 +1209,17 @@ pre, code {
 :root:has(input:checked[name=mode][value=black]) {
   color-scheme: only dark;
   --minima-brand-color: #999999;
-  --minima-brand-color-light: #a6a6a6;
-  --minima-brand-color-dark: #404040;
-  --minima-site-title-color: #a6a6a6;
-  --minima-border-color-01: #404040;
-  --minima-border-color-02: #a6a6a6;
+  --minima-brand-color-light: rgb(165.75, 165.75, 165.75);
+  --minima-brand-color-dark: rgb(63.75, 63.75, 63.75);
+  --minima-site-title-color: rgb(165.75, 165.75, 165.75);
+  --minima-border-color-01: rgb(63.75, 63.75, 63.75);
+  --minima-border-color-02: rgb(165.75, 165.75, 165.75);
   --minima-border-color-03: #999999;
   --minima-table-text-color: #bbbbbb;
-  --minima-table-zebra-color: #222222;
-  --minima-table-header-bg-color: #323232;
-  --minima-table-header-border: #4e4e4e;
-  --minima-table-border-color: #404040;
+  --minima-table-zebra-color: rgb(34.2, 34.2, 34.2);
+  --minima-table-header-bg-color: rgb(49.5, 49.5, 49.5);
+  --minima-table-header-border: rgb(77.55, 77.55, 77.55);
+  --minima-table-border-color: rgb(63.75, 63.75, 63.75);
   --minima-code-background-color: #212121;
   --minima-text-color: white;
   --minima-background-color: black;
@@ -2598,7 +2598,7 @@ div.card :first-child {
 }
 div.card.yellow {
   background-color: #fff9b1;
-  border-color: #b1a300;
+  border-color: rgb(177, 163.3846153846, 0);
 }
 
 .image-compare {

@@ -10,10 +10,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="onion-location"
 		content="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/retrocomputing/2024/10/04/booting-sun-sparc-servers.html" />
+	<meta name="fediverse:creator" content="@Sidneys1@infosec.exchange">
 	<link rel="icon" type="image/png" sizes="16x16"
 		href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" /><!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Booting Sun SPARC Servers | Sidneys1.com on GitHub Pages</title>
-<meta name="generator" content="Jekyll v4.3.3" />
+<meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Booting Sun SPARC Servers" />
 <meta name="author" content="Sidneys1" />
 <meta property="og:locale" content="en_US" />
@@ -214,12 +215,12 @@
 
 <div class="popunder" style="float:right; margin-left:1em;">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/sparc-journey/invalid-nvram.jpg" alt="Invalid NVRAM boot messages" title="Invalid NVRAM boot messages" onclick="document.getElementById('205-invalid-nvram-boot-messages').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/sparc-journey/invalid-nvram.jpg" alt="Invalid NVRAM boot messages" title="Invalid NVRAM boot messages" onclick="document.getElementById('249-invalid-nvram-boot-messages').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="205-invalid-nvram-boot-messages" onclick="document.getElementById('205-invalid-nvram-boot-messages').close()">
+<dialog class="popover" id="249-invalid-nvram-boot-messages" onclick="document.getElementById('249-invalid-nvram-boot-messages').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -259,7 +260,7 @@ place to restore it manually by entering NVRAM values by hand. Here’s the gene
         </tr>
         <tr>
           <td style="text-align: right">1</td>
-          <td>First byte of HostID (machine type<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>).</td>
+          <td>First byte of HostID (machine type<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>).</td>
         </tr>
         <tr>
           <td style="text-align: right">2–7</td>
@@ -338,7 +339,7 @@ Ethernet address <span class="highlight-3">8:0:20:c0:ff:ee</span>, Host ID: <spa
 
     <p>If, instead, you see a message like <code class="language-plaintext amber-term highlighter-rouge">The IDPROM contents are invalid</code> after the banner, then either the
 checksum is wrong (check that you typed it correctly!) or the first byte of the HostID is incorrect – this byte
-specifies the machine type, and must match the machine you’re trying to boot<sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. Don’t forget to re-generate the
+specifies the machine type, and must match the machine you’re trying to boot<sup id="fnref:1:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>. Don’t forget to re-generate the
 checksum after updating any of these values!</p>
   </li>
   <li>Finally enter <code class="language-plaintext amber-term highlighter-rouge">reset</code> at the <code class="language-plaintext amber-term highlighter-rouge">ok</code> prompt, which will restart the boot process. Because we
@@ -348,7 +349,7 @@ Sun server and another machine can help here – otherwise the Sun server can sp
 <code class="language-plaintext amber-term highlighter-rouge">SUNW,hme0: Link Down - cable problem?</code>. I plugged the Sun Ultra 1 into a powered on Raspberry Pi 3b
 and it stopped complaining.</li>
   <li>Eventually you’ll be brought to a Unix login, assuming the machine is running Solaris. If you know the password,
-great; if not, things get tricky<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>. <!-- TODO: talk about clearing root password by booting debian -->
+great; if not, things get tricky<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>. <!-- TODO: talk about clearing root password by booting debian -->
 Once logged in, you can set the date and time (for as long as the machine is
 powered on, anyways) at the <code class="language-plaintext amber-term highlighter-rouge">root#</code> prompt with <code class="language-plaintext amber-term highlighter-rouge">date 1004102024</code> (in format
 <code class="language-plaintext highlighter-rouge">mmddHHMMYY</code>).</li>
@@ -719,19 +720,19 @@ powered on, anyways) at the <code class="language-plaintext amber-term highlight
 
 <div class="popunder" style="float:left;margin-right:1em;">
 	
-		<img class="pop" style="max-width:400px;" src="https://sidneys1.github.io/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" onclick="document.getElementById('206-sparcstation-20-simm-errors').showModal()" />
+		<img class="pop" style="max-width:400px;" src="https://sidneys1.github.io/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" onclick="document.getElementById('22-sparcstation-20-simm-errors').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="206-sparcstation-20-simm-errors" onclick="document.getElementById('206-sparcstation-20-simm-errors').close()">
+<dialog class="popover" id="22-sparcstation-20-simm-errors" onclick="document.getElementById('22-sparcstation-20-simm-errors').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
 	<img class="pop-in" src="/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" loading="lazy" />
 </dialog>
 
-<p>After some stumbles learning about the machine-type byte in the host ID<sup id="fnref:1:2" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, this machine was able to get past the NVRAM
+<p>After some stumbles learning about the machine-type byte in the host ID<sup id="fnref:1:2"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>, this machine was able to get past the NVRAM
 check, but failed during memory diagnostics. This output repeated for some 10 minutes before I turned the machine off.
 For J0301, it looks like the fourth bit of the lowest byte (<code class="language-plaintext highlighter-rouge">0b00010000</code>) is faulty, always set to <code class="language-plaintext highlighter-rouge">0b1</code>. For example,
 the pattern <code class="language-plaintext highlighter-rouge">0b10100101</code> (<code class="language-plaintext highlighter-rouge">0xa5</code>) becomes <code class="language-plaintext highlighter-rouge">0b10110101</code> (<code class="language-plaintext highlighter-rouge">0xb5</code>). For J0302, something stranger seems to be happening, as
@@ -740,7 +741,7 @@ the pattern <code class="language-plaintext highlighter-rouge">0b10100101</code>
 <table class="compact-table" style="width:unset;clear:none;">
   <thead>
     <tr>
-      <th style="text-align: right">U-number<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup></th>
+      <th style="text-align: right">U-number<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></th>
       <th style="text-align: center">Physical Addresses</th>
       <th style="text-align: right">Expected Value</th>
       <th style="text-align: left">Observed Value</th>
@@ -1659,14 +1660,14 @@ Notes:
  -->
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1" role="doc-endnote">
+    <li id="fn:1">
       <p>A complete table can be found at the <ruby style="ruby-position: under; ruby-align: center;">
   <a href="https://www.sun3arc.org/FAQ/sun-nvram-hostid.faq.phtml" target="_blank">SUN NVRAM/hostid FAQ</a>
   <rt>Archived at: <a href="https://web.archive.org/web/2/https://www.sun3arc.org/FAQ/sun-nvram-hostid.faq.phtml" target="_blank" class="no-arrow">Wayback Machine</a>.</rt>
   </ruby>, but for my purposes <code class="language-plaintext highlighter-rouge">80</code> is the correct value for a Sun Ultra 1, and <code class="language-plaintext highlighter-rouge">72</code> is the correct value for a
   SPARCstation 20. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">🔙</a> <a href="#fnref:1:1" class="reversefootnote" role="doc-backlink">🔙<sup>2</sup></a> <a href="#fnref:1:2" class="reversefootnote" role="doc-backlink">🔙<sup>3</sup></a></p>
     </li>
-    <li id="fn:2" role="doc-endnote">
+    <li id="fn:2">
       <p>I ended up buying an Adaptec ASC-29160 Ultra 3 SCSI controller PCI card to throw in another old computer. This
   card can be found pretty easily on eBay, and only cost me $14 USD with shipping. It has 68- and 50-pin SCSI
   headers, but the disks in my Sun servers are 80-pin, so I also had to purchase an 80-to-68 pin adaptor
@@ -1674,7 +1675,7 @@ Notes:
   and inspection. I believe this is also how I got the root password cleared, but I was also messing around with
   net-booting at the time and I honestly can’t remember which method ended up working. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">🔙</a></p>
     </li>
-    <li id="fn:3" role="doc-endnote">
+    <li id="fn:3">
       <p>This is the SIM slot identifier. On a SPARCstation 20, J0301 is “bank 3”, physical addresses
   0x0c000000–0x0fffffff, and J0302 is “bank 6”, physical addresses 0x18000000–0x1bffffff.
   See <a href="https://archive.org/details/manualzilla-id-6034531/page/n57/mode/2up?q=%22SIMM+errors%22">SPARCstation 20 Service Manual, p.35: §SIMM Errors on Archive.org</a>.
