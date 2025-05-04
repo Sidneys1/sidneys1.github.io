@@ -1,4 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="https://sidneys1.github.io/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2025-02-19T13:58:10-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>admin@sidneys1.com</email></author><entry><title type="html">I Had To Slay the Princess</title><link href="https://sidneys1.github.io/reviews/2025/01/08/slay-the-princess.html" rel="alternate" type="text/html" title="I Had To Slay the Princess" /><published>2025-01-08T00:00:00-05:00</published><updated>2025-01-08T00:00:00-05:00</updated><id>https://sidneys1.github.io/reviews/2025/01/08/slay-the-princess</id><content type="html" xml:base="https://sidneys1.github.io/reviews/2025/01/08/slay-the-princess.html"><![CDATA[<cite>Slay the Princess</cite> is a breathtaking visual novel that explores obedience, rebellion, heartbreak, love, and
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="https://sidneys1.github.io/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2025-05-04T10:08:27-04:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>admin@sidneys1.com</email></author><entry><title type="html">Etho Timeline</title><link href="https://sidneys1.github.io/etho-timeline/" rel="alternate" type="text/html" title="Etho Timeline" /><published>2025-04-05T00:00:00-04:00</published><updated>2025-04-05T00:00:00-04:00</updated><id>https://sidneys1.github.io/etho-timeline</id><content type="html" xml:base="https://sidneys1.github.io/etho-timeline/"><![CDATA[<p>Here’s a timeline of video uploads to different series of the YouTube channel
+<a href="https://www.youtube.com/@EthosLab/">Etho’s Lab</a>.</p>
+
+<!--more-->
+
+<h2 id="2011-2015">2011-2015</h2>
+
+<div class="popunder">
+	
+		<img class="pop" style="" src="https://sidneys1.github.io/images/etho_timeline/2011-2015.png" alt="Timeline" title="Timeline" onclick="document.getElementById('102-timeline').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+<dialog class="popover" id="102-timeline" onclick="document.getElementById('102-timeline').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/etho_timeline/2011-2015.svg" alt="Timeline" title="Timeline" loading="lazy" />
+</dialog>
+
+<h2 id="2016-2020">2016-2020</h2>
+
+<div class="popunder">
+	
+		<img class="pop" style="" src="https://sidneys1.github.io/images/etho_timeline/2016-2020.png" alt="Timeline" title="Timeline" onclick="document.getElementById('109-timeline').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+<dialog class="popover" id="109-timeline" onclick="document.getElementById('109-timeline').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/etho_timeline/2016-2020.svg" alt="Timeline" title="Timeline" loading="lazy" />
+</dialog>
+
+<h2 id="2021-present">2021-Present</h2>
+
+<div class="popunder">
+	
+		<img class="pop" style="" src="https://sidneys1.github.io/images/etho_timeline/2021-2025.png" alt="Timeline" title="Timeline" onclick="document.getElementById('211-timeline').showModal()" />
+	
+	<em>Click to zoom.</em>
+</div>
+
+<dialog class="popover" id="211-timeline" onclick="document.getElementById('211-timeline').close()">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="https://sidneys1.github.io/images/etho_timeline/2021-2025.svg" alt="Timeline" title="Timeline" loading="lazy" />
+</dialog>]]></content><author><name>Sidneys1</name></author><category term="other" /><category term="etho" /><category term="ethoslab" /><category term="youtube" /><summary type="html"><![CDATA[Here’s a timeline of video uploads to different series of the YouTube channel Etho’s Lab.]]></summary></entry><entry><title type="html">I Had To Slay the Princess</title><link href="https://sidneys1.github.io/reviews/2025/01/08/slay-the-princess.html" rel="alternate" type="text/html" title="I Had To Slay the Princess" /><published>2025-01-08T00:00:00-05:00</published><updated>2025-01-08T00:00:00-05:00</updated><id>https://sidneys1.github.io/reviews/2025/01/08/slay-the-princess</id><content type="html" xml:base="https://sidneys1.github.io/reviews/2025/01/08/slay-the-princess.html"><![CDATA[<cite>Slay the Princess</cite> is a breathtaking visual novel that explores obedience, rebellion, heartbreak, love, and
 everything in between. Emotional voice acting, unreliable narrators, and multiple player "personalities" set this game
 apart.
 
@@ -2228,122 +2279,4 @@ whatever `oh-my-posh` produces in its redefined `prompt` function, and we're don
 
 Wow! We've almost completely eliminated the overhead of importing our profile, and pushed that execution time into the
 background while a user is typing in their first prompt and digesting its output. I'd move the
-`Import-Module PSReadLine` into the background as well, except that module doesn't import correctly when you do this.]]></content><author><name>Sidneys1</name></author><category term="programming" /><category term="programming" /><category term="powershell" /><summary type="html"><![CDATA[Recently I began using Oh My Posh for PowerShell 7+ (pwsh). One thing I noticed however is that it takes upward of a second to activate in my pwsh $profile. Let’s dig in and see if we can’t improve that.]]></summary></entry><entry><title type="html">How I Built This Website, And How to Do It Yourself</title><link href="https://sidneys1.github.io/programming/2022/08/22/how-I-built-this-website.html" rel="alternate" type="text/html" title="How I Built This Website, And How to Do It Yourself" /><published>2022-08-22T00:00:00-04:00</published><updated>2022-08-22T00:00:00-04:00</updated><id>https://sidneys1.github.io/programming/2022/08/22/how-I-built-this-website</id><content type="html" xml:base="https://sidneys1.github.io/programming/2022/08/22/how-I-built-this-website.html"><![CDATA[Sidneys1.com is built statically using [Jekyll](https://jekyllrb.com/), and then published on the world wide web, GitHub
-Pages, Tor, and IPFS. How is this all accomplished, and how can you host your own website this way? Let's walk through
-it step by step. We'll be looking into (over the course of several posts):
-
-* Building a website with Jekyll
-* Hosting on NearlyFreeSpeech.net
-* Customizing the site layout and adding useful features
-* Hosting on GitHub Pages
-* Hosting on IPFS
-* Hosting on Tor
-
-<!--more-->
-
-## Getting Started With Jekyll
-
-I use a Windows PC, and I find that the Jekyll environment is easier to set up under the
-[Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about), so that's what I'll be using going
-forward in this post. First, we'll install Ruby via your package manager - Ubuntu 20.04 has Ruby 2.7 available on apt
-via `apt install ruby`. Next we'll use the Ruby package manager, `gem` to install both Jekyll and Bundler:
-`gem install bundler jekyll`. Finally, you can create a new Jekyll site with `jekyll new sitename`.
-
-Once inside the new site folder, you can generate and serve your page with `bundle exec jekyll serve`! This will create
-a development server on `http://localhost:4000`. Let's quickly talk about how Jekyll works:
-
-1. You create Markdown or HTML files in your site's folder for each post you wish to make.
-2. Jekyll processes these files (along with some templates - we'll get to these later) to generate static HTML files.
-3. These static HTML files (in `_site`) are what you want to put on your web hosting! It's all static, so you don't need
-   anything fancy like server-side PHP or client-side Angular or React.
-
-To simplify the build-preview and build-release process, let's make a simple Makefile. GNU Make is a tool that allows
-you to define simple build steps, and then figures out the interdependencies between these steps for you. Let's take
-a look:
-
-```make
-all: build
-
-build: _site/
-
-serve:
-	bundle exec jekyll serve --watch --livereload --force_polling --drafts --destination _site_live/
-
-_site/:
-	env JEKYLL_ENV=production bundle exec jekyll build
-
-clean:
-	rm -rf _site/
-```
-
-Let's break down each of these sections:
-* `all: build`: "all" is the default rule run when you execute `make`. This line says when "all" is run, run "build"
-  first.
-* `build: _site/`: when the "build" rule is run, we depend on "_site/" being built first.
-* `serve: ...`: If you execute `make serve`, this rule is triggered. Make will run the `bundle exec jekyll serve ...`
-  command we've listed. The parameters included are:
-  * `--watch`: live-rebuild any changes made to the posts as you edit them (very useful!).
-  * `--livereload`: use LiveReload to automatically refresh your browser when changes are rebuilt.
-  * `--force_polling`: this is a workaround for some WSL bugs. See
-    [this WSL issue](https://github.com/Microsoft/BashOnWindows/issues/216).
-  * `--drafts`: include posts under the `_drafts` folder (this is where you can put in-progress posts).
-  * `--destination _site_live/`: this directs the `serve` command to build the static output under a separate folder
-    than the normal `_site/` rule. This way we can't accidentally publish our live preview version of the website - if
-    we did, it would be broken because all links would lead to `localhost` instead of your website's URL!
-* `_site/: ...`: this rule matches a file path, `_site`, which is Jekyll's output folder. Make understands file paths
-  and will know that this rule will build the contents of `_site`. Note that we use `env` to tell Jekyll to use the
-  ["production" environment](https://jekyllrb.com/docs/configuration/environments/).
-
-  We'll never run this rule manually (though you could with `make _site/`), but our `build` rule depends on this
-  running, and so Make will automatically run it when needed.
-* `clean: ...`: Run `make clean` to invoke this rule - in our case, we just delete the `_site/` folder.
-
-## Modifying the Jekyll Configuration
-
-Jekyll configuration is stored in the `_config.yml` file at the root of our site. There are a couple things in here
-we'll want to adjust before we publish our site to the world wide web. First of course we'll want to set a few basics:
-
-* `title`: The name of your site (shown in the header).
-* `email`: A contact email address (shown in the footer).
-* `url`: This one is important - this sets the url used when clicking on absolute links to other pages within your site!
-* `baseurl`: Used in conjunction with `url`. The format used is `{url}{baseurl}/path/to/page.html`. If you're hosting
-  nothing but Jekyll on your website, then leave this blank.
-
-And that's about it! We'll dig into configuration more when we talk about hosting on Tor and IPFS.
-
-## Hosting
-
-Ok! Now that we have a (basic) site, how do we host it? Let's start simple and look at NearlyFreeSpeech.net, whom I've
-been using for years. They're cheap, no-nonsense, and don't have any crazy hidden fees. They also have support for Let's
-Encrypt certificates, making SSL support both easy and automatic. Head on over and set up an account. It'll walk you
-through creating a site (your website hosting) and you can even register and connect the domain name all within their
-system. Eventually you'll find the settings to be able to connect with SSH - enable this and let's update our Makefile
-again. Add this rule to your Makefile:
-
-```make
-publish: _site/
-	rsync --itemize-changes --checksum --recursive --compress --delete _site/* $USER@ssh.phx.nearlyfreespeech.net:.
-```
-
-Let's break it down again:
-* `publish: _site/`: when we execute `make publish`, we want to make sure the rule to build the `_site/` folder runs
-  first.
-* `rsync [...] _site/* $USER@ssh.phx.nearlyfreespeech.net:.`: we'll use rsync (a remote file-copying tool) to connect to
-  our hosting via SSH, synchronizing the contents of `_site` with the root (`.`) folder of our hosting. You'll want to
-  replace `$USER` with your NearlyFreeSpeech.net username, of course.
-
-  The options we're using are:
-  * `--itemize-changes`: list changes as we go (for clarity).
-  * `--checksum`: rely on a file checksum (not timestamps and file size) to determine if files need to be replaced.
-  * `--recursive`: recurse into subdirectories of `_site/`.
-  * `--compress`: HTML is very compressible, so why not save some bandwidth?
-  * `--delete`: this allows rsync to remove files on your hosting that are no longer present in your `_site` folder.
-    This can be useful if you rename or delete a file that you no longer want people to be able to access.
-
-Running `make publish` now should build your website and then prompt your for your NearlyFreeSpeech.net password to
-connect with SSH. Provide your password and watch as your site is made available!
-
-## Up Next
-
-In future posts in this series, we'll look at making some quality of life improvements to the default Jekyll layout and
-theme, as well as hosting our site on IPFS!]]></content><author><name>Sidneys1</name></author><category term="programming" /><category term="programming" /><category term="meta" /><summary type="html"><![CDATA[Sidneys1.com is built statically using Jekyll, and then published on the world wide web, GitHub Pages, Tor, and IPFS. How is this all accomplished, and how can you host your own website this way? Let’s walk through it step by step. We’ll be looking into (over the course of several posts): Building a website with Jekyll Hosting on NearlyFreeSpeech.net Customizing the site layout and adding useful features Hosting on GitHub Pages Hosting on IPFS Hosting on Tor]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://sidneys1.github.io/images/how-I-built-this-website/hero.png" /><media:content medium="image" url="https://sidneys1.github.io/images/how-I-built-this-website/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+`Import-Module PSReadLine` into the background as well, except that module doesn't import correctly when you do this.]]></content><author><name>Sidneys1</name></author><category term="programming" /><category term="programming" /><category term="powershell" /><summary type="html"><![CDATA[Recently I began using Oh My Posh for PowerShell 7+ (pwsh). One thing I noticed however is that it takes upward of a second to activate in my pwsh $profile. Let’s dig in and see if we can’t improve that.]]></summary></entry></feed>
