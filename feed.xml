@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="https://sidneys1.github.io/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2025-05-05T10:02:41-04:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>admin@sidneys1.com</email></author><entry><title type="html">Etho Timeline</title><link href="https://sidneys1.github.io/etho-timeline/" rel="alternate" type="text/html" title="Etho Timeline" /><published>2025-04-05T00:00:00-04:00</published><updated>2025-04-05T00:00:00-04:00</updated><id>https://sidneys1.github.io/etho-timeline</id><content type="html" xml:base="https://sidneys1.github.io/etho-timeline/"><![CDATA[<p>Here’s a timeline of video uploads to different series of the YouTube channel
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="https://sidneys1.github.io/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://sidneys1.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sidneys1.github.io/" rel="alternate" type="text/html" /><updated>2026-02-24T10:26:35-05:00</updated><id>https://sidneys1.github.io/feed.xml</id><title type="html">Sidneys1.com on GitHub Pages</title><subtitle>A home for all my ramblings on subjects such as programming, cybersecurity, photography, videography, video games, and whatever else I see fit.</subtitle><author><name>Sidneys1</name><email>admin@sidneys1.com</email></author><entry><title type="html">Etho Timeline</title><link href="https://sidneys1.github.io/etho-timeline/" rel="alternate" type="text/html" title="Etho Timeline" /><published>2025-04-05T00:00:00-04:00</published><updated>2025-04-05T00:00:00-04:00</updated><id>https://sidneys1.github.io/etho-timeline</id><content type="html" xml:base="https://sidneys1.github.io/etho-timeline/"><![CDATA[<p>Here’s a timeline of video uploads to different series of the YouTube channel
 <a href="https://www.youtube.com/@EthosLab/">Etho’s Lab</a>.</p>
 
 <!--more-->
@@ -7,12 +7,12 @@
 
 <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/etho_timeline/2011-2015.png" alt="Timeline" title="Timeline" onclick="document.getElementById('135-timeline').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/etho_timeline/2011-2015.png" alt="Timeline" title="Timeline" onclick="document.getElementById('108-timeline').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="135-timeline" onclick="document.getElementById('135-timeline').close()">
+<dialog class="popover" id="108-timeline" onclick="document.getElementById('108-timeline').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -23,12 +23,12 @@
 
 <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/etho_timeline/2016-2020.png" alt="Timeline" title="Timeline" onclick="document.getElementById('14-timeline').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/etho_timeline/2016-2020.png" alt="Timeline" title="Timeline" onclick="document.getElementById('253-timeline').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="14-timeline" onclick="document.getElementById('14-timeline').close()">
+<dialog class="popover" id="253-timeline" onclick="document.getElementById('253-timeline').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -39,12 +39,12 @@
 
 <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/etho_timeline/2021-2025.png" alt="Timeline" title="Timeline" onclick="document.getElementById('201-timeline').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/etho_timeline/2021-2025.png" alt="Timeline" title="Timeline" onclick="document.getElementById('152-timeline').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="201-timeline" onclick="document.getElementById('201-timeline').close()">
+<dialog class="popover" id="152-timeline" onclick="document.getElementById('152-timeline').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -637,12 +637,12 @@ simple function:</p>
 
 <div class="popunder" style="float:right; margin-left:1em;">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/sparc-journey/invalid-nvram.jpg" alt="Invalid NVRAM boot messages" title="Invalid NVRAM boot messages" onclick="document.getElementById('20-invalid-nvram-boot-messages').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/sparc-journey/invalid-nvram.jpg" alt="Invalid NVRAM boot messages" title="Invalid NVRAM boot messages" onclick="document.getElementById('13-invalid-nvram-boot-messages').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="20-invalid-nvram-boot-messages" onclick="document.getElementById('20-invalid-nvram-boot-messages').close()">
+<dialog class="popover" id="13-invalid-nvram-boot-messages" onclick="document.getElementById('13-invalid-nvram-boot-messages').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -1142,12 +1142,12 @@ powered on, anyways) at the <code class="language-plaintext amber-term highlight
 
 <div class="popunder" style="float:left;margin-right:1em;">
 	
-		<img class="pop" style="max-width:400px;" src="https://sidneys1.github.io/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" onclick="document.getElementById('51-sparcstation-20-simm-errors').showModal()" />
+		<img class="pop" style="max-width:400px;" src="https://sidneys1.github.io/images/sparc-journey/sp20-simm-errors.jpg" alt="SPARCstation 20 SIMM Errors" title="SPARCstation 20 SIMM Errors" onclick="document.getElementById('138-sparcstation-20-simm-errors').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="51-sparcstation-20-simm-errors" onclick="document.getElementById('51-sparcstation-20-simm-errors').close()">
+<dialog class="popover" id="138-sparcstation-20-simm-errors" onclick="document.getElementById('138-sparcstation-20-simm-errors').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
@@ -3117,12 +3117,12 @@ give it a go:</p>
 
   <div class="popunder">
 	
-		<img class="pop" style="" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('42-editor-mode').showModal()" />
+		<img class="pop" style="" src="https://sidneys1.github.io/images/reverse-engineering-a-win95-game-III/editor-mode-thumb.png" alt="Editor Mode" title="Editor Mode" onclick="document.getElementById('143-editor-mode').showModal()" />
 	
 	<em>Click to zoom.</em>
 </div>
 
-  <dialog class="popover" id="42-editor-mode" onclick="document.getElementById('42-editor-mode').close()">
+  <dialog class="popover" id="143-editor-mode" onclick="document.getElementById('143-editor-mode').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
